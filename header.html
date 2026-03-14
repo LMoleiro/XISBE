@@ -1,0 +1,262 @@
+<!--Boas malta, vou tentar meter comentários a explicar o que
+    é que cada um dos elementos deste ficheiro faz, se tiverem
+    dúvidas perguntem ao chat, ajuda sempre, e se continuarem c
+    dúvidas mandem-me mensagem e eu tento explicar. Em princípio
+    o que eu explicar neste ficheiro não vou explicar nos outros
+    então leiam, mm que seja bue secante e tal. Podem aprender por
+    vocês se acharem melhor, mas há alguns erros nestes
+    ficheiros que acho importante que vejam, portanto pelo menos
+    vejam isso. Vão estar assinalados assim:-->
+
+<!--
+    ERRO###################################################################################
+    (descrição do erro)
+    ERRO###################################################################################
+-->
+
+<!--Este é o ficheiro que codifica o cabeçalho da página principal (index.html)
+    No site, é a parte no topo que contém o logo da XSBE e as secções Home, Activities, Schedule...-->
+
+<!-- Declaração do tipo do documento, diz ao browser que é uma página html (HTML5 mais especificamente) -->
+<!DOCTYPE html>
+
+<!-- Indica a linguagem da página, inglês no caso. É importante para o auto-tradutor do google e para
+    o SEO site (SEO significa Search Engine Optimization, não é super importante para nós mas é um
+    conceito interessante)-->
+<html lang="en">
+
+<!--Algumas notas sobre html, a linguagem divide diferentes partes da página web em diferentes
+    elementos, por exemplo "head" ou "body", e dentro desses elementos existem outros elementos,
+    por exemplo o elemento "head" tem dentro de si o elemento "style".
+    Cada um destes elementos é em geral delimitado por tags: o elemento "head" é constituído
+    por tudo o que está entre as tags <head> e </head>. Neste caso <head> é a tag de abertura
+    (já que "abre" o elemento) e </head> é a tag de fecho (já que "fecha" o elemento).
+    Outro exemplo de um elemento é o antes a este comentário, que diz <html lang="en">.
+    Se forem até ao final da página vão ver a tag de fecho </html>. Neste caso, o lang="en"
+    não faz parte da declaração do elemento em si, mas é um atributo do elemento-->
+
+<!--O elemento <head> contêm informação útil para o browser e o motor de busca,
+mas que não é visível diretamente na página-->
+<head>
+
+    <!--Os elementos <meta> são elementos vazio, que não têm conteudo nem tag de fecho.
+        Os seus atributos representam dados da página, que são modificados dentro do
+        elemento meta. Por exemplo:
+        
+        charset: Codificação de caracteres, em princípio é sempre UTF-8,
+        permite usar acentos e outras coisas. Há outras codificações úteis mas não nos interessam-->
+    <meta charset="UTF-8">
+
+    <!--name: Indica que "parte" da página é que vamos alterar neste elemento.
+        content: As diferentes "partes" da página podem também ter diferentes atributos.
+                 Aquilo que colocamos no content vai alterar esses atributos
+        
+        Neste caso, vamos alterar o Viewport. O Viewport corresponde à área do ecrã
+        onde o browser desenha a página web. Tem atributos como, por exemplo, a largura
+        e a altura da página, indicações sobre se o utilizador consegue fazer zoom, etc..
+
+        "width=device-width"  indica que a largura da página deve ser igual à do dispositivo,
+        e "initial-scale = 1.0" indica que não deve existir zoom quando se entra na página.
+        
+        Alterar o viewport assim customa fazer com que a visualização do site no tlm funcione.
+        Já vamos ver porque é que isso não era o caso no site do ano passado-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Título da página, aparece na aba do browser e, quando pesquisamos, é o titulo do link
+        que nos leva à página-->
+    <title>Header with Custom Font</title>
+    <!--Quando eu vi isto fiquei um bocado confuso. Porque é que um header tem título sequer?
+        O que leva ao primeiro problema deste ficheiro:-->
+
+    <!--
+    ERRO###################################################################################
+        Nada do que vimos até agora devia estar aqui.
+        Este ficheiro não codifica nenhuma página, mas sim o cabeçalho da página principal.
+        Informações meta, títulos de página, e sinceramente tudo o que está no elemento <head>
+        deve estar APENAS no ficheiro da página principal (index.html)
+        Isto aplica-se também ao elemento <style> que vem a seguir, que devia estar num ficheiro
+        CSS separado.
+    ERRO###################################################################################
+    -->
+
+    <!--O elemento style é intuitivo, codifica o estilo e aparência de elementos da página.
+        Utiliza a linguagem CSS. Enquanto que o html define a estrutura da página (o que é
+        um cabeçalho, uma imagem, um link etc...) o CSS define a apresentação da página,
+        ou seja, como a estrutura HTML é exibida.
+        
+        Em geral, o <style> deve estar num ficheiro CSS à parte-->
+    <style>
+        /*O @import é um exemplo de uma "regra" de CSS, ou seja, uma instrução específica que
+        o navegador deve seguir para formatar a página. É uma regra especial, que não formata nada,
+        mas importa recursos necessários para a formatação da página.
+        Neste caso importa um tipo de letra a partir de um url. */
+        @import url('https://fonts.googleapis.com/css?family=Jaapokki+Subtract&display=swap');
+
+        /* De seguida está uma regra mais comum, com a estrutura: seletor{propriedade:valor}.
+           O seletor indica o(s) elemento(s) de página a formatar. Neste caso, seleciona toda uma
+           classe de elementos: custom-header (O ponto antes de custom-header indica que é um seletor
+           de classe). Mais à frente há um exemplo de um elemento que pertence a esta classe.
+
+           A propriedade a modificar neste case é o tipo da letra, que será a importada anteriormente,
+           'Jaapokki Subtract'. Caso não seja possivel usá-la por qlqr razão, usa uma fonte genérica.
+        */
+        .custom-header {
+            font-family: 'Jaapokki Subtract', sans-serif; /* fallback to a generic sans-serif */
+        }
+
+        /*A regra a seguir é aplicada ao menu de navegação (Home Activities Schedule ...) do cabeçalho
+          (elemento da classe nav-links, está especificado melhor mais à frente).
+          A declaração position:relative indica que a posição dos elementos-filhos (elemento contido noutro,
+          p.e. um menu dropdown que aparece quando se clica num botão é um elemento-filho do botão) cujo
+          atributo position é absolute será sempre relativa ao elemento-pai. (Isto é um bocado técnico, mas,
+          de uma forma um pouco simplista, só alguns elementos específicos é que obedeceriam a esta regra, e
+          esses elementos específicos não estão presentes no menu de navegação, então esta regra é inútil).
+
+          No fundo isto seria útil se um dos botões do cabeçalho tivesse position: absolute (como seria o caso
+          de um menu dropdown). Como não há elementos posicionados absolutamente na navegação atual, esta regra não
+          é necessária.
+        */
+        .nav-links {
+            position: relative;
+        }
+
+        /*Esta regra é uma regra condicional, depende da interação do utilizador com a página.
+          Quando o utilizador faz hover por cima de um elemento nav-link, aplica um estilo a outro elemento,
+          neste caso um elemento filho: o tal menu dropdown (que não existe).
+          A declaração display:flex aplica um display visível ao dropdown visível, que supostamente estaria
+          invisível até o utilizador passar o rato por cima do botão de navegação. Este display em especifico
+          permite distribuir o espaço do contentor pelos seus elementos-filhos de forma flexível numa dimensão
+          (coluna ou linha).
+          Há outros tipos de display, de que não vou falar aqui.
+        */
+        .nav-links:hover .dropdown {
+            display: flex;
+        }
+    /*
+    ERRO###################################################################################
+    As últimas duas regras não servem para nada, não deviam estar ali. Ter um menu dropdown
+    nem seria má ideia, mas teria de ser implementado...
+    ERRO###################################################################################*/
+
+    </style><!--tag de fecho do <style>-->
+</head><!--tag de fecho do <head>-->
+
+<!--O elemento body contém toda a estrutura vísivel da página. Vem a seguir à head, e só pode
+    existir um por ficheiro HTML. Contém elementos de estrutura (cabeçalho, secções, rodapé),
+    de conteúdo (títulos, imagens) e de interação (botões, menus).
+    
+    Como este ficheiro codifica apenas o cabeçalho da página, tem apenas um elemento de estrutura,
+    o header.-->
+<body>
+    
+
+    <!--O elemento header fica automaticamente no topo da página. Atributos:
+            class = "custom-header" -> define a classe do elemento. Os elementos desta classe têm um regra definida
+                                       no <style>, que garante que todos os elementos de texto deste cabeçalho terão
+                                       um certo tipo de letra.
+                                        
+            style = (...)-> O atributo style permite aplicar regras CSS diretamente a elementos. Também devia ser
+                            feito num ficheiro separado.
+                            A propriedade backgroung-image define a imagem de fundo, aqui definida como uma imagem
+                            no folder dos assets (podem ir lá ver qual é)
+
+                            A propriedade background-size define a dimensão da imagem, aqui definida como cover, que
+                            garante que a imagem é esticada ou encolhida para cobrir o tamanho do cabeçalho. Nesta
+                            propriedade também se pode definir valores certos de pixeis, por exemplo.
+
+                            A propriedade background-position define a posição da imagem, aqui definida como center,
+                            para estar centrada no cabeçalho.-->
+    <header class="custom-header" style="background-image: url('assets/images/background.png'); background-size: cover; background-position: center;">
+        <!--A partir daqui todos os elementos são elementos-filho deste elemento header-->
+
+        <!--Novo elemento, muito utilizado: elemento <div> (division). É um contentor genérico que não possui nenhum
+            significado específico, serve só para agrupar outros elementos para estilo ou manipulação (já vemos o 
+            que isto é). Atributos:
+            
+            class = "header-container" -> define a classe
+            style -> display: flex -> visto previamente
+                    justify-content: space-between -> Coloca o primeiro filho o mais à esquerda possivel e o último
+                                                    filho o mais à direita possivel. Os restantes são colocados no
+                                                    espaço entre os extremos
+                    align-items: center -> alinha os elementos filhos ao centro-->
+        <div class="header-container" style="display: flex; justify-content: space-between; align-items: center;">
+
+            <!--Novo contentor genérico para o logo, é filho do contentor anterior-->
+            <div class="logo">
+                <!--O elemento <img> é outro elemento vazio, que mostra uma imagem. Atributos:
+                    src = (...) -> Filepath da imagem a mostrar (encontra-se nos assets)
+                    alt = (...) -> Caso não carregue a imagem, mostra determinado texto.
+                    style = "height: 70px" -> define a altura da imagem a 70 px-->
+                <img src="assets/images/logoescuro.png" alt="SBE Semana da Bioengenharia" style="height: 70px;">
+            </div>
+            
+            <!--O elemento <nav> é um contentor específico para links de navegação, usados para ir de página em
+                página no site. Atributos:
+                class = "nav-links" -> Esta classe em específico tem uma regra no <style>, podem ir ver.
+                                    Como está lá comentado, a regra não serve para nada, pois este elemento
+                                    não tem elementos filhos cuja posição seja absoluta.
+                style -> O display flex já vimos, o gap garante um espaço de 20 px entre links-->
+            <nav class="nav-links" style="display: flex; gap: 20px;">
+
+
+                <!--O elemento <a> representa um link para outra página. Atributos:
+                    href=(...) -> Hypertext reference, indica o ficheiro html a carregar quando o link é clicado.
+                    style=(...) -> Penso que está claro o que cada elemento do style faz, então não vou comentar um
+                                    a um.
+                    Quando a tag de abertura do elemento termina, escreve-se o texto clicável que o utilizador vê-->
+                <a href="index.html" style="text-decoration: none; color: white; font-weight: bold;">Home</a>
+                <a href="activities.html" style="text-decoration: none; color: white; font-weight: bold;">Activities</a>
+                <a href="schedule.html" style="text-decoration: none; color: white; font-weight: bold;">Schedule</a>
+                <a href="meettheteam.html" style="text-decoration: none; color: white; font-weight: bold;">Meet the Team</a>
+                <a href="attendance.html" style="text-decoration: none; color: white; font-weight: bold;">Enroll</a>
+                <!-- O link a seguir foi comentado, provavelmente uma página que não acabaram o ano passado-->
+                <!--<a href="contact.html" style="text-decoration: none; color: white; font-weight: bold;"></a>-->
+                <!--
+                    ERRO###################################################################################
+                    O style em todos estes links é igual, mais valia criar uma classe só para links com um
+                    estilo específico. Em geral repetir código é má ideia, depois para o editar é preciso 
+                    editar umas 50 linhas de código desnecessariamente. Por exemplo:
+                    No <style>:
+                    .nav-link-style {
+                        text-decoration: none;
+                        color: white;
+                        font-weight: bold;
+                    } 
+                    E aqui ficava:
+                    <a href="index.html" class="nav-link-style">Home</a>
+                    (...)
+                    ERRO###################################################################################
+                -->
+            </nav>
+
+           <!-- Contentor genérico para os botões de log-in e sign-up-->
+           <div style="display: flex; gap: 10px; justify-content: center;">
+                <!--O elemento <button> é um botão interativo que, quando clicado, faz alguma coisa, determinada
+                    pelo seu atributo onclick.
+                    Neste caso, a instrução window.location.href causa uma mudança de página para login.html no
+                    primeiro botão e para signup.html no segundo botão -->
+                <button onclick="window.location.href='login.html'" style="background-color: #FF9114; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                    Login
+                </button>
+                <!-- When clicked, take the user to the signup page -->
+                <button onclick="window.location.href='signup.html'" style="background-color: #FF9114; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                    Sign Up
+                </button>
+                <!--Só uma nota, estes botões têm a mesma funcionalidade que os links anteriores, redirecionando
+                    o utilizador para outra página. No entanto, aqui justifica-se usar botões e não links, já que
+                    os botões customam simbolizar ações do utilizador, neste caso login e signup. Para elém disso,
+                    com o justify-content: space-between do header-container, os botões ficam à direita da página,
+                    claramente separados do resto, marcando mais essa diferença entre uma ação do user e uma
+                    mudança de página.-->
+                <!--
+                    ERRO###################################################################################
+                    Outra vez, o style dos dois botões é igual e redundante.
+                    ERRO###################################################################################
+                -->
+            </div>
+
+        </div>
+    </header>
+</body>
+
+</html>

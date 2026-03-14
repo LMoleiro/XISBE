@@ -1,0 +1,720 @@
+<!--Este é o documento da página principal-->
+<!--Neste documento, os comentários mais importantes são sobre Javascript, estão no final do
+    ficheiro.-->
+
+<!DOCTYPE html>
+<!--Mudaram a linguagem para português aqui-->
+<html lang="pt">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>X SBE - Semana da Bioengenharia</title>
+    <link rel="stylesheet" href="assets/css/website.css" /> <!--Comentário do ano passado: Já não é preciso //-->
+    <!--Aqui tiveram a ideia certa, de importar o estilo de um ficheiro CSS à parte, mas parece que desistiram
+        da ideia, e fizeram o <style> manualmente a seguir, não sei bem porquê-->
+  </head>
+  <!--Este <style> é gigante, vou só comentar algumas partes que acho interessantes-->
+  <style>
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: "Jaapokki Subtract", sans-serif;
+      background-image: url("assets/images/background.png");
+      background-size: cover;
+      background-position: center;
+      color: #333;
+    }
+
+    section {
+      padding: 15px;
+    }
+    .countdown-e-banner {
+      padding: 0px 0 0px 0;
+    }
+    .sec-countdown {
+      display: flex;
+      background-color: white;
+      top: 100px;
+      padding: 30px
+    }
+    /*O texto transparente vem dos atributos -webkit-(...), o Gemini achou fixe, eu também*/
+    .join-us {
+      width: 500px;
+      font-size: 100px;
+      position: absolute;
+      font-weight: bolder;
+      font-family: Copperplate, fantasy;
+      text-transform: uppercase;
+      background: url("assets/images/background.png") 50% 50%;
+      background-size: cover;
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      text-align: center;
+    }
+    /*Esta regra é para um elemento que ainda não vimos, já explico mais à frente*/
+    .join-us span {
+      display: block;
+    }
+    .texto-countdown {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+    }
+    .countdown-section {
+      text-align: center;
+      margin: 20px 0;
+      flex: 1;
+      width: 100%;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      background: url("assets/images/background.png") 50% 50%;
+      background-size: cover;
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+    }
+
+    .countdown div {
+      display: flex;
+      flex-direction: column;
+    }
+    .countdown div p {
+      font-size: 42px;
+      font-weight: bolder;
+      font-family: Copperplate, fantasy;
+      text-transform: uppercase;
+    }
+    .countdown div span {
+      font-size: 84px;
+      font-weight: bolder;
+      font-family: Copperplate, fantasy;
+      text-transform: uppercase;
+    }
+
+    
+    .countdown-1,
+    .countdown-2,
+    .countdown-3,
+    .countdown-4 {
+      justify-content: center;
+      align-items: center;
+    }
+    /*
+    ERRO###################################################################################
+    Deviam ter feito uma classe genérica para estes quatro
+    ERRO###################################################################################
+    */
+    .countdown span {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .countdown p {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .team-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .countdown-e-banner {
+      padding: 0px 0 0px 0;
+    }
+    .sec-countdown {
+      display: flex;
+      background-color: white;
+      top: 74px;
+    }
+    .join-us {
+      width: 500px;
+      font-size: 100px;
+      position: absolute;
+      font-weight: bolder;
+      font-family: Copperplate, fantasy;
+      text-transform: uppercase;
+      background: url("assets/images/background.png") 50% 50%;
+      background-size: cover;
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      text-align: center;
+    }
+    .join-us span {
+      display: block;
+    }
+    /*
+    ERRO###################################################################################
+    Estas últimas duas regras estão repetidas
+    ERRO###################################################################################
+    */
+
+    .about-us-main {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .about-us-texto,
+    .atividades,
+    .meet-the-team {
+      display: flex;
+      height: 130px;
+      background-color: white;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+    }
+    .about-us-texto p,
+    .atividades p,
+    .meet-the-team p {
+      font-size: 80px;
+      font-weight: bolder;
+      font-family: Copperplate, fantasy;
+      color: #055b61;
+      margin: 0;
+    }
+    /*
+    ERRO###################################################################################
+    Deviam ter feito uma classe genérica para estas três.
+    ERRO###################################################################################
+    */
+    .x-sbe-caixa {
+      height: auto;
+    }
+    .about-us {
+      display: flex;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 200px;
+      padding: 15px 0px 15px 0px;
+    }
+
+    .texto-about-us {
+      text-align: justify;
+      margin: 10px 0;
+      line-height: 25px;
+    }
+    /*
+    ERRO###################################################################################
+    Esta classe chama-se texto-about-us e mais acima há outra chamada about-us-texto, super
+    confuso
+    ERRO###################################################################################
+    */
+
+    .logo-e-texto-about-us {
+      background-color: white;
+      display: flex;
+      position: relative;
+      box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      width: 80%;
+      height: 80%;
+    }
+    .logo-e-texto-about-us:hover {
+      box-shadow: 2px 2px 24px rgba(0, 0, 0, 0.8);
+      width: 84%;
+      height: 86%;
+      transition: width 1s, height 1s;
+    }
+    .logo-about-us {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+    }
+    .imagem-logo-about-us {
+      width: 80%;
+      height: 50%;
+      margin-left: 70px;
+      margin-top: 24px;
+    }
+    .sec-about-us {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 18px;
+    }
+    .sec-about-us:hover span {
+      font-size: larger;
+      color: #ff9114;
+      transition: font-size 1s;
+    }
+    .sec-about-us div {
+      width: 70%;
+    }
+    .perguntas-who-what {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 15px;
+      height: auto;
+    }
+    .pergunta-who,
+    .pergunta-what {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .pergunta-who-texto,
+    .pergunta-what-texto {
+      padding: 15px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      width: 55%;
+      height: 240px;
+    }
+    .pergunta-who-texto p,
+    .pergunta-what-texto p {
+      margin: 10px;
+    }
+    /*
+    ERRO###################################################################################
+    Mais coisas repetidas
+    ERRO###################################################################################
+    */
+    .pergunta-where-main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      height: 150px;
+    }
+    .pergunta-where-texto {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      width: 50%;
+      height: 55%;
+    }
+    .pergunta-where-texto p {
+      margin: 10px;
+    }
+    .perguntas-about-us {
+      font-size: 18px;
+      font-weight: 700;
+      color: #055b61;
+      font-family: Copperplate, fantasy;
+    }
+
+    .pergunta-who-texto:hover span,
+    .pergunta-what-texto:hover span,
+    .pergunta-where-texto:hover span {
+      color: #ff9114;
+      font-size: larger;
+      transition: font-size 0.7s;
+    }
+    .pergunta-what-texto:hover,
+    .pergunta-who-texto:hover {
+      height: 260px;
+      width: 60%;
+      box-shadow: 2px 2px 24px rgba(0, 0, 0, 0.8);
+      transition: height 1s, width 1s;
+    }
+    .pergunta-where-texto:hover {
+      width: 55%;
+      height: 65%;
+      box-shadow: 2px 2px 24px rgba(0, 0, 0, 0.8);
+      transition: height 1s, width 1s;
+    }
+    .atividades a,
+    .meet-the-team a {
+      text-decoration: none;
+    }
+    .meet-the-team a :hover {
+      color: #ff9114;
+      font-size: 85px;
+      transition: color, font-size 0.7s;
+    }
+    .atividades a :hover {
+      color: #ff9114;
+      font-size: 85px;
+      transition: color, font-size 0.7s;
+    }
+    /*
+    ERRO###################################################################################
+    Mais coisas repetidas. Vou parar de fazer comentários sobre repetição de código, acho que
+    já se percebeu
+    ERRO###################################################################################
+    */
+    #header-container,
+    #footer-container {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #header-container {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    /* Comentário do ano passado: Page-specific styles for footer, navigation, etc. */
+  
+  /*Isto é uma media query, uma avaliação do estado de visualização do nosso site. Podem ser feitas sobre diferentes
+  elementos como, por exemplo, o tamanho do ecrã, a orientação do sipositivo, as preferências de browser do utilizador
+  etc...
+  
+    Neste caso, a media query quer saber qual é que é a largura do dispositivo que está a ver o site. Para isso, o tipo
+    da query é "screen" e a característica que está a testar é a largura do ecrã. Ou seja, quando a largura de ecrã for
+    menor que 768 pixeis, por exemplo, num telemóvel, vai mudar a configuração do site.
+    
+    Eles não conseguiram implementar isto lá muito bem infelizmente, mas é muito com estas media queries que nós vamos
+    trabalhar.*/
+  
+
+/*Aqui uma query para dispositivos mais pequenos*/
+@media (max-width: 600px) {
+
+  .sec-countdown{
+    position: static;  /* cancels top/left positioning if it was positioned */
+    top: auto;
+    flex-direction: column;   /* key: stacks join-us over countdown */
+    align-items: center;
+    justify-content: center;
+    gap: 0; /* remove gap between join-us and countdown */
+
+  }
+
+
+  .join-us {
+    position: static; 
+    font-size: 15vw;
+    margin-bottom: 0;
+    margin-top:0;
+    width: 100% !important;
+  }
+
+  .countdown {
+    flex-direction: row !important;
+  }
+
+
+
+  .countdown div span{
+    font-size: 20vw;                 /* smaller big number (was huge) */
+    line-height: 1;
+  }
+
+  .countdown div p{
+    font-size: 14px;                 /* smaller “DAYS/HOURS/…” */
+    margin: 0;                       /* remove default <p> margin */
+  }
+
+  .about-us-texto p,
+  .atividades p,
+  .meet-the-team p {
+    font-size: 25px;
+  }
+
+  .about-us{
+    height: auto !important;
+    align-items: flex-start !important; /* optional, keeps card at the top */
+    padding: 15px 0 !important;
+  }
+
+  .logo-e-texto-about-us:hover{
+    height: auto !important;
+    transition: none !important;
+    box-shadow: 2px 2px 20px rgba(0,0,0,.5) !important;
+  }
+
+
+  .logo-e-texto-about-us{
+  display: flex;
+  align-items: flex-start; /* prevents stretch */
+  height: auto;            /* ensure no fixed height is forcing it */
+  pointer-events: none;  
+
+  }
+
+
+  .sec-about-us,
+  .pergunta-who-texto,
+  .pergunta-what-texto,
+  .pergunta-where-texto {
+    padding-top: 0 !important;
+    font-size: 14px !important;
+  }
+
+
+  .pergunta-who-texto,
+  .pergunta-what-texto {
+    width: 65% !important;
+    height: auto !important;
+    pointer-events: none; 
+  }
+ 
+  .pergunta-where-texto{
+    width: 80%;
+    height: auto;
+    pointer-events: none;
+  }
+ 
+}
+  </style>
+  <body>
+    <!-- Placeholder for the header -->
+    <!--O atributo id é quase igual ao atributo classe, com a diferença que é único a um elemento-->
+    <div id="header-container"></div>
+
+    <div class="countdown-e-banner">
+      <div class="sec-countdown">
+        <div class="texto-countdown">
+          <p class="join-us" style="color: #055b61">Join Us In:</p>
+        </div>
+        <!--O elemento section é, em termos de código, igual ao div. A diferença está no uso, enquanto
+        o div é usado para fins estilísticos ou para agrupar elementos sem ligação entre si, o section
+        é usado para agrupar elementos conectados entre si, e indica ao navegador essa ligação.
+        Neste caso, é usado para os números do Countdown-->
+        <section class="countdown-section" id="countdown-to-event">
+          <div class="countdown">
+            <div class="countdown-1">
+              <!--O elemento span é um contentor genérico, como o div, mas de linha. A diferença é visual
+              no site, sendo que o div ocupa a largura toda da pagina, enquanto que o span só ocupa o
+              espaço necessário para o seu conteúdo-->
+              <span id="days">0</span>
+              <p>Days</p>
+            </div>
+            <div class="countdown-2">
+              <span id="hours">0</span>
+              <p>Hours</p>
+            </div>
+            <div class="countdown-3">
+              <span id="minutes">0</span>
+              <p>Minutes</p>
+            </div>
+            <div class="countdown-4">
+              <span id="seconds">0</span>
+              <p>Seconds</p>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div style="height: 330px">
+        <img
+          src="assets/images/banner.png"
+          alt=""
+          style="width: 100%; height: 100%"
+        />
+      </div>
+    </div>
+    <div class="about-us-main">
+      <div class="about-us-texto">
+        <p>ABOUT US</p>
+      </div>
+      <div class="x-sbe-caixa">
+        <div class="about-us">
+          <div class="logo-e-texto-about-us">
+            <div class="logo-about-us">
+              <img
+                class="imagem-logo-about-us"
+                src="assets/images/logoescuro.png"
+                alt="SBE Semana da Bioengenharia"
+              />
+            </div>
+            <div class="sec-about-us">
+              <div>
+                <!--Aqui está um bom exemplo de como usar o span para modificar partes de um texto-->
+                <p class="texto-about-us">
+                  <!--O elemento strong indica ao navegador que um texto ou parte de um texto tem 
+                      importância, e coloca-o a negrito.-->
+                  The <span><strong>SBE</strong></span> –
+                  <span><strong>Semana da Bioengenharia</strong></span> - is a
+                  week-long event dedicated to showcasing the exciting world of
+                  Bioengineering. It combines biology, biomechanics, artificial
+                  intelligence, pharmaceuticals and technologies, and innovation
+                  to address real-world challenges.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="perguntas-who-what">
+        <div class="pergunta-who">
+          <div class="pergunta-who-texto">
+            <p class="perguntas-about-us">
+              <span style="font-size: 45px">WHO</span> is it for?
+            </p>
+            <p style="line-height: 25px">
+              The SBE is designed for
+              <span class="aaa">
+                <strong>
+                  students, researchers, and enthusiasts of Bioengineering
+                </strong> </span
+              >. Whether you're curious about groundbreaking discoveries, eager
+              to network, or simply exploring your passion for the field, this
+              event has something for everyone
+            </p>
+          </div>
+        </div>
+        <div class="pergunta-what">
+          <div class="pergunta-what-texto">
+            <p class="perguntas-about-us">
+              <span style="font-size: 45px">WHAT</span> can you expect?
+            </p>
+            <p>
+              - Inspiring <span><strong>talks</strong></span> by leading experts
+            </p>
+            <p>
+              - Hands-on <span><strong>workshops</strong></span> to build
+              practical skills
+            </p>
+            <p>
+              - Opportunities to <span><strong>network</strong></span> with
+              professionals
+            </p>
+            <p>
+              - <span><strong>Insights</strong></span> into career paths and the
+              future of Bioengineering.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="pergunta-where-main">
+        <div class="pergunta-where-texto">
+          <p class="perguntas-about-us">
+            <span class="where1" style="font-size: 45px">WHERE</span> does it
+            happen?
+          </p>
+          <p class="texto-perguntas-about-us">
+            <span><strong>Instituto Superior Técnico</strong></span>
+            (IST), Lisbon
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="atividades">
+      <a href="activities.html">
+        <p>ACTIVITIES</p>
+      </a>
+    </div>
+    <div class="meet-the-team">
+      <a href="meettheteam.html">
+        <p>MEET THE TEAM</p>
+      </a>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <!--O elemento script é utilizado para inserir ou importar código executável, normalmente em
+        javascript (JS). É parecido com o <style>, que importa regras CSS, e tal como o <style>,
+        é preferível mantê-lo num ficheiro separado.
+        
+        O Javascipt é uma linguagem orientada a objetos, ou seja, trabalha principalmente com objetos.
+        Objetos são estruturas de dados definidas pelo programador, com diferentes características e 
+        funções específicas a cada objeto. Por exemplo, o programador pode decidir criar um objeto Cat,
+        que tem como características o nome, a cor dos olhos, a cor do pelo,..., e depois dar-lhe funções
+        específicas, como comer ou miar. Há maneiras específicas de trabalhar em JS com objetos:
+          Para criar um objeto novo, usa-se o comando 'new':
+          Cat novoGato = new Cat("Simba","azul","Alaranjado");
+          (Aqui, novoGato é o nome da variável do tipo Cat)
+          
+          Para aceder às suas características ou funções, mete-se um ponto entre o nome da variável e 
+          aquilo a que queremos aceder:
+          string name = novoGato.nome (Aqui vai-se buscar uma característica diretamente)
+          string color = novoGato.getName() (E aqui faz-se o mesmo, mas utilizando uma função intermédia)
+          novoGato.miar()
+          -->
+    <script>
+      /*Fetch é uma API (Aplication Programming Interface), que permite ao JS fazer pedidos através
+      da rede. O navegador envia um pedido (fetch) ao servidor para encontrar o ficheiro "header.html"
+      e recebe determinada resposta. Como estamos a tratar de comunicação entre navegador e servidor,
+      esta resposta pode não ser imediata. Para evitar que o site fique parado à espera, o código 
+      continua a correr até que a resposta chegue, momento em que o motor de JS do navegador executa
+      o método then(), uma função especial que fica em standby até receber os dados que precisa.
+      
+      O método 'then()' trata dessa resposta, guardando-a na variável temporária 'response', e de
+      seguida extrai o texto da resposta com 'response.text()'. Depois, o próximo then() guarda o texto
+      da resposta na variável data, e define o HTML interno do header-container para ser o código do
+      ficheiro header.html, guardado em data*/
+      fetch("headerAtualizado.html")
+        /*A seta (=>) é uma Arrow Function, uma maneira mais curta de escrever funções. O return
+          é implícitamente o que está à direita da seta.*/
+        .then((response) => response.text())
+        .then((data) => {
+          /*Aqui o document é um objeto que corresponde a toda a página web, e getElementById é uma
+            função específica do objeto document, que procura um elemento pelo seu id.*/
+          const container = document.getElementById("header-container");
+    
+          // Limpa o que lá estiver antes
+          container.innerHTML = ""; 
+
+          // Cria um "fragmento" que processa o HTML e EXECUTA os scripts
+          const fragment = document.createRange().createContextualFragment(data);
+          
+          // Insere o fragmento no container
+          container.appendChild(fragment);
+        })
+      
+      /*O mesmo acontece aqui para o rodapé*/
+      fetch("footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footer-container").innerHTML = data;
+        })
+        .catch((error) => console.error("Error loading header:", error));
+      
+      /*Aqui define-se uma função para tratar dos números do Countdown*/
+      function updateCountdown() {
+        /*Cria-se um novo objeto date, com a data da SBE, e imediatamente calcula-se a sua timestamp*/
+        const eventDate = new Date("February 17, 2025 10:30:00").getTime();
+        /*Faz-se o mesmo para a data atual,e depois calcula-se o tempo restante*/
+        const now = new Date().getTime();
+        const timeLeft = eventDate - now;
+        /*Se já tiver passado da data definida, mete-se o countdown a 0*/
+        if (timeLeft <= 0) {
+        document.getElementById("days").textContent = 0;
+        document.getElementById("hours").textContent = 0;
+        document.getElementById("minutes").textContent = 0;
+        document.getElementById("seconds").textContent = 0;
+        return; // Comentário do ano passado: Stop the countdown from updating further
+        }
+        /*Aqui calcula-se os valores individuais de dia, hora, minuto e segundo*/
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        /*E atualiza-se o countdown*/
+        document.getElementById("days").textContent = days;
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("seconds").textContent = seconds;
+      }
+      /*É um pouco estranho definir uma função no meio do código corrido, mas pronto*/
+
+      /*Depois de definir a função, esta é posta num loop de 1 segundo com o setInterval*/
+      //Comentário do ano passado: Atualizar o countdown a cada segundo
+      setInterval(updateCountdown, 1000);
+      /*Pôr a função num loop assim causa um lag de 1 segundo até o countdown
+        aparecer. Não é um erro propriamente mas dá para fazer melhor*/
+    </script>
+  </body>
+</html>

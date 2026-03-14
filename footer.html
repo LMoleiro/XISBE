@@ -1,0 +1,135 @@
+<!--Este ficheiro codifica o rodapé da página-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer with Custom Font</title>
+    <!--Outra vez, elementos meta e títulos desnecessários-->
+
+    <!--O elemento link é utilizado para importar bibliotecas externas, neste caso a Font Awesome, uma biblioteca de
+        ícones, utilizada neste ficheiro nos logos do instagram, facebook, etc...
+        Tem um atributo que ainda não vimos, o rel, abreviatura de relação (relationship), que indica ao navegador
+        como tratar aquilo que estamos a importar da href. Apesar da Font Awesome ser uma biblioteca de ícones, a sua
+        importação é feita através de um ficheiro CSS. Quando se importa ficheiros CSS usa-se a relação "stylesheet"-->
+
+    <!--Comentário do ano passado: Adicionar Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!--Comentário do ano passado: Importar a fonte diretamente no HTML -->
+    <!--Como já vimos no header.html, o style devia estar num ficheiro CSS à parte-->
+    <style>
+        /*Import já feito no header.html, desnecessário*/
+        @import url('https://fonts.googleapis.com/css?family=Jaapokki+Subtract&display=swap');
+        
+        /* Esta regra aplica o tipo de letra a todos os elementos do rodapé, está bem feito e é como
+            devia ter sido feito também no header*/
+        .custom-footer {
+            font-family: 'Jaapokki Subtract', sans-serif;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /*Aqui está um exemplo da aplicação de seletores descendentes, em que a regra de css aplica-se apenas a
+        elementos muito específicos, com determinadas hierarquias (relações pai e filho). Neste caso, aplica-se a
+        ul's (unordered list (lista desordenada)) filhas de um elemento de classe footer-links, que por sua vez
+        tem de ser filho de um elemento custom-footer
+        
+        Há diferentes tipos de listas, a ul é utilizada em casos em que a ordem não interessa, como neste. Caso
+        a ordem interessasse usar-se-ia uma ordered list, ol (por exemplo, num procedimento de um relatório, a
+        ordem interessaria)*/
+        .custom-footer .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /*Aqui, 'li' significa list item e 'a' são os elementos <a> que vimos no header (links, portanto)*/
+        .custom-footer .footer-links ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        /*Aqui codifica-se uma mudança de cor ao passar o mouse por cima do elemento. O tempo de transição para outra
+        cor está na regra anterior (na transition). Se  estivesse apenas no :hover, a cor mudaria suavemente
+        ao entrar, mas voltaria ao original instantaneamente ao sair. Assim está muito bem feito.*/
+        .custom-footer .footer-links ul li a:hover {
+            color: #FF9114;
+        }
+
+        .custom-footer .footer-social a {
+            color: white;
+            margin: 0 10px;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .custom-footer .footer-social a:hover {
+            color: #FF9114;
+        }
+    </style>
+</head>
+<body>
+    <!-- Footer -->
+    <!--Só uma nota sobre o atributo aria-label: É um elemento de acessibilidade, para pessoas com deficiência visual
+        que usam leitores de ecrã, e deixa que o leitor de ecrã interprete o elemento. Achei interessante.-->
+    <footer class="custom-footer" style="background-image: url('assets/images/background.png'); background-size: cover; background-position: center;" aria-label="Rodapé">
+        <div class="footer-container">
+            <!--O elemento p indica um parágrafo de texto. O &copy; é uma entidade HTML que serve para escrever
+                caracteres especiais, neste caso o Copyright-->
+            <p>&copy; 2024 X SBE. All rights reserved.</p>
+            <!--
+                    ERRO###################################################################################
+                    2024??
+                    ERRO###################################################################################
+            -->
+            <nav class="footer-links">
+                <ul>
+                    <!--
+                    ERRO###################################################################################
+                    Fizeram 3 regras diferentes para o style dos elementos do footer-links, e depois deixaram
+                    a lista vazia. Não é mau a lista estar vazia, já que a seguir implementam bem os logos e
+                    a redireção para as redes sociais de outra forma, mas aí esta lista torna-se desnecessária,
+                    e deviam tê-la removido.
+                    ERRO###################################################################################
+                    -->
+                </ul>
+            </nav>
+            <div class="footer-social">
+                <!--O atributo target indica como é aberta a página. Com target="_blank", é aberta uma nova aba
+                    do navegador.
+                    O elemento <i> é geralmente usado para mostrar ícones. Aqui, os ícones têm duas classes diferentes,
+                    separadas por um espaço. Estas são classes do ficheiro CSS da Font Awesome, importado anteriormente,
+                    e juntas permitem ao navegador mostrar os ícones -->
+                <a href="https://www.linkedin.com/company/semana-da-bioengenharia/?originalSubdomain=pt" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.tiktok.com/@sbe.ist?is_from_webapp=1&sender_device=pc" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/sbe.ist?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/semanabioengenharia" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <!--
+                    ERRO###################################################################################
+                    Puseram o logo do twitter no link do tiktok
+                    ERRO###################################################################################
+                -->
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+    </footer>
+</body>
+</html>
+<!--
+    ERRO###################################################################################
+    Tags de fecho duplicadas para o footer, o body e o html. Um bom lembrete para termos
+    cuidado com o copy paste. Felizmente o navegador está equipado para lidar com HTML mal
+    feito, mas isto é facilmente evitável
+    ERRO###################################################################################
+-->
+

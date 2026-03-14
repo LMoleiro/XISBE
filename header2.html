@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.76">
+    <title>Header with Custom Font</title>
+
+    <!-- Importar a fonte diretamente no HTML -->
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Jaapokki+Subtract&display=swap');
+
+        /* Aplicar a fonte ao header */
+        .custom-header {
+            font-family: 'Jaapokki Subtract', sans-serif;
+        }
+
+        /* Dropdown styles */
+        .nav-links {
+            position: relative;
+        }
+
+        .nav-links:hover .dropdown {
+            display: flex;
+        }
+
+        @media screen and (max-width: 768px) {
+
+            .custom-header{
+                width:75%;
+            }
+            .nav-links{
+                gap:10px;
+            }
+            
+            .header-container{
+                width:75%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="custom-header" style="background-image: url('assets/images/background.png'); background-size: cover; background-position: center;">
+        <div class="header-container" style="display: flex; justify-content: space-between; align-items: center;">
+            <!-- Logo -->
+            <div class="logo">
+                <img src="assets/images/logoescuro.png" alt="SBE Semana da Bioengenharia" style="height: 70px;">
+            </div>
+            
+            <!-- Navigation Links -->
+            <nav class="nav-links" style="display: flex; gap: 20px;">
+                <a href="index.html" style="text-decoration: none; color: white; font-weight: bold;">Home</a>
+                <a href="activities.html" style="text-decoration: none; color: white; font-weight: bold;">Activities</a>
+                <a href="schedule.html" style="text-decoration: none; color: white; font-weight: bold;">Schedule</a>
+                <a href="meettheteam.html" style="text-decoration: none; color: white; font-weight: bold;">Meet the Team</a>
+                <a href="attendance.html" style="text-decoration: none; color: white; font-weight: bold;">Enroll</a>
+                <!--<a href="contact.html" style="text-decoration: none; color: white; font-weight: bold;"></a>-->
+            </nav>
+
+           <div style="display: flex; gap: 10px; justify-content: center;">
+                <button onclick="window.location.href='login.html'" style="background-color: #FF9114; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                    Login
+                </button>
+                <button onclick="window.location.href='signup.html'" style="background-color: #FF9114; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                    Sign Up
+                </button>
+            </div>
+
+        </div>
+    </header>
+</body>
+</html>

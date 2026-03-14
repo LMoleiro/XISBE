@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule - X SBE</title>
+    <style>
+        
+        html, body { height: 100%; margin: 0; padding: 0; }
+        body {
+            display: flex; flex-direction: column; min-height: 100vh;
+            background-image: url('assets/images/background.png'); font-family: sans-serif;
+        }
+        main { flex: 1; width: 100%; }
+        
+        #header-placeholder { width: 100%; z-index: 1000; }
+        #footer-placeholder { width: 100%; margin-top: auto; }
+
+        .calendar-container {
+            width: auto; margin: 50px auto;
+            display: flex; justify-content: center; padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /*Desktop*/
+        @media (min-width: 1025px) {
+            body {overflow-x: auto; }
+
+            .calendar {
+                display: grid !important;
+                grid-template-columns: 2fr 2fr 1fr 1fr 1fr 2fr 1fr 1fr !important;
+                grid-auto-rows: 35px;
+                width: 1200px !important;
+                border-radius: 15px;
+                clip-path: inset(0 round 15px);
+                border: 2px solid #fff;
+                background-color: #fff;
+                grid-gap: 2px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .calendar-empty-space { background-color: #e5e5bc; }
+
+            .header1 {
+                background-image: url('assets/images/background.png') !important;
+                color: #333; font-size: 22px !important; font-weight: bold;
+                display: flex; justify-content: center; align-items: center;
+                grid-row: 1; z-index: 5;
+            }
+
+            .activity-card {
+                display: flex; flex-direction: column; align-items: center;
+                justify-content: center; text-align: center; line-height: 1.1;
+                padding: 4px; box-sizing: border-box; z-index: 10;
+                cursor: pointer; transition: transform 0.1s ease;
+            }
+            .activity-card:hover { transform: scale(1.02); }
+            .activity-card strong { font-size: 13px; margin-bottom: 2px; }
+            .activity-card small { font-size: 11px; }
+
+            .qr-section img{
+                height:200px;
+            }
+        }
+
+        /*Mobile*/
+        @media (max-width: 1024px) {
+            body { overflow-x: hidden; }
+            
+            .calendar-container { 
+                display: block; 
+                padding: 0 20px; 
+                box-sizing: border-box;
+            }
+            
+            .calendar { 
+                display: flex; 
+                flex-direction: column; 
+                gap: 10px; 
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .header1 {
+                background-color: #055B61; color: white; padding: 18px;
+                border-radius: 10px; cursor: pointer; font-size: 18px;
+                display: flex; justify-content: space-between; align-items: center;
+                width: 100%; 
+                box-sizing: border-box;
+            }
+            
+            .header1::after { content: '▼'; font-size: 12px; transition: transform 0.3s; }
+            .header1.active::after { transform: rotate(180deg); }
+            .header1.active { background-color: #FF9114; }
+
+            .day-content { 
+                display: none; 
+                flex-direction: column; 
+                gap: 8px; 
+                margin-bottom: 10px; 
+                width: 100%; 
+                box-sizing: border-box;
+            }
+            
+            .day-content.active { display: flex !important; }
+
+            .activity-card {
+                width: 100% !important; 
+                border-radius: 12px; 
+                padding: 15px !important;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.08); 
+                text-align: left;
+                box-sizing: border-box; 
+                background-color: #fff;
+
+            }
+
+            .qr-section img{
+                height:150px;
+            }
+        }
+
+        @media (max-width: 360px) {
+        .header1 {
+                background-color: #055B61; color: white; padding: 18px;
+                border-radius: 10px; cursor: pointer; font-size: 18px;
+                display: flex; justify-content: space-between; align-items: center;
+                width: 100%; 
+                box-sizing: border-box;
+            }
+
+            .qr-section img{
+                height:100px;
+            }
+        }
+
+        /* detalhes sobre cada dia */
+        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
+        .modal-content { display:flex; flex-direction: row; justify-content: space-between; background-color: white; margin: 10% auto; padding: 30px; border-radius: 15px; width: 90%; max-width: 600px; position: relative; }
+        .close { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; }
+        
+        .qr-section { text-align: center; padding: 40px 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="calendar-container">
+            <div class="calendar" id="calendarGrid"></div>
+        </div>
+
+        <div class="qr-section">
+            <div><strong>To download this schedule, read this QR Code:</strong></div>
+            <img src="scheduleqr.png" style="margin: 20px 0;">
+            <div><strong>OR</strong></div>
+            <button onclick="window.location.href='Schedule X SBE.ics'" style="background-color: #055B61; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; margin-top: 20px; font-weight: bold;">
+                Click Here
+            </button>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal()">&times;</span>
+            <div id="modalInfo"></div>
+        </div>
+    </div>
+
+    <script>
+        const horariosData = [
+        { startTime: '10:30', endTime: '11:00', seg: { activity: 'Opening Session', color: '#fb890a', fontColor: 'white', description: 'The Opening Session marks the beginning of SBE...', room: 'V02.1' } },   
+        { startTime: '11:00', endTime: '11:30', seg: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black' }, ter: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black' }, qua: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black' }, qui2: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', position: 'full' }, sex: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', position: 'full' } },
+            { startTime: '11:30', endTime: '13:00', seg: { activity: 'The AI Revolution in Healthcare', color: '#44c0c0', fontColor: 'white', description: 'Artificial Intelligence is transforming medicine...', room: 'V02.1' } },
+            { startTime: '14:00', endTime: '15:30', seg: { activity: 'The Future of Plastic', color: '#94c203', fontColor: 'white', description: 'Dive into the groundbreaking innovations...', room: 'V02.1' } },
+            { startTime: '15:30', endTime: '16:00', seg: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black' }, ter: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black' }, qui2: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', position: 'full' } },
+            { startTime: '16:00', endTime: '17:30', seg: { activity: 'Feeding the Future: GMO Debate', color: '#edc12f', fontColor: 'white', description: 'Can GMOs be the key to solving world hunger?', room: 'V02.1' } },
+            { startTime: '09:30', endTime: '11:00', ter: { activity: 'Think. Connect. Control.', color: '#edc12f', fontColor: 'white', description: 'Workshop: Unlocking Neural Computer Interfaces.', room: 'V02.03' } },
+            { startTime: '11:30', endTime: '13:00', ter: { activity: 'Beyond Donors: 3D Printing', color: '#fb890a', fontColor: 'white', description: 'How 3D printing is reshaping regenerative medicine.', room: 'V02.1' } },
+            { startTime: '14:00', endTime: '15:30', ter: { activity: 'Surgeons of Tomorrow: Robotics', color: '#44c0c0', fontColor: 'white', description: 'Explore the future of surgery with robotics.', room: 'V02.1' } },
+            { startTime: '16:00', endTime: '17:30', ter: { activity: 'Tease your Thesis', color: '#94c203', fontColor: 'white', room: 'V02.1' } },
+            { startTime: '17:30', endTime: '19:30', ter: { activity: 'Film Session: Henrietta Lacks', color: '#7ac9ac', fontColor: 'white', description: 'Our very first Film Session.', room: '' } },
+            { startTime: '09:30', endTime: '11:00', qua: { activity: 'Craft Beer Production', color: '#edc12f', position: 'left', fontColor: 'white', description: 'Learn all about the beer production process.', room: 'BBQ Space' } },
+            { startTime: '10:30', endTime: '13:00', qua2: { activity: 'Lisbon Biomechanics Lab', color: '#7ac9ac', fontColor: 'white', description: 'Field trip to LBL confirmed!', room: 'Pav. Mecânica II' } },
+            { startTime: '11:30', endTime: '13:00', qua: { activity: 'Neuroscience and Regenerations', color: '#94c203', position: 'left', fontColor: 'white', description: 'New Horizons in Brain Healing.', room: 'V02.1' } },
+            { startTime: '19:00', endTime: '21:00', qua: { activity: 'BARBECUE', color: '#7ac9ac', position: 'full', fontColor: 'white', room: 'BBQ Space' } },
+            { startTime: '11:00', endTime: '17:30', qui: { activity: 'Job Fair', color: '#7ac9ac', position: 'left', fontColor: 'white', description: 'Meet your future co-workers!', room: '' } },
+            { startTime: '11:30', endTime: '13:00', qui2: { activity: 'The Cycle of Cancer', color: '#94c203', fontColor: 'white', description: 'Metastatic Cells and Tumor Recurrence.', room: 'V02.1' } },
+            { startTime: '14:00', endTime: '14:30', qui2: { activity: 'Pitch: The Glintter World', color: '#edc12f', fontColor: 'white', room: 'V02.03' } },
+            { startTime: '14:30', endTime: '15:00', qui2: { activity: 'Pitch: Fit at Deloitte?', color: '#edc12f', fontColor: 'white', room: 'V02.03' } },
+            { startTime: '15:00', endTime: '15:30', qui2: { activity: 'Pitch: Fermentation Industry', color: '#edc12f', fontColor: 'white', room: 'V02.03' } },
+            { startTime: '16:00', endTime: '17:30', qui2: { activity: 'Alumni Session', color: '#44c0c0', fontColor: 'white', description: 'Discover secrets of academic success.', room: 'V02.01' } },
+            { startTime: '09:30', endTime: '11:00', sex: { activity: 'From Lab to Patient', color: '#fb890a', position: 'full', fontColor: 'white', description: 'Drug Delivery and Immunoengineering.', room: 'V02.1' } },
+            { startTime: '11:30', endTime: '13:00', sex: { activity: 'Product Management', color: '#94c203', position: 'full', fontColor: 'white', description: 'Insights into successful product development.', room: 'V02.03' } },
+            { startTime: '13:00', endTime: '13:30', sex: { activity: 'Closing Session', color: '#44c0c0', position: 'full', fontColor: 'white', room: 'V02.1' } }
+        ];
+
+        const timeToRow = (time) => {
+            const [h, m] = time.split(':').map(Number);
+            return ((h - 9) * 2) + (m === 30 ? 1 : 0) - 1 + 2;
+        };
+
+        function gerarCalendario() {
+            const calendar = document.getElementById('calendarGrid');
+            const dias = [
+                { id: 'seg', label: 'Monday', col: "1" },
+                { id: 'ter', label: 'Tuesday', col: "2" },
+                { id: 'qua', label: 'Wednesday', col: "3 / span 2" },
+                { id: 'qui', label: 'Thursday', col: "5 / span 2" },
+                { id: 'sex', label: 'Friday', col: "7 / span 2" }
+            ];
+
+            calendar.innerHTML = '';
+
+            if (window.innerWidth > 1024) {
+                for (let r = 2; r <= 26; r++) {
+                    for (let c = 1; c <= 8; c++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'calendar-empty-space';
+                        cell.style.gridRow = r;
+                        cell.style.gridColumn = c;
+                        calendar.appendChild(cell);
+                    }
+                }
+            }
+
+            dias.forEach((dia) => {
+                const header = document.createElement('div');
+                header.className = 'header1';
+                header.innerText = dia.label;
+                if (window.innerWidth > 1024) header.style.gridColumn = dia.col;
+                calendar.appendChild(header);
+
+                const content = document.createElement('div');
+                content.className = 'day-content';
+
+                horariosData.forEach(item => {
+                    const dayKey = item[dia.id] ? dia.id : (item[dia.id + '2'] ? dia.id + '2' : null);
+                    if (dayKey) {
+                        const act = item[dayKey];
+                        const card = document.createElement('div');
+                        card.className = 'activity-card';
+                        card.style.backgroundColor = act.color;
+                        card.style.color = act.fontColor;
+                        if (window.innerWidth <= 1024){
+                            card.innerHTML = `
+                                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 10px;">
+                                    <strong style="flex: 1; text-align: left;">${act.activity}</strong>
+                                    <small style="flex: 1; text-align: center;">${item.startTime} - ${item.endTime}</small>
+                                    <small style="flex: 1; text-align: right;">${act.room || ''}</small>
+                                </div>
+                            `;
+                        }
+                        else card.innerHTML = `<strong>${act.activity}</strong><small>${item.startTime} - ${item.endTime}</small><small>${act.room || ''}</small>`;
+
+                        card.onclick = (e) => {
+                            e.stopPropagation();
+                            if (act.description) mostrarInfo(act.activity, item.startTime + ' - ' + item.endTime, act.room, act.description);
+                        };
+
+                        if (window.innerWidth > 1024) {
+                            const rowStart = timeToRow(item.startTime);
+                            const rowEnd = timeToRow(item.endTime);
+                            card.style.gridRow = `${rowStart} / ${rowEnd}`;
+                            
+                            if (dia.id === 'seg') card.style.gridColumn = "1";
+                            else if (dia.id === 'ter') card.style.gridColumn = "2";
+                            else if (dia.id === 'qua') {
+                                if (dayKey === 'qua2') card.style.gridColumn = "4";
+                                else if (act.position === 'full') card.style.gridColumn = "3 / span 2";
+                                else card.style.gridColumn = "3";
+                            }
+                            else if (dia.id === 'qui') {
+                                if (dayKey === 'qui2') card.style.gridColumn = "6";
+                                else if (act.position === 'full') card.style.gridColumn = "5 / span 2";
+                                else card.style.gridColumn = "5";
+                            }
+                            else if (dia.id === 'sex') {
+                                if (dayKey === 'sex2') card.style.gridColumn = "8";
+                                else if (act.position === 'full') card.style.gridColumn = "7 / span 2";
+                                else card.style.gridColumn = "7";
+                            }
+                            calendar.appendChild(card);
+                        } else {
+                            content.appendChild(card);
+                        }
+                    }
+                });
+
+                if (window.innerWidth <= 1024) {
+                    header.onclick = function() {
+                        const isActive = this.classList.contains('active');
+                        document.querySelectorAll('.header1, .day-content').forEach(el => el.classList.remove('active'));
+                        if (!isActive) { this.classList.add('active'); content.classList.add('active'); }
+                    };
+                    calendar.appendChild(content);
+                }
+            });
+        }
+
+        function mostrarInfo(titulo, tempo, sala, desc) {
+            document.getElementById("modalInfo").innerHTML = `<h2>${titulo}</h2><p><strong>Time:</strong> ${tempo}</p><p><strong>Room:</strong> ${sala}</p><hr><p>${desc}</p>`;
+            const modal = document.getElementById("myModal");
+            modal.style.display = "flex";
+        }
+        function fecharModal() { document.getElementById("myModal").style.display = "none"; }
+
+        function loadPartial(file, target) {
+            fetch(file).then(r => r.text()).then(d => document.getElementById(target).innerHTML = d);
+        }
+        
+        function loadHeader() {
+            fetch("headerAtualizado.html")
+                .then((response) => response.text())
+                .then((data) => {
+                const container = document.getElementById("header-placeholder");
+                container.innerHTML = "";
+                const fragment = document.createRange().createContextualFragment(data);
+                container.appendChild(fragment);
+                })
+                .catch((error) => console.error("Error loading header:", error));
+        }
+        window.onload = () => {
+            gerarCalendario();
+            loadHeader();
+            loadPartial('footer.html', 'footer-placeholder');
+        };
+        window.onresize = () => gerarCalendario();
+        window.onclick = (e) => { if (e.target == document.getElementById("myModal")) fecharModal(); }
+    </script>
+</body>
+</html>
