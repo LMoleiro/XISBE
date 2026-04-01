@@ -175,6 +175,14 @@ header {
     align-items: center;
 }
 
+.errorMessage {
+    color: red;
+    font-size: 0.85em;
+    display: block; /* Garante que fica na linha de baixo do input */
+    margin-bottom: 10px;
+    min-height: 15px; /* Mantém o espaço mesmo quando está vazio para o botão não saltar */
+}
+
 /* Títulos */
 h1 {
     font-size: 36px;
@@ -192,16 +200,15 @@ h2 {
 }
 
 /* Campos de input */
-input[type="email"], input[type="password"] {
+input[type="text"], input[type="email"], input[type="password"] {
     width: 100%;
     padding: 12px;
-    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
 }
 
-input[type="email"]:focus, input[type="password"]:focus {
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
     outline: none;
     border-color: #055B61;
 }
@@ -224,6 +231,7 @@ button:hover {
 
 /* Links */
 p {
+
     text-align: center;
 }
 
@@ -317,7 +325,7 @@ h2 {
         font-size: 16px;
     }
 
-    input[type="email"], input[type="password"] {
+    input[type="text"], input[type="email"], input[type="password"] {
         font-size: 14px; /* Ajusta fonte para telas menores */
     }
 
