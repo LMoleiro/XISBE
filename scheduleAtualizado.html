@@ -43,9 +43,9 @@
 
             .calendar {
                 display: grid !important;
-                grid-template-columns: 2fr 2fr 1fr 1fr 1fr 2fr 1fr 1fr !important;
+                grid-template-columns: 1.8fr 0.9fr 0.9fr 1.8fr 1.8fr !important;
                 grid-auto-rows: 35px;
-                width: 1200px !important;
+                width: 1100px !important;
                 border-radius: 15px;
                 clip-path: inset(0 round 15px);
                 border: 1px solid var(--surface-glass-border);
@@ -240,37 +240,25 @@
 
     <script>
         const horariosData = [
-        { startTime: '10:30', endTime: '11:00', seg: { activity: 'Opening Session', color: '#fb890a', fontColor: 'white', description: 'The Opening Session marks the beginning of SBE...', room: 'V02.1' } },   
-        { startTime: '11:00', endTime: '11:30', seg: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black' }, ter: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black' }, qua: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black' }, qui2: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', position: 'full' }, sex: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', position: 'full' } },
-            { startTime: '11:30', endTime: '13:00', seg: { activity: 'The AI Revolution in Healthcare', color: '#44c0c0', fontColor: 'white', description: 'Artificial Intelligence is transforming medicine...', room: 'V02.1' } },
-            { startTime: '14:00', endTime: '15:30', seg: { activity: 'The Future of Plastic', color: '#94c203', fontColor: 'white', description: 'Dive into the groundbreaking innovations...', room: 'V02.1' } },
-            { startTime: '15:30', endTime: '16:00', seg: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black' }, ter: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black' }, qui2: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', position: 'full' } },
-            { startTime: '16:00', endTime: '17:30', seg: { activity: 'Feeding the Future: GMO Debate', color: '#edc12f', fontColor: 'white', description: 'Can GMOs be the key to solving world hunger?', room: 'V02.1' } },
-            { startTime: '09:30', endTime: '11:00', ter: { activity: 'Think. Connect. Control.', color: '#edc12f', fontColor: 'white', description: 'Workshop: Unlocking Neural Computer Interfaces.', room: 'V02.03' } },
-            { startTime: '11:30', endTime: '13:00', ter: { activity: 'Beyond Donors: 3D Printing', color: '#fb890a', fontColor: 'white', description: 'How 3D printing is reshaping regenerative medicine.', room: 'V02.1' } },
-            { startTime: '14:00', endTime: '15:30', ter: { activity: 'Surgeons of Tomorrow: Robotics', color: '#44c0c0', fontColor: 'white', description: 'Explore the future of surgery with robotics.', room: 'V02.1' } },
-            { startTime: '16:00', endTime: '17:30', ter: { activity: 'Tease your Thesis', color: '#94c203', fontColor: 'white', room: 'V02.1' } },
-            { startTime: '17:30', endTime: '19:30', ter: { activity: 'Film Session: Henrietta Lacks', color: '#7ac9ac', fontColor: 'white', description: 'Our very first Film Session.', room: '' } },
-            { startTime: '09:30', endTime: '11:00', qua: { activity: 'Craft Beer Production', color: '#edc12f', position: 'left', fontColor: 'white', description: 'Learn all about the beer production process.', room: 'BBQ Space' } },
-            { startTime: '10:30', endTime: '13:00', qua2: { activity: 'Lisbon Biomechanics Lab', color: '#7ac9ac', fontColor: 'white', description: 'Field trip to LBL confirmed!', room: 'Pav. Mecânica II' } },
-            { startTime: '11:30', endTime: '13:00', qua: { activity: 'Neuroscience and Regenerations', color: '#94c203', position: 'left', fontColor: 'white', description: 'New Horizons in Brain Healing.', room: 'V02.1' } },
-            { startTime: '19:00', endTime: '21:00', qua: { activity: 'BARBECUE', color: '#7ac9ac', position: 'full', fontColor: 'white', room: 'BBQ Space' } },
-            { startTime: '11:00', endTime: '17:30', qui: { activity: 'Job Fair', color: '#7ac9ac', position: 'left', fontColor: 'white', description: 'Meet your future co-workers!', room: '' } },
-            { startTime: '11:30', endTime: '13:00', qui2: { activity: 'The Cycle of Cancer', color: '#94c203', fontColor: 'white', description: 'Metastatic Cells and Tumor Recurrence.', room: 'V02.1' } },
-            { startTime: '14:00', endTime: '14:30', qui2: { activity: 'Pitch: The Glintter World', color: '#edc12f', fontColor: 'white', room: 'V02.03' } },
-            { startTime: '14:30', endTime: '15:00', qui2: { activity: 'Pitch: Fit at Deloitte?', color: '#edc12f', fontColor: 'white', room: 'V02.03' } },
-            { startTime: '15:00', endTime: '15:30', qui2: { activity: 'Pitch: Fermentation Industry', color: '#edc12f', fontColor: 'white', room: 'V02.03' } },
-            { startTime: '16:00', endTime: '17:30', qui2: { activity: 'Alumni Session', color: '#44c0c0', fontColor: 'white', description: 'Discover secrets of academic success.', room: 'V02.01' } },
-            { startTime: '09:30', endTime: '11:00', sex: { activity: 'From Lab to Patient', color: '#fb890a', position: 'full', fontColor: 'white', description: 'Drug Delivery and Immunoengineering.', room: 'V02.1' } },
-            { startTime: '11:30', endTime: '13:00', sex: { activity: 'Product Management', color: '#94c203', position: 'full', fontColor: 'white', description: 'Insights into successful product development.', room: 'V02.03' } },
-            { startTime: '13:00', endTime: '13:30', sex: { activity: 'Closing Session', color: '#44c0c0', position: 'full', fontColor: 'white', room: 'V02.1' } }
+            { startTime: '09:00', endTime: '09:30', ter: { activity: 'Opening Session', color: '#FFFFFF', fontColor: '#111111' } },
+            { startTime: '09:30', endTime: '11:00', ter: { activity: 'NeuroFrontiers: Pushing the Limits of Non-Invasive Brain Stimulation', color: '#C89AF7', fontColor: '#111111' }, qua: { activity: 'Compliance in Healthcare', color: '#8FB2F3', fontColor: '#111111', position: 'full' }, qui: { activity: 'The Gut-Brain Connection Unveiled', color: '#BA8CF0', fontColor: '#111111' } },
+            { startTime: '11:00', endTime: '11:30', ter: { activity: 'Coffee break', color: '#FFEAA6', fontColor: '#111111' }, qua: { activity: 'Coffee break', color: '#FFEAA6', fontColor: '#111111', position: 'full' }, qui: { activity: 'Coffee break', color: '#FFEAA6', fontColor: '#111111' }, sex: { activity: 'Coffee break', color: '#FFEAA6', fontColor: '#111111' } },
+            { startTime: '11:30', endTime: '17:30', qua: { activity: 'Job Fair', color: '#D1009C', fontColor: '#111111' } },
+            { startTime: '11:30', endTime: '13:00', ter: { activity: 'Laser Writtens Bioelectronics: Building Blocks for Epidermal Sensors', color: '#8FB2F3', fontColor: '#111111' }, qua2: { activity: 'At the Edge of Life: Astrobiology and the Search for the (Im)Possible', color: '#C89AF7', fontColor: '#111111' }, qui: { activity: 'Behind the Formula: Innovation in Cosmetic Science', color: '#8FB2F3', fontColor: '#111111' }, sex: { activity: 'Thease Your Thesis', color: '#F28B82', fontColor: '#111111' } },
+            { startTime: '13:00', endTime: '14:00', ter: { activity: 'Lunch', color: '#FFFFFF', fontColor: '#111111' }, qua2: { activity: 'Lunch', color: '#FFFFFF', fontColor: '#111111' }, qui: { activity: 'Lunch', color: '#FFFFFF', fontColor: '#111111' }, sex: { activity: 'Lunch', color: '#FFFFFF', fontColor: '#111111' } },
+            { startTime: '14:00', endTime: '15:30', ter: { activity: 'Debate', color: '#BDBDBD', fontColor: '#111111' }, qua2: { activity: 'Pitch', color: '#F3B968', fontColor: '#111111' }, qui: { activity: 'Genetic Footprints of Portugal: History in Our DNA', color: '#B98CF2', fontColor: '#111111' }, sex: { activity: 'Forensic Bioengineering: DNA as an eyewitness', color: '#B98CF2', fontColor: '#111111' } },
+            { startTime: '15:30', endTime: '16:00', ter: { activity: 'Coffee break', color: '#FFEAA6', fontColor: '#111111' }, qua2: { activity: 'Coffee break', color: '#FFEAA6', fontColor: '#111111' }, qui: { activity: 'Coffee break', color: '#FFEAA6', fontColor: '#111111' }, sex: { activity: 'Coffee break', color: '#FFEAA6', fontColor: '#111111' } },
+            { startTime: '16:00', endTime: '17:30', ter: { activity: 'Decoding Aging: From Molecules to Longevity', color: '#B98CF2', fontColor: '#111111' }, qua2: { activity: 'Alumni Sessions Bachelor and Master', color: '#9BE36B', fontColor: '#111111' }, qui: { activity: 'Field Trip', color: '#A9D7E1', fontColor: '#111111' }, sex: { activity: 'How to control a robotic prosthesis with EMG signals', color: '#8FB2F3', fontColor: '#111111' } },
+            { startTime: '17:30', endTime: '18:00', sex: { activity: 'Closing Session', color: '#F7B5A8', fontColor: '#111111' } },
+            { startTime: '17:30', endTime: '19:00', qui: { activity: 'Barbecue', color: '#5FAFB1', fontColor: '#111111' } }
         ];
 
         const eventColorPalette = ['#F6B756', '#F79A4A', '#F46D6D', '#8C73E6', '#6F7AE6', '#3BB3C3'];
+        const nonInteractiveActivities = new Set(['Coffee break', 'Lunch']);
 
         const timeToRow = (time) => {
             const [h, m] = time.split(':').map(Number);
-            return ((h - 9) * 2) + (m === 30 ? 1 : 0) - 1 + 2;
+            return ((h - 9) * 2) + (m === 30 ? 1 : 0) + 2;
         };
 
         function openActivityPage(activityName) {
@@ -282,18 +270,17 @@
             const calendar = document.getElementById('calendarGrid');
             let eventColorCursor = 0;
             const dias = [
-                { id: 'seg', label: 'Monday', col: "1" },
-                { id: 'ter', label: 'Tuesday', col: "2" },
-                { id: 'qua', label: 'Wednesday', col: "3 / span 2" },
-                { id: 'qui', label: 'Thursday', col: "5 / span 2" },
-                { id: 'sex', label: 'Friday', col: "7 / span 2" }
+                { id: 'ter', label: 'Monday', col: "1" },
+                { id: 'qua', label: 'Tuesday', col: "2 / span 2" },
+                { id: 'qui', label: 'Wednesday', col: "4" },
+                { id: 'sex', label: 'Thursday', col: "5" }
             ];
 
             calendar.innerHTML = '';
 
             if (window.innerWidth > 1024) {
-                for (let r = 2; r <= 26; r++) {
-                    for (let c = 1; c <= 8; c++) {
+                for (let r = 2; r <= 22; r++) {
+                    for (let c = 1; c <= 5; c++) {
                         const cell = document.createElement('div');
                         cell.className = 'calendar-empty-space';
                         cell.style.gridRow = r;
@@ -317,6 +304,7 @@
                     const dayKey = item[dia.id] ? dia.id : (item[dia.id + '2'] ? dia.id + '2' : null);
                     if (dayKey) {
                         const act = item[dayKey];
+                        const isInteractive = !nonInteractiveActivities.has(act.activity);
                         const card = document.createElement('div');
                         const cardColor = eventColorPalette[eventColorCursor % eventColorPalette.length];
                         eventColorCursor += 1;
@@ -335,42 +323,37 @@
                         }
                         else card.innerHTML = `<strong>${act.activity}</strong><small>${item.startTime} - ${item.endTime}</small><small>${act.room || ''}</small>`;
 
-                        card.onclick = (e) => {
-                            e.stopPropagation();
-                            document.querySelectorAll('.activity-card.selected').forEach(el => el.classList.remove('selected'));
-                            card.classList.add('selected');
-                            setTimeout(() => openActivityPage(act.activity), 120);
-                        };
+                        if (isInteractive) {
+                            card.onclick = (e) => {
+                                e.stopPropagation();
+                                document.querySelectorAll('.activity-card.selected').forEach(el => el.classList.remove('selected'));
+                                card.classList.add('selected');
+                                setTimeout(() => openActivityPage(act.activity), 120);
+                            };
 
-                        card.onkeydown = (e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault();
-                                card.click();
-                            }
-                        };
+                            card.onkeydown = (e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    card.click();
+                                }
+                            };
+                        } else {
+                            card.style.cursor = 'default';
+                        }
 
                         if (window.innerWidth > 1024) {
                             const rowStart = timeToRow(item.startTime);
                             const rowEnd = timeToRow(item.endTime);
                             card.style.gridRow = `${rowStart} / ${rowEnd}`;
                             
-                            if (dia.id === 'seg') card.style.gridColumn = "1";
-                            else if (dia.id === 'ter') card.style.gridColumn = "2";
+                            if (dia.id === 'ter') card.style.gridColumn = "1";
                             else if (dia.id === 'qua') {
-                                if (dayKey === 'qua2') card.style.gridColumn = "4";
-                                else if (act.position === 'full') card.style.gridColumn = "3 / span 2";
-                                else card.style.gridColumn = "3";
+                                if (dayKey === 'qua2') card.style.gridColumn = "3";
+                                else if (act.position === 'full') card.style.gridColumn = "2 / span 2";
+                                else card.style.gridColumn = "2";
                             }
-                            else if (dia.id === 'qui') {
-                                if (dayKey === 'qui2') card.style.gridColumn = "6";
-                                else if (act.position === 'full') card.style.gridColumn = "5 / span 2";
-                                else card.style.gridColumn = "5";
-                            }
-                            else if (dia.id === 'sex') {
-                                if (dayKey === 'sex2') card.style.gridColumn = "8";
-                                else if (act.position === 'full') card.style.gridColumn = "7 / span 2";
-                                else card.style.gridColumn = "7";
-                            }
+                            else if (dia.id === 'qui') card.style.gridColumn = "4";
+                            else if (dia.id === 'sex') card.style.gridColumn = "5";
                             calendar.appendChild(card);
                         } else {
                             content.appendChild(card);
