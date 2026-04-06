@@ -404,6 +404,11 @@
 }
     
 @media (max-width: 768px) {
+  /* Fix font on mobile */
+  body {
+    font-family: "Jaapokki Subtract", Copperplate, fantasy, sans-serif;
+  }
+
   .sec-countdown{
     position: static;  
     top: auto;
@@ -431,42 +436,80 @@
   .meet-the-team p {
     font-size: 25px;
   }
-  .about-us{
+
+  /* Logo above text */
+  .about-us {
     height: auto !important;
-    align-items: flex-start !important; 
+    align-items: flex-start !important;
     padding: 15px 0 !important;
   }
-  .logo-e-texto-about-us:hover{
+  .logo-e-texto-about-us {
+    flex-direction: column !important;
+    align-items: center !important;
     height: auto !important;
+    width: 90% !important;
+    pointer-events: none;
+  }
+  .logo-e-texto-about-us:hover {
+    height: auto !important;
+    width: 90% !important;
     transition: none !important;
     box-shadow: 2px 2px 20px rgba(0,0,0,.5) !important;
   }
-  .logo-e-texto-about-us{
-  display: flex;
-  align-items: flex-start; 
-  height: auto;            
-  pointer-events: none;  
+  .logo-about-us {
+    width: 100%;
+    padding: 15px 0 5px 0;
   }
-  .sec-about-us,
-  .pergunta-who-texto,
-  .pergunta-what-texto,
-  .pergunta-where-texto {
-    padding-top: 0 !important;
+  .imagem-logo-about-us {
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    width: 55% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+  .sec-about-us {
+    width: 100%;
+    padding: 0 0 15px 0 !important;
     font-size: 14px !important;
+  }
+  .sec-about-us div {
+    width: 85%;
+  }
+
+  /* Who / What stacked vertically */
+  .perguntas-who-what {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 15px;
+    padding: 15px 0;
+  }
+  .pergunta-who,
+  .pergunta-what {
+    width: 100%;
+    flex: unset;
+    justify-content: center;
   }
   .pergunta-who-texto,
   .pergunta-what-texto {
-    width: 65% !important;
+    width: 80% !important;
     height: auto !important;
-    pointer-events: none; 
-  }
- 
-  .pergunta-where-texto{
-    width: 80%;
-    height: auto;
     pointer-events: none;
+    font-size: 14px !important;
+    padding-top: 0 !important;
   }
 
+  /* Where */
+  .pergunta-where-main {
+    height: auto;
+    padding: 0 0 15px 0;
+  }
+  .pergunta-where-texto {
+    width: 80% !important;
+    height: auto !important;
+    font-size: 14px !important;
+    pointer-events: none;
+    padding-top: 0 !important;
+  }
 }
   </style>
   <body>    
@@ -639,7 +682,7 @@
         document.getElementById("hours").textContent = 0;
         document.getElementById("minutes").textContent = 0;
         document.getElementById("seconds").textContent = 0;
-        return; // Comentário do ano passado: Stop the countdown from updating further
+        return;
         }
         
         const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
@@ -655,8 +698,6 @@
         document.getElementById("seconds").textContent = seconds;
       }
       
-      
-      //Comentário do ano passado: Atualizar o countdown a cada segundo
       setInterval(updateCountdown, 1000);
       
     </script>
