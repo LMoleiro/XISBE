@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sessões de Abertura e Encerramento</title>
     <style>
-        /* Importação da Fonte */
         @import url('https://fonts.googleapis.com/css?family=Jaapokki+Subtract&display=swap');
 
         *, *::before, *::after {
-         box-sizing: border-box;
+            box-sizing: border-box;
         }
 
-        /* Estilo Global */
         body {
             margin: 0;
             font-family: 'Jaapokki Subtract', sans-serif;
@@ -20,7 +18,6 @@
             color: #2f2f2f;
         }
 
-        /* Container Principal */
         .container {
             width: 100%;
             max-width: 1200px;
@@ -28,7 +25,6 @@
             padding: 20px;
         }
 
-        /* Título Principal */
         h1.main-title {
             text-align: center;
             color: #055B61;
@@ -36,7 +32,6 @@
             margin-bottom: 30px;
         }
 
-        /* Estrutura das Sessões */
         .session-container {
             display: flex;
             justify-content: space-between;
@@ -70,23 +65,85 @@
             border-radius: 8px;
             transition: outline-color 0.4s ease;
         }
-        
-        /* media querie menos de 600 px.
-        a ideia é meter a organização vertical em vez de horizontal, eles tinham as imagens a 300 px. não dava para ter isso + texto
-        o chat disse me para usar !important para dar override de algumas coisas, não tive tempo para entender. 
-        Rever toda a lógica mais tarde para não ter de usar estes overrides ? 
-        
-        Mudanças em relação ao outro style: imagens ocupam toda a widht e texto também mas agrupados na vertical agora
-        titulos mais pequenos
-        padding mais pequeno para ficar menos awkward */
+
+        /* Speaker cards */
+        .speaker-card {
+            margin-bottom: 40px;
+        }
+
+        .speaker-toggle {
+            display: none;
+        }
+
+        .speaker-body {
+            display: block;
+        }
+
+        .speaker-desktop-layout {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            text-align: justify;
+        }
+
+        .speaker-desktop-layout.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .speaker-image-wrapper {
+            width: 300px;
+            flex: 0 0 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #f3f3f3;
+        }
+
+        .speaker-image {
+            width: 100%;
+            height: 340px;
+            display: block;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .desktop-only {
+            display: block;
+        }
+
+        .speaker-mobile-bar,
+        .speaker-row-panel {
+            display: none;
+        }
+
+        .speaker-mobile-icon {
+            font-size: 28px;
+            line-height: 1;
+            color: #055B61;
+            font-weight: bold;
+            transition: transform 0.25s ease;
+        }
+
+        .event-description-card {
+            justify-content: center;
+            margin-top: -18px;
+        }
+
+        .event-description-card .session-content {
+            max-width: 860px;
+            width: 100%;
+            background: #f8fbfb;
+            border: 1px solid #dceced;
+            border-radius: 14px;
+            padding: 18px 20px;
+        }
 
         @media (max-width: 600px) {
-
             .session-container {
                 flex-direction: column !important;
                 align-items: stretch;
-                gap: 16px;
+                gap: 14px;
                 text-align: left !important;
+                margin-bottom: 28px;
             }
 
             .session-container img {
@@ -99,578 +156,711 @@
                 max-width: 100%;
             }
 
-            h1.main-title {
-                font-size: 32px;
-            }
-
-            h2 {
-                font-size: 22px;
-            }
-
             .container {
                 padding: 12px;
             }
+
+            h1.main-title {
+                font-size: 28px;
+                margin-bottom: 22px;
+            }
+
+            h2 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+            p {
+                font-size: 15px;
+                line-height: 1.42;
+                margin-top: 0.75em;
+                margin-bottom: 0.75em;
+            }
+
+            .speaker-collection {
+                margin-bottom: 22px;
+            }
+
+            .speaker-row {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+                align-items: start;
+                margin-bottom: 0;
+            }
+
+            .speaker-row.single-card {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .speaker-row.single-card .speaker-card {
+                max-width: 240px;
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .speaker-card {
+                margin-bottom: 0;
+                border-radius: 14px;
+                overflow: hidden;
+                background: #ffffff;
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+                border: 1px solid #ededed;
+            }
+
+            .speaker-card.active {
+                border-color: #FF9114;
+                border-width: 2px;
+                box-shadow: 0 5px 16px rgba(255, 145, 20, 0.22);
+                border-radius: 14px;
+                overflow: hidden;
+            }
+
+            /* Chevron arrow below active card pointing to description panel */
+            .speaker-card.active .speaker-mobile-bar::after {
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 0;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-top: 9px solid #FF9114;
+                z-index: 2;
+            }
+
+            .speaker-toggle {
+                display: block;
+                width: 100%;
+                padding: 0;
+                border: none;
+                background: none;
+                cursor: pointer;
+                text-align: left;
+                font: inherit;
+                color: inherit;
+            }
+
+            .speaker-toggle .speaker-image-wrapper {
+                width: 100%;
+                flex: none;
+                border-radius: 0;
+                overflow: hidden;
+                aspect-ratio: 4 / 5;
+                background: #eef3f3;
+            }
+
+            .speaker-toggle .speaker-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center top;
+            }
+
+            .speaker-mobile-bar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                min-height: 56px;
+                padding: 10px 12px;
+                background-color: #f7f7f7;
+                border-top: 1px solid #ececec;
+                border-bottom: 3px solid #039A95;
+                position: relative;
+            }
+
+            .speaker-card.active .speaker-mobile-bar {
+                border-bottom: 3px solid #FF9114;
+            }
+
+            .speaker-mobile-name {
+                font-size: 16px;
+                line-height: 1.2;
+                color: #055B61;
+            }
+
+            .speaker-card.active .speaker-mobile-icon {
+                transform: rotate(45deg);
+            }
+
+            .speaker-body,
+            .desktop-only {
+                display: none !important;
+            }
+
+            .speaker-row-panel {
+                display: none;
+                margin: 10px 0 18px;
+                background: #ffffff;
+                border: 2px solid #FF9114;
+                border-radius: 14px;
+                box-shadow: 0 4px 16px rgba(255, 145, 20, 0.13);
+                padding: 16px 16px 14px;
+            }
+
+            .speaker-row-panel.is-open {
+                display: block;
+            }
+
+            .speaker-row-panel .session-content {
+                max-width: 100%;
+            }
+
+            .speaker-row-panel .session-content p:first-child {
+                margin-top: 0;
+            }
+
+            .event-description-card {
+                margin-top: 0;
+                margin-bottom: 24px;
+            }
+
+            .event-description-card .session-content {
+                max-width: 100%;
+                padding: 14px 15px;
+                border-radius: 12px;
+            }
         }
-        
     </style>
 </head>
 <body>
     <div id="header-placeholder"></div>
     <main>
-    <!-- Conteúdo Principal -->
     <div class="container">
 
-        <!-- Primeira Repetição -->
-        <h1 class="main-title">OPENING AND CLOSING SESSIONS</h1>
-
-        <!-- Sessão de Abertura -->
-        <div class="session-container" style=" text-align: justify; " > 
-            <img src="assets/images/Opening.png" alt="Sessão de Abertura">
-            <div class="session-content">
-                <h2>Opening Session</h2>
-                <p><strong>2ª feira, dia 17 das 10:30 às 11:00</strong></p>
-                <p>📍 <strong>V02.1</strong></p>
-                <p>
-                    To start the week off on a high note, we will be joined by Rogério Colaço, the President of IST, João Pedro Conde, president of DBE (Department of Bioengineering), Clara Mestre, president of NEB (Núcleo de Engenharia Biológica) and André Pestana, president of NEBM (Núcleo de Engenharia Biomédica).                </p>
-            </div>
-        </div>
-
-        <!-- Sessão de Encerramento -->
-        <div class="session-container" style="flex-direction: row-reverse; text-align: justify;">
-            <img src="assets/images/closing1.png" alt="Sessão de Abertura">
-            <div class="session-content">
-                <h2>Closing Session</h2>
-                <p><strong>6ª feira, dia 21 das 13:00 às 13:30</strong></p>
-                <p>📍 <strong>V02.1</strong></p>
-                <p>
-                    To end the week we will be joined by Nuno Mira and Margarida Diogo, coordinators of Biological and Biomedical Engeneering.
-                </p>
-            </div>
-        </div>
-
-        <!-- Segunda Repetição -->
         <h1 class="main-title">LECTURES</h1>
 
-        <!-- Sessão de Abertura -->
-        <div class="session-container" style="display: flex; justify-content: center; text-align: justify; " >
-            
+        <div class="session-container" style="display: flex; justify-content: center; text-align: justify;">
             <div class="session-content">
-                <h2>The AI Revolution in Healthcare</h2>
-                <p><strong>2ª feira, dia 17 das 11:30 às 13:00</strong></p>
-                <p>📍 <strong>V02.1</strong></p>
-                <p>
-                    
-                <p><strong>Speakers:</strong> Hugo Gamboa, José Moreira  </p>
-                <p><strong>Moderators:</strong> Cláudia Antunes</p>
-
-                </p>
+                <h2>The Gut-Brain Connection Unveiled</h2>
+                <p><strong>Data/Hora: TBD</strong></p>
+                <p>📍 <strong>TBD</strong></p>
+                <p><strong>Speakers:</strong> Gabriela Ribeiro, Sílvia F. Henriques</p>
             </div>
         </div>
 
-        <!-- Sessão de Encerramento -->
-        <div class="session-container" style="flex-direction: row-reverse; text-align: justify; ">
-            <img src="assets/images/hugo.jpg" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>Hugo Gamboa</strong></p>
-                <p>
-                    Hugo Gamboa é Professor Catedrático no Departamento de Física da Faculdade de Ciências e Tecnologia da Universidade Nova de Lisboa e membro do LIBPHYS-UNL. Dedica-se à investigação da instrumentação, processamento de sinais e aprendizagem automática aplicada aos biossinais.
-Doutorado em Engenharia Electrotécnica e de Computadores, pelo IST, apresentou na sua tese intitulada "Multi-Modal Behavioral Biometrics Based on HCI and Electrophysiology" novas modalidades de biometria comportamental, constituindo um importante contributo para o estado da arte nesta área. É cientista sénior da Fraunhofer Portugal, onde coordena o polo de Lisboa deste instituto de investigação aplicada. Fundador e presidente da PLUX, uma empresa tecnológica dedicada à engenharia de sistemas e sensores médicos sem fios, coordena uma equipa de investigação com competências em microeletrónica, processamento de biossinais e desenvolvimento de aplicações clínicas. É co-presidente fundador da conferência BIOSTEC, atualmente na sua décima-oitava edição, uma referência internacional na área da engenharia biomédica. Mantém um equilíbrio entre a liderança académica, a investigação aplicada e a colaboração com a indústria, promovendo a criação de conhecimento com impacto real na saúde e na sociedade.
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/gabriela_ribeiro.jpg" alt="Gabriela Ribeiro" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Gabriela Ribeiro</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout reverse">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/gabriela_ribeiro.jpg" alt="Gabriela Ribeiro" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Gabriela Ribeiro</strong></p>
+                        <p>Gabriela Ribeiro é Professora Auxiliar na NOVA Medical School (Universidade NOVA de Lisboa) e investigadora no Comprehensive Health Research Center (CHRC). É doutorada em Neurociências pela Faculdade de Medicina da Universidade de Lisboa (FMUL), tendo desenvolvido o seu trabalho no Champalimaud Research &amp; Clinical Centre, onde investigou os mecanismos neurais e comportamentais associados à obesidade. A sua formação integra ainda uma licenciatura em Ciências da Nutrição pela Universidade do Porto e um mestrado em Doenças Metabólicas e Comportamento Alimentar pela FMUL.</p>
+                        <p>Ao longo do seu percurso, desenvolveu trabalho em contextos internacionais, incluindo o APC Microbiome Ireland (University College Cork), explorando o eixo intestino–cérebro e o papel da alimentação na função cerebral e cognitiva.</p>
+                        <p>Atualmente, a sua investigação foca-se na forma como o estado metabólico influencia a perceção sensorial e os processos de recompensa alimentar, com o objetivo de identificar marcadores precoces relevantes para a obesidade para as doenças do comportamento alimentar. Para além da atividade científica, é também nutricionista clínica, âmbito no qual faz a translação da evidência científica para a terapia médico-nutricional dirigida a pessoas com doenças psiquiátricas.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="session-container" style="text-align: justify; ">
-            <img src="assets/images/Jose moreira.jpg" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>José Moreira</strong></p>
-                <p>
-                    José Maria Moreira é atualmente Gestor de Projetos em Ciência de dados no Hospital da Luz Learning Health e membro da sua equipa de investigação. Doutorado em Bioengenharia pelo Instituto Superior Técnico e Mestre em Engenharia Biomédica pelo mesmo instituto.
-O seu projeto de Doutoramento focou-se na utilização de métodos de aprendizagem automática (machine learning) e profunda (deep learning) em imagens de ressonância magnética, para segmentar tumores, classificar e prever estadios de doença oncológica, ou analisar sobrevivência. Este projeto foi desenvolvido em parceria com a Fundação Champalimaud em Lisboa e com o King’s College London em Londres.
-Durante o seu período de Mestrado, realizado no âmbito do Programa de Neurociência da Fundação Champalimaud, desenvolveu tecnologia para medir o comportamento alimentar de moscas da fruta e medir os mecanismos neuronais da escolha por uma dieta. Desenvolveu igualmente um método optogenético com o objetivo de manipular o comportamento destes animais.
-Lecionou como Assistente Convidado na disciplina de "Deep Learning" no Instituto Superior Técnico e na disciplina de "Introduction to Machine Learning in Healthcare" na Universidade Católica.
-                </p>
-            </div>
-        </div>
-
-        <div class="session-container" style="flex-direction: row-reverse; text-align: justify; ">
-            <img src="assets/images/Claudia.png" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>Cláudia Antunes</strong></p>
-                <p>
-                    Cláudia Antunes é Professora Associada no Instituto Superior Técnico – Universidade de Lisboa, onde leciona desde 1998 e concluiu o doutoramento em Engenharia Informática e de Computadores. É uma das primeiras doutoradas europeias no domínio da Ciência de Dados numa perspetiva de engenharia, tendo proposto novos métodos e metodologias de Aprendizagem Automática para lidar com dados temporais. Os seus interesses de investigação centram-se na utilização do conhecimento de domínio e exploração da temporalidade para automatizar a etapa de preparação de dados. Coordenou e participou em vários projetos de investigação nacionais e europeus, tendo cerca de uma centena de artigos publicados em revistas e conferências internacionais. A par deste trabalho, orientou cerca de meia centena de alunos de mestrado e doutoramento, e tem lecionado disciplinas de ciência de dados, tanto em programas de graduação como de pós-graduação. Produziu dois MOOCs sobre Ciência de Dados, disponíveis na plataforma MOOC Técnico. Cláudia é atualmente coordenadora de duas organizações locais sem fins lucrativos: o grupo de afinidade para as mulheres na engenharia no IEEE Portugal e o Colégio de Engenharia Informática da Ordem dos Engenheiros – Região Sul. 
-                </p>
-            </div>
-        </div>
-
-
-
-
-        <!-- Sessão de Abertura -->
-        <div class="session-container" style="display: flex; justify-content: center; text-align: justify; " >
-            
-            <div class="session-content">
-                <h2>THE FUTURE OF PLASTICS: BIOPLASTICS FROM ORGANIC WASTE AS A SUSTAINABLE ALTERNATIVE</h2>
-                <p><strong>2ª feira, dia 17 das 14:00 às 15:30</strong></p>
-                <p>📍 <strong>V02.1</strong></p>
-                <p>
-                    
-                <p><strong>Speakers:</strong> Nídia Lourenço, João Bessa, Idalina Gonçalves, Ana C. Marques  </p>
-            
-
-                </p>
-            </div>
-        </div>
-
-        <!-- Sessão de Encerramento -->
-        <div class="session-container" style=" text-align: justify; ">
-            <img src="assets/images/plasticos1.png" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>Nídia Lourenço</strong></p>
-                <p>
-                    Assistant Professor at the Department of Chemistry of NOVA School of Science and Technology (NOVA FCT) Senior Researcher at the Biochemical Engineering Group of the Applied Molecular Biosciences Unit (UCIBIO) at NOVA FCT
-Chemical Engineer (5-years, minor in Biotechnology) PhD in Biotechnology.
-
-<p> <strong>João Bessa</strong></p>
-                <p>
-                    R&D+i Manager at the Fibrenamics Institute from University of Minho.
-Chemical Engineer Master from the Faculty of Engineering of the University of Porto (FEUP).
-PhD Student in Materials Engineering in University of Minho.
-
-
-
-                </p>
-            </div>
-        </div>
-
-        
-                
-                
-
-
-        <div class="session-container" style="flex-direction: row-reverse; text-align: justify; ">
-            <img src="assets/images/plasticos2.png" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>Idalina Gonçalves</strong></p>
-                <p>
-                    Aveiro Institute of Materials
-Junior Researcher at CICECO - Aveiro Institute of Materials, in the Department of Materials and Ceramic Engineering at the University of Aveiro
-Since 2015, Dr. Idalina Gonçalves has been a proactive researcher focused on the valorization of agri-food by-products through the development and processing of (bio)plastics.
- 
-<p> <strong>Ana C. Marques</strong></p>
-                <p>
-                    DEQ
-Associate Professor at the Chemical
-Engineering Department, Instituto Superior
-Técnico (IST)
-Member of CERENA - Center for Natural Resources and Environment
-Established the Technological Platform for Microencapsulation and Immobilization (TPMI) at IST
-                </p>
-            </div>
-        </div>
-
-        
-        <!-- Sessão de Abertura -->
-        <div class="session-container" style=" display: flex; justify-content: center; text-align: justify; " >
-            
-            <div class="session-content">
-                <h2>Beyond Donors: How 3D Printing is Creating a New World for Transplants</h2>
-                <p><strong>3ª feira, dia 18 das 11:30 às 13:00</strong></p>
-                <p>📍 <strong>V02.1</strong></p>
-                <p>
-                    
-                <p><strong>Speakers:</strong> Duarte Almeida  </p>
-                
-
-                </p>
-            </div>
-        </div>
-
-        <!-- Sessão de Encerramento -->
-        <div class="session-container" style="flex-direction: row-reverse; text-align: justify; ">
-            <img src="assets/images/duarte.jpg" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>Duarte Almeida</strong></p>
-                <p>
-                    "Formei-me em Engenharia Biomédica pelo Instituto Superior Técnico, tendo obtido o grau de Mestre em dezembro de 2023. A minha tese, desenvolvida no SCERG, no campus do Taguspark, revolveu à volta do tema da bioimpressão 3D, onde desenvolvemos biotintas magnéticas com o objetivo de modular remotamente a resposta do organismo. Em 2024, recebi uma bolsa de Doutoramento por parte da FCT, e encontro-me atualmente a tirar o Doutoramento em Bioengenharia. O meu projeto, que consiste numa colaboração entre o IST e o RPI (Troy, US), tem como objetivo é o desenvolvimento de um modelo de pele bioimpressa, vascularizada e inervada."
-
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/silvia_henriques.jpg" alt="Sílvia F. Henriques" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Sílvia F. Henriques</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/silvia_henriques.jpg" alt="Sílvia F. Henriques" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Sílvia F. Henriques</strong></p>
+                        <p>Sílvia F. Henriques is a biochemist and microbiologist studying how nutrition and the microbiome interact to regulate metabolism, physiology, behavior, and aging. She obtained her PhD from Instituto Superior Técnico, where she investigated yeast metabolism and stress adaptation, before shifting to host–microbe interactions using <em>Drosophila melanogaster</em> as a model system. She is currently a postdoctoral researcher at the Champalimaud Foundation (Behavior and Metabolism Laboratory). Her work integrates dietary and microbial manipulations with metabolomics, transcriptomics, genetics, and behavioral quantitative assays to uncover conserved mechanisms linking nutrition, microbial ecology, and host health.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
 
-        <!-- Sessão de Abertura -->
-        <div class="session-container" style=" display: flex; justify-content: center; text-align: justify; " >
-            
+        <div class="session-container" style="display: flex; justify-content: center; text-align: justify;">
             <div class="session-content">
-                <h2>Surgeons of Tomorrow: How Robotics is Shaping the Future of Surgery                 </h2>
-                <p><strong>3ª feira, dia 18 das 14:00 às 15:30</strong></p>
-                <p>📍 <strong>V02.1</strong></p>
-                <p>
-                    
-                <p><strong>Speakers:</strong> João Bimbo  </p>
-                <p><strong>Moderators:</strong> Pedro U. Lima  </p>
-                
-
-                </p>
+                <h2>At the Edge of Life: Astrobiology and the Search for the (Im)Possible</h2>
+                <p><strong>Data/Hora: TBD</strong></p>
+                <p>📍 <strong>TBD</strong></p>
+                <p><strong>Speakers:</strong> Zita Martins, Daniela Pinto, Francisco Santos</p>
+                <p><strong>Moderadora:</strong> Leonilde Moreira</p>
             </div>
         </div>
 
-        <!-- Sessão de Encerramento -->
-        <div class="session-container" style="flex-direction: row-reverse; text-align: justify; ">
-            <img src="assets/images/Bimbocerto.png" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>João Bimbo</strong></p>
-                <p>
-                    João Bimbo é Professor Auxiliar no Departamento de Informática da Faculdade de Ciências da Universidade de Lisboa e investigador no LASIGE.
-Concluiu o Mestrado em Engenharia Eletrotécnica na Universidade de Coimbra em 2011 e o Doutoramento em Robótica no King's College London em 2016. A sua investigação foca-se na manipulação robótica, háptica, e interação homem-robô. Foi investigador pós-doutorado no Istituto Italiano di Tecnologia e na Universidade de Yale. É o organizador principal da CRAS - Conference on New Technologies for Computer and Robot Assisted Surgery 2025.
-
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/zita_martins.png" alt="Zita Martins" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Zita Martins</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout reverse">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/zita_martins.png" alt="Zita Martins" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Zita Martins</strong></p>
+                        <p>Zita Martins is an Astrobiologist, Associate Professor with Aggregation and Vice-President for International Affairs at Instituto Superior Técnico (IST). Her research interests include the detection of chemical signatures of extra-terrestrial life on space missions, and the potential chemical contribution of meteorites and comets to the origin of life.</p>
+                        <p>She graduated in Chemistry from IST in 2002 and obtained her PhD in Astrobiology from Leiden University (The Netherlands) in 2007. She was an Invited Scientist at NASA Goddard (USA) in 2005 and 2006. She worked at Imperial College London from 2007 to 2017, where in 2009 she was awarded a University Research Fellowship worth 1 million pounds by the Royal Society. Since January 2018 she is a Professor at IST, where she created the first Astrobiology and Cosmochemistry laboratory in Portugal.</p>
+                        <p>Zita Martins is co-investigator on ESA projects OREOcube and EXOcube aboard the International Space Station, a Community Scientist on the ARIEL mission (ESA), a member of the Hayabusa2 insoluble organic matter team (JAXA), and a member of the Comet Interceptor mission (ESA). In 2015 she was appointed Officer of the Military Order of Saint James of the Sword by the President of Portugal, and in 2025 was appointed Grand-Officer of the Order of Public Instruction.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Sessão de Encerramento -->
-        <div class="session-container" style=" text-align: justify; ">
-            <img src="assets/images/Bimbo.png" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>Pedro U. Lima</strong></p>
-                <p>
-                    Pedro U. Lima obteve a Licenciatura (5 anos) e o Mestrado em Engenharia Electrotécnica e de Computadores pelo IST em 1984 e 1989, respectivamente, e o Doutoramento (1994) em Electrical Engineering pelo Rensselaer Polytechnic Institute, NY, EUA, onde também foi investigador do CIRSSE NASA Center. Atualmente é Professor Catedrático no IST, Universidade de Lisboa. É o atual Presidente do Instituto de Sistemas e Robótica,  onde é também Coordenador do grupo de Robôs e Sistemas Inteligentes. Pedro é co-autor de dois livros e editor associado do Journal of Robotics and Autonomous Systems da Elsevier. Os seus interesses de investigação estão focados nas áreas de modelos de eventos discretos de tarefas robóticas planeamento sob incerteza, incluindo aprendizagem automática e por reforço, com aplicações para sistemas robóticos multi-robô e em rede, por exemplo, em cenários hospitalares, residenciais e de exteriores. Orientou com sucesso 21 estudantes de doutoramento desde 2002, e (co-)orienta atualmente 5 estudantes de doutoramento.
-                    Pedro Lima foi Presidente e membro fundador da Sociedade Portuguesa de Robótica (209-2010), foi Delegado Nacional para os programas de Robótica Espacial da UE e da ESA e foi premiado com uma Cátedra de Excelência de 6 meses na Universidade Carlos III de Madrid, Espanha, em 2010.
-                    
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/daniela_pinto.jpg" alt="Daniela Pinto" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Daniela Pinto</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/daniela_pinto.jpg" alt="Daniela Pinto" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Daniela Pinto</strong></p>
+                        <p>Daniela Pinto é Investigadora Auxiliar no iMed.ULisboa (Faculdade de Farmácia da Universidade de Lisboa), onde coordena o projeto PROSPERUS, focado na engenharia de probióticos para a produção e entrega de proteínas terapêuticas. Licenciada em Biologia Microbiana e Genética e Doutorada em Biologia (Microbiologia) pela Faculdade de Ciências da Universidade de Lisboa, o seu percurso académico é marcado por uma forte componente internacional. Desenvolveu investigação pós-doutoral na Ludwig-Maximilians-Universität München e na Technische Universität Dresden, na Alemanha, através de uma prestigiada bolsa Marie Curie, e realizou estadias de investigação em instituições de referência como a Newcastle University e a Københavns Universitet.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-
-
-
-        <!-- Sessão de Abertura -->
-        <div class="session-container" style=" display: flex; justify-content: center; text-align: justify; " >
-            
-            <div class="session-content">
-                <h2>Neuroscience and Regenerations: New horizons in brain healing</h2>
-                <p><strong>4ª feira, dia 19 das 11:30 às 13:00</strong></p>
-                <p>📍 <strong>V02.1</strong></p>
-                <p>
-                    
-                <p><strong>Speakers:</strong> Ricardo J Rodrigues, Anabel Rodriguez Simões, Marina Silva, Tiago Fernandes  </p>
-                
-                
-
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/francisco_santos.jpg" alt="Francisco Santos" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Francisco Santos</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout reverse">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/francisco_santos.jpg" alt="Francisco Santos" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Francisco Santos</strong></p>
+                        <p>Francisco Santos is an orthopaedic surgery resident with a focused interest in aerospace medicine. Since 2021, he has been a researcher at CEMA, working on topics such as Spaceflight-Associated Neuro-ocular Syndrome (SANS) and intracranial pressure determination in microgravity. He has also contributed to research in AI-assisted ultrasound labeling. His work has been presented at multiple conferences, including the Aerospace Medical Association (AsMA) Annual Scientific Meeting and national meetings in Portugal.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Sessão de Encerramento -->
-        <div class="session-container" style="flex-direction: row-reverse; text-align: justify; ">
-            <img src="assets/images/brain1.png" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>Ricardo J Rodrigues</strong></p>
-                <p>
-                    Principal Investigator at the CNC-Center for Neuroscience and Cell Biology, University of Coimbra
-PhD in Molecular Biology/Neuroscience from the University of Coimbra Postdoctoral training at Instituto de Neurociencias de Alicante (Spain)
-
-        <p> <strong>Anabel Rodriguez Simões</strong></p>
-                <p>
-                    Fundação Champalimaud
-Postdoctoral Researcher at the Stem Cells and Regeneration Laboratory, Champalimaud Centre for the Unknown
-Master's in Cellular and Molecular Biology
-PhD in Molecular Sciences from ITQB-NOVA
-Postdoctoral Researcher at the Stem Cells and Regeneration Laboratory, Champalimaud Centre for the Unknown
-
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/leonilde_moreira.jpg" alt="Leonilde Moreira" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Leonilde Moreira</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/leonilde_moreira.jpg" alt="Leonilde Moreira" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Leonilde Moreira</strong> <em>(Moderadora)</em></p>
+                        <p>Leonilde Moreira is an Associate Professor in the Department of Bioengineering at Instituto Superior Técnico, coordinator of the Master's in Biotechnology, and Principal Investigator at the Institute for Bioengineering and Biosciences. Her scientific work focuses on molecular microbiology, bacterial genomics, and host-microorganism interactions, with emphasis on the adaptation, evolution, and persistence of microbial communities in complex environments. She teaches course units such as Genetic Engineering and Molecular Biotechnology, training students in microbiology, bioengineering, and biotechnology.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Sessão de Encerramento -->
-        <div class="session-container" style=" text-align: justify; ">
-            <img src="assets/images/brain2.png" alt="Sessão de Encerramento">
+        <div class="session-container" style="display: flex; justify-content: center; text-align: justify;">
             <div class="session-content">
-                
-                <p> <strong>Marina Silva </strong></p>
-                <p>
-                    INSTITUTO DE INVESTIGAÇÃO E INOVAÇÃO EM SAÚDE UNIVERSIDADE DO PORTO
-                    Junior Researcher at the Neurodegeneration
-                    Team, i3S. Principal Investigator of a Pfizer- funded PAF project
-                    Master's in Biochemistry from the University of Porto
-                    PhD in Molecular Biology/Neuroscience from the University of Coimbra
-                    Lead investigator of a Pfizer-funded project on neuronal generation in Familial Amyloid Polyneuropathy (FAP).
-
-        <p> <strong>Tiago Fernandes</strong></p>
-                <p>
-                    DEPARTAMENTO DE BIOENGENHARIA
-Assistant Professor in the Department of Bioengineering at IST. Coordinator of the Master's Program in Bioengineering: Regenerative and Precision Medicine
-PhD in Biotechnology from IST
-International research experience at Rensselaer Polytechnic Institute and the University of Wisconsin-Madison (USA)
-
-                </p>
+                <h2>Genetic Footprints of Portugal: History in Our DNA</h2>
+                <p><strong>Data/Hora: TBD</strong></p>
+                <p>📍 <strong>TBD</strong></p>
+                <p><strong>Speakers:</strong> Luísa Mesquita Pereira, João Tiago Brochado de Almeida</p>
+                <p><strong>Moderadora:</strong> Joana Feliciano</p>
             </div>
         </div>
 
-
-
-
-
-        <!-- Sessão de Abertura -->
-        <div class="session-container" style=" display: flex; justify-content: center; text-align: justify; " >
-            
-            <div class="session-content">
-                <h2>The Cycle of Cancer: Metastatic Cells and Their Role in Tumor Recurrence               </h2>
-                <p><strong>5ª feira, dia 20 das 11:30 às 13:00</strong></p>
-                <p>📍 <strong>V02.1</strong></p>
-                <p>
-                    
-                <p><strong>Speakers:</strong> Ana Luísa Correia, Miguel Castanho  </p>
-                <p><strong>Moderators:</strong> Gabriel Monteiro</p>
-
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/luisa_pereira.png" alt="Luísa Mesquita Pereira" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Luísa Mesquita Pereira</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout reverse">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/luisa_pereira.png" alt="Luísa Mesquita Pereira" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Luísa Mesquita Pereira</strong></p>
+                        <p>Luísa Pereira has a degree in Biology, and a Master's and PhD in Human Population Genetics. She is a group leader at i3S (Institute of Research and Innovation in Health, University of Porto), interested in using genetics to infer the past and evolution of human populations, as well as to evaluate susceptibility of human populations to complex diseases. She has mapped genes that may protect sub-Saharan African populations from presenting worse clinical phenotypes following infection by <em>Helicobacter pylori</em> and dengue fever virus.</p>
+                        <p>Through international collaborations with anthropologists, geneticists, and clinicians, she has generated knowledge about the genetic diversity of populations across all continents. She is a regular presence in the media, organizes outreach events for the general public — including the course "Genetic Odyssey" — and is co-author of the popular science book <em>The Portuguese Genetic Heritage: Human History Preserved in Genes</em>.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Sessão de Encerramento -->
-        <div class="session-container" style="flex-direction: row-reverse; text-align: justify; ">
-            <img src="assets/images/ana.jpg" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>Ana Luísa Correia</strong></p>
-                <p>
-                    Ana Luísa Correia received her B.Sc. in Applied Biology from the University of Minho, Portugal. As a GABBA student, she ventured to California in the USA to pursue her PhD studies on the role of the microenvironment in breast cell invasion. As a European Molecular Biology Organization (EMBO) Postdoctoral Fellow at the Friedrich Miescher Institute for Biomedical Research and the University of Basel in Switzerland, she pioneered research on tissue-specific mechanisms controlling breast cancer metastasis. Ana Luísa now leads the Cancer Dormancy & Immunity Lab at CF. Her group strives to understand what makes a tissue favourable or not to metastasis and to leverage this biology into therapeutic interventions that reliably prevent the emergence of metastases in cancer patients. Ana Luísa has received several international awards (2021 Metastasis Research Prize, 2022 Pfizer Oncology, AACR 2022 NextGen Stars), is an EMBO Young Investigator, and serves as an active member of the American, European, and Portuguese associations for Cancer Research (AACR, EACR, and ASPIC) and the Metastasis Research Society.
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/joao_tiago_almeida.png" alt="João Tiago Brochado de Almeida" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">João Tiago Brochado de Almeida</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/joao_tiago_almeida.png" alt="João Tiago Brochado de Almeida" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>João Tiago Brochado de Almeida</strong></p>
+                        <p>João Tiago Brochado de Almeida is a PhD candidate in Molecular and Environmental Biology at the University of Minho and University of Huddersfield, where he focuses on ancient DNA and human population genetics. His current research investigates the genomic history of Eurasian populations from the Bronze Age to the Medieval period, with particular emphasis on ancient individuals from Romania. By integrating high-throughput sequencing with advanced computational analyses, his work aims to reconstruct patterns of migration, admixture, and demographic change across key moments of human history.</p>
+                        <p>He has contributed to studies on human population history in São Tomé and Príncipe, exploring the genetic legacy of slavery and ethnogenesis in the Gulf of Guinea, and has worked in cancer genomics analyzing mitochondrial DNA heteroplasmy. He is author and co-author of several peer-reviewed publications in international journals spanning ancient DNA authenticity, human population history, and genomic variation.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="session-container" style="text-align: justify; ">
-            <img src="assets/images/castanho.png" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>Miguel Castanho</strong></p>
-                <p>
-                    Professor Catedrático da Faculdade de Medicina da Universidade de Lisboa e Líder de Grupo do Instituto Gulbenkian de Medicina Molecular
-The goal of Miguel Castanho’s group is to unravel the physical principles that govern interactions at the molecular level of clinically relevant compounds with viruses and cells, with the objective of developing new drugs, as well as improving the understanding of the mechanism(s) of action of established drugs. Miguel Castanho has expertise in the design and study of membrane-active peptides with activities ranging from Antiviral, Antimicrobial, Anticancer, Analgesic, and Drug delivery using a wide variety of experimental methods, as well as structural biology approaches. One of the main focuses of his research group is the study of antiviral peptide drugs able to transmigrate across the Blood-Brain-Barrier (BBB) and target enveloped viruses in the Central Nervous System (CNS). He is the coordinator of international consortia funded by LaCaixa Foundation and the European Commission (Horizon Europe Program) to tackle the problem of brain protection against viruses and metastatic cancer cells.
-Lecionou como Assistente Convidado na disciplina de "Deep Learning" no Instituto Superior Técnico e na disciplina de "Introduction to Machine Learning in Healthcare" na Universidade Católica.
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/joana_feliciano.jpg" alt="Joana Feliciano" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Joana Feliciano</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout reverse">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/joana_feliciano.jpg" alt="Joana Feliciano" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Joana Feliciano</strong> <em>(Moderadora)</em></p>
+                        <p>Joana Feliciano is a researcher at the Institute of Bioengineering and Biosciences (iBB) and an Invited Assistant Professor at Instituto Superior Técnico. She earned her PhD in Biotechnology and Biosciences from IST in 2017, focusing on the virulence mechanisms of opportunistic pathogens from the <em>Burkholderia cepacia</em> complex. She completed international research stays at the University of Montpellier, the University of Würzburg, and the University of Zurich.</p>
+                        <p>Currently, she investigates how regulatory RNAs and outer membrane vesicles contribute to antimicrobial resistance in clinically relevant opportunistic pathogens, aiming to identify new molecular targets for innovative antimicrobial strategies.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="session-container" style="flex-direction: row-reverse; text-align: justify; ">
-            <img src="assets/images/gabriel.png" alt="Sessão de Encerramento">
+        <div class="session-container" style="display: flex; justify-content: center; text-align: justify;">
             <div class="session-content">
-                
-                <p> <strong>Gabriel Monteiro</strong></p>
-                <p>
-                    Gabriel A. Monteiro has a degree in Biology from the University of Coimbra, a Masters in Biotechnology from the Instituto Superior Técnico and a PhD in Biotechnology from the Instituto Superior Técnico. He is currently an Associate Professor at the Instituto Superior Técnico, and Researcher at the IBB – Institute for Bioengineering and Biosciences. He is (co-)author of 105 articles in international peer-reviewed journals with &gt;3200 citations, h-index=29, Scopus). In addition to these publications, he is (co-)author of &gt;40 articles in non-ISI journals (book chapters, proceedings,etc.), (co-)supervisor of 16 PhD and 37 MSc theses. Currently, his main research focuses on the design and production of plasmid and minicircle biopharmaceuticals for use as DNA vaccines and gene therapy vectors for transient cell modification. During 2024-25, he teaches at Técnico the courses of Biomolecular Engineering, Tissue Engineering, Cellular Engineering, Gene and Cell Therapy.
-
-                </p>
+                <h2>NeuroFrontiers: Pushing the Limits of Non-Invasive Brain Stimulation</h2>
+                <p><strong>Data/Hora: TBD</strong></p>
+                <p>📍 <strong>TBD</strong></p>
+                <p><strong>Speakers:</strong> Sofia Fernandes, Gonçalo Cotovio, Francisco Faro Viana</p>
+                <p><strong>Moderador:</strong> Mário Pinheiro</p>
             </div>
         </div>
 
-
-
-         <!-- Sessão de Abertura -->
-         <div class="session-container" style=" display: flex; justify-content: center; text-align: justify; " >
-            
-            <div class="session-content">
-                <h2>From Lab to Patient: How Drug Delivery and Immunoengineering are Shaping Modern Medicine                </h2>
-                <p><strong>6ª feira, dia 21 das 9:30 às 11:00</strong></p>
-                <p>📍 <strong>V02.1</strong></p>
-                <p>
-                    
-                <p><strong>Speakers:</strong> Soraia Pinto, Manuela Gaspar, Liane Moura, Ana M. Azevedo  </p>
-                
-                
-
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/sofia_fernandes.png" alt="Sofia Fernandes" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Sofia Fernandes</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout reverse">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/sofia_fernandes.png" alt="Sofia Fernandes" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Sofia Fernandes</strong></p>
+                        <p>Sofia Fernandes is an assistant professor at the Department of Physics, Faculty of Sciences of the University of Lisbon (DF FCUL) and a researcher at IBEB, with a multidisciplinary background spanning Physics, Physiotherapy, and Neurosciences. She is dedicated to model-guided strategies for optimizing non-invasive brain and spinal stimulation (NIBSS) in neural rehabilitation. Her work integrates neuromodulation, computational modelling, and neurophysiology. She currently leads the NIBSS modelling team at IBEB and collaborates internationally on brain and spinal stimulation research.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Sessão de Encerramento -->
-        <div class="session-container" style="flex-direction: row-reverse; text-align: justify; ">
-            <img src="assets/images/lab1.png" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>Soraia Pinto</strong></p>
-                <p>
-                    Postdoctoral Researcher at Institute for Research and Innovation in Health (i3S), University of Porto
-PhD in Biomedical Sciences, ICBAS, University of Porto
-
-        <p> <strong>Manuela Gaspar</strong></p>
-                <p>
-                    Researcher at the Research Institute for Medicines at Faculty of Pharmacy, Universidade de Lisboa
-Dr. Maria Manuela Gaspar specializes in lipid/polymeric drug delivery systems for antibiotics and cancer therapy. She has led 30+ projects, co-authored 117+ papers, oversees animal facilities, and is a governing member of the Portuguese Society for Laboratory Animal Science.
-
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/goncalo_cotovio.png" alt="Gonçalo Cotovio" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Gonçalo Cotovio</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/goncalo_cotovio.png" alt="Gonçalo Cotovio" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Gonçalo Cotovio</strong></p>
+                        <p>Gonçalo Cotovio completed his degree in Medicine at NOVA Medical School in 2014. He completed his PhD in January 2023 at the Champalimaud Foundation Neuropsychiatry Unit, supported by a PhD Scholarship from Fundação para a Ciência e Tecnologia, with neuromodulation training at the Berenson Allen Center, Harvard Medical School. In 2020 he graduated in Epidemiology and Clinical Research from the Portugal Clinical Research Training Program, Harvard Medical School. In 2024 he completed his residency in Psychiatry at Unidade Local de Saúde de Lisboa Ocidental.</p>
+                        <p>He is now a full-time Psychiatrist and clinical researcher at the Champalimaud Foundation Neuropsychiatry Unit and an Assistant Professor of Neurosciences and Psychiatry at NOVA Medical School. His work focuses on the neurobiology of mood disorders and neuromodulation strategies, and he was awarded a 2023 BBRF Young Investigator Grant.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Sessão de Encerramento -->
-        <div class="session-container" style=" text-align: justify; ">
-            <img src="assets/images/lab2.png" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p> <strong>Liane Moura </strong></p>
-                <p>
-Research Institute for Medicines
-Researcher at BioNanoSciences-Drug
-Delivery & Immunoengineering group, iMed.ULisboa/FFUL
-PhD in Chemical Engineering - specialization in Biotechnology, University of Coimbra
-
-
-        <p> <strong>Ana M. Azevedo</strong></p>
-                <p>
-Associate Professor at Department of
-Institute for Bioengineering and Biosciences
-Bioengineering, Instituto Superior Técnico (IST) Senior Researcher at Institute of
-Bioengineering and Biosciences (iBB)
-
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/francisco_faro_viana.png" alt="Francisco Faro Viana" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Francisco Faro Viana</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout reverse">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/francisco_faro_viana.png" alt="Francisco Faro Viana" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Francisco Faro Viana</strong></p>
+                        <p>Francisco Faro Viana earned a Master's degree in Biomedical Engineering and Biophysics, specializing in medical signals and imaging, from the Faculty of Sciences of the University of Lisbon. He has hands-on experience in clinical and research applications of Transcranial Magnetic Stimulation (TMS), multimodal neurophysiology (EMG, EEG), and functional MRI analysis. He is currently pursuing a PhD in Biomedical Engineering at Instituto Superior Técnico and the Champalimaud Foundation, where his research focuses on characterizing and quantifying the effects of neuromodulation using functional MRI.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/mario_pinheiro.png" alt="Mário J. Pinheiro" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Mário J. Pinheiro</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/mario_pinheiro.png" alt="Mário J. Pinheiro" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Mário J. Pinheiro</strong> <em>(Moderador)</em></p>
+                        <p>Mario J. Pinheiro is a physicist and professor at the Department of Physics, Instituto Superior Técnico (University of Lisbon), with a transdisciplinary focus on electrodynamics, plasma physics, and complex systems. He has published in several scientific journals and contributed to the development of new theoretical frameworks, including Ergontropic Dynamics, which explores the relationship between energy, information, and structure.</p>
+                        <p>He is actively engaged in teaching, research, and science communication, with a strong interest in connecting fundamental physics to real-world technological challenges.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-
-
-        <!-- Terceira Repetição -->
         <h1 class="main-title">WORKSHOPS</h1>
 
-        <!-- Sessão de Abertura -->
-        <div class="session-container" style=" text-align: justify">
-            
+        <div class="session-container" style="display: flex; justify-content: center; text-align: justify;">
             <div class="session-content">
-                <h2>Think. Connect. Control: Unlocking Neural Computer Interfaces                </h2>
-                <p><strong>3ª feira, dia 18 das 09:30 às 11:00</strong></p>
-                <p>📍 <strong>V02.03</strong></p>
-                <p>
-                    Neural Computer Interfaces (NCIs) capture and decode neural signals to control external devices. This opens up new possibilities for assistive technologies, allowing individuals with disabilities to control prosthetics, communicate, and interact with devices using signals such as electromyography (EMG).
-In this workshop we will explore how machine learning can process EMG signals and translate them into voluntary commands, empowering individuals with conditions like Amyotrophic Lateral Sclerosis (ALS) to communicate and control devices.
-The session will begin with an overview of ALS, discussing the challenges patients face and how NCIs can help address these issues. Participants will then get hands-on experience working with real neural signal data, processing it, extracting key features, and applying machine learning techniques to classify the signals into different states, such as resting or performing gestures. Finally, participants will have the opportunity to test and refine the models they've created during the session.
-
-<p><strong>Requirements:</strong> Basic knowledge of Python is required. Experience with Machine Learning is recommended but not required</p>
-<p><strong>Speakers:</strong> Mariana Nunes</p>
-</p>
+                <h2>Compliance in Healthcare</h2>
+                <p><strong>Speaker:</strong> Miguel Amador</p>
             </div>
         </div>
 
-        <!-- Sessão de Encerramento -->
-        <div class="session-container" style="flex-direction: row-reverse; text-align: justify">
-            <img src="assets/images/mariananunes.jpg" alt="Sessão de Encerramento">
-            <div class="session-content">
-                
-                <p><strong>Mariana Nunes</strong></p>
-                <p>
-                    Mariana Nunes completed her MSc in Biomedical Engineering at Instituto Superior Técnico (IST) in 2023. Currently, she is a PhD student at IST, collaborating with Instituto de Telecomunicações, Unbabel, and Carnegie Mellon University. Her doctoral research focuses on advancing deep learning applications in assistive technologies using neural interfaces. Mariana is actively involved in the Halo project, which aims to restore communication for patients living with Amyotrophic Lateral Sclerosis. Her main research interests include deep learning, neural interfaces, wearable technology, and signal processing.
-                </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/MiguelAmador.png" alt="Miguel Amador" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Miguel Amador</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout reverse">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/MiguelAmador.png" alt="Miguel Amador" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Miguel Amador</strong></p>
+                        <p>Miguel Amador é mestre em Engenharia Biomédica pelo Instituto Superior Técnico de Lisboa e tem uma pós-graduação em Bioengenharia de Sistemas pelo programa MIT Portugal. É Diretor de Inovação da Complear, uma empresa Portuguesa especialista mundial nos processos regulatórios de Software como Dispositivo Médico. Foi antes consultor na Board of Innovation, uma consultora de inovação com foco na sustentabilidade e saúde, e é responsável por Portugal do EIT Health, a maior rede de inovação em saúde da Europa.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
 
-           <!-- Sessão de Abertura -->
-    <div class="session-container" style="  text-align: justify; ">
-        
-        <div class="session-content">
-            <h2>CRAFT BEER PRODUCTION                </h2>
-            <p><strong>4ª feira, dia 19 das 09:30 às 11:00</strong></p>
-            <p>📍 <strong>Barbecue Space</strong></p>
-            <p>
-                The group is made up of students passionate about craft beer brewing, combining science and creativity.
-                Founded as part of an entrepreneurship course by Biological Engineering students, the club's mission is to promote knowledge about craft beer production.
-                During our workshops, we offer participants the opportunity to dive into the production process, exploring everything from the initial stages, such as weighing and milling the malt, to a comprehensive overview of the history of beer and the contributions of biotechnology to this world.
-<p><strong>Hosts:</strong> Clube de Cervejeiros</p>
-</p>
+        <div class="session-container event-description-card" style="display: flex; justify-content: center; text-align: justify;">
+            <div class="session-content">
+                <p><strong>Workshop description:</strong> O workshop explora o papel e a regulação de dispositivos médicos digitais (incluindo software). Aborda diferentes temas desde a definição legal e classificação de risco até ao percurso necessário para obter a marcação CE. Através da apresentação de casos práticos, os participantes aprendem a identificar riscos, criar conceitos de software médico e conhecer as diversas saídas profissionais nesta área.</p>
+            </div>
         </div>
-    </div>
 
-    <!-- Sessão de Abertura -->
-    <div class="session-container" style=" text-align: justify; ">
-        
-        <div class="session-content">
-            <h2>PRODUCT MANAGEMENT                </h2>
-            <p><strong>6ª feira, dia 21 das 11:30 às 13:00</strong></p>
-            <p>📍 <strong>V02.3</strong></p>
-            <p>
-                Brief Introduction to Glintt
-                Agile Methodology - Scrum - Brief explanation of the methodology and its application
-                Glintt Global
-                 Product Management - From Problem to Product – Practical exercise where students think of a product and identify essential features to address a problem/need
-                
-<p><strong>Speaker:</strong> Ana Margarida Lopes</p>
-<p>
-
+        <div class="session-container" style="display: flex; justify-content: center; text-align: justify;">
+            <div class="session-content">
+                <h2>Laser Written Bioelectronics: Building Blocks for Epidermal Sensors</h2>
+                <p><strong>Speaker:</strong> Tomás Pinheiro</p>
+            </div>
         </div>
-    </div>
 
-    <!-- Sessão de Encerramento -->
-    <div class="session-container" style="flex-direction: row-reverse; text-align: justify">
-        <img src="assets/images/anam.png" alt="Sessão de Encerramento">
-        <div class="session-content">
-            
-            <p><strong>Ana Margarida Lopes</strong></p>
-            <p>
-                Graduated in Nursing, I began my career at Hospital de Cascais and, in 2017, at Hospital Garcia de Orta.
-In 2018, I transitioned to healthcare management, joining the SPMS Procurement Directorate for Public Contracting of medicines and medical devices. In 2021, I moved to the SNS24 Support Unit, and since April 2022, I have been a Product Owner at Glintt Global.
-            </p>
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/TomasPinheiro.jpg" alt="Tomás Pinheiro" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Tomás Pinheiro</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout reverse">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/TomasPinheiro.jpg" alt="Tomás Pinheiro" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Tomás Pinheiro</strong></p>
+                        <p>Tomás Pinheiro is a researcher working at the intersection of laser materials processing, flexible electronics, and wearable bioengineering. With a background in Biomedical Engineering and a research trajectory spanning NOVA School of Science and Technology, KAUST, and CENIMAT|i3N, he has built a distinctive expertise in Direct Laser Writing (DLW) as a sustainable, versatile platform for creating next-generation bioelectronic materials and devices. His work has introduced new methodologies for laser-engineered soft conductors, including laser-induced graphene on unconventional substrates, peel-off transfer techniques for skin-conformable electrodes, and multimaterial laser synthesis strategies for sensing and energy applications.</p>
+                        <p>Throughout his PhD and postdoctoral research, Tomás has contributed to high-impact publications in journals such as Advanced Materials, ACS Nano, Materials Horizons, and Applied Physics Reviews. His work bridges fundamental materials science with practical device engineering, always with a focus on accessibility, sustainability, and real-world biomedical relevance.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <div class="session-container event-description-card" style="text-align: justify;">
+            <div class="session-content">
+                <p><strong>Workshop description:</strong> Wearable biosensing is rapidly transforming health monitoring, sports performance, and human–machine interfaces. Participants will explore how laser-based fabrication enables rapid, low-cost production of flexible bioelectronic components for epidermal sensors. After a short introductory presentation, students will rotate through five practical modules:</p>
+                <p><strong>Module 1:</strong> Laser synthesis of electrode conductive materials.<br>
+                <strong>Module 2:</strong> Electrochemical glucose sensing.<br>
+                <strong>Module 3:</strong> Epifluidics module for sweat transportation.<br>
+                <strong>Module 4:</strong> Carbon bioelectrodes for physiological monitoring.<br>
+                <strong>Module 5:</strong> Iontophoresis module for sweat stimulation.</p>
+            </div>
+        </div>
+
+        <div class="session-container" style="display: flex; justify-content: center; text-align: justify;">
+            <div class="session-content">
+                <h2>Behind the Formula: Innovation in Cosmetic Science</h2>
+                <p><strong>Speaker:</strong> Sandra Simões</p>
+            </div>
+        </div>
+
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/SandraSimoes.jpg" alt="Sandra Simões" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Sandra Simões</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout reverse">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/SandraSimoes.jpg" alt="Sandra Simões" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Sandra Simões</strong></p>
+                        <p>Sandra Simões is a Principal Investigator at the Research Institute for Medicines (iMed), Faculty of Pharmacy, University of Lisbon. She graduated in Pharmaceutical Sciences and has a PhD in Pharmacy (Pharmaceutical Technology). Advanced technologies for skin drug delivery have motivated her research, which has been focused on design, development and biological evaluation of optimal drug delivery systems with special emphasis on nanocarriers. In the last years she has been working on the valorisation of food industry by-products and the application of extracted bioactives in skin health.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-container event-description-card" style="display: flex; justify-content: center; text-align: justify;">
+            <div class="session-content">
+                <p><strong>Workshop description:</strong> This workshop explores how cosmetic products are designed and developed from a scientific perspective, covering formulation design, ingredient selection, product performance, and current innovation trends. The session includes a practical component where participants will prepare a cosmetic gel.</p>
+            </div>
+        </div>
 
 
+        <div class="session-container" style="display: flex; justify-content: center; text-align: justify;">
+            <div class="session-content">
+                <h2>Tease Your Thesis</h2>
+                <p><strong>Speakers:</strong> Rebeca Friedrich, Teresa Porqueddu</p>
+            </div>
+        </div>
 
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/rebeca_friedrich.png" alt="Rebeca Friedrich" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Rebeca Friedrich</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout reverse">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/rebeca_friedrich.png" alt="Rebeca Friedrich" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Rebeca Friedrich</strong></p>
+                        <p>Rebeca Friedrich completed both her BSc and MSc in Biomedical Engineering at Instituto Superior Técnico. Throughout her academic path, she developed experience in biomechanics and medical device development through internships in distinct research environments.</p>
+                        <p>During her BSc thesis at iBB, she contributed to the design and fabrication of 3D-printed gradient scaffolds for osteochondral tissue engineering. She later completed an internship at the Laboratory of Biomechanics and Functional Morphology of the Faculty of Human Kinetics.</p>
+                        <p>In her MSc thesis, carried out at the Department of Mechanical Engineering, she investigated the biomechanical impact of knee arthroplasty reconstruction surgery using a modular megaprosthesis in oncological patients, focusing on lower-limb biomechanics after surgical intervention.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-         <!-- Terceira Repetição -->
-   <h1 class="main-title">DEBATE</h1>
-
-   <div class="session-content" style="justify-content: center;">
-            <p><strong>2ª feira, dia 17 das 16:00 às 17:30</strong></p>
-            <p>📍 <strong>V02.1</strong></p>
-   </div>
-
-   <!-- Sessão de Abertura -->
-   <div class="session-container" style="justify-content: center;"> 
-       <img src="assets/images/Capa4.png" alt="">
-    </div>
-
-     <!-- Sessão de Encerramento -->
-     <div class="session-container">
-        <img src="assets/images/Slide1.png" alt="Sessão de Encerramento">
-        <img src="assets/images/Slide2.png" alt="Sessão de Encerramento">
-        <img src="assets/images/Slide3.png" alt="Sessão de Encerramento">
-     </div>
-
-   <!-- Terceira Repetição -->
-   <h1 class="main-title">ALUMNI</h1>
-
-   <div class="session-content" style="justify-content: center;">
-        <p><strong>5ª feira, dia 20 das 16:00 às 17:30</strong></p>
-        <p>📍 <strong>V02.1</strong></p>
-    </div>
-
-   <!-- Sessão de Abertura -->
-   <div class="session-container" style="justify-content: center;"> 
-       <img src="assets/images/A1.png" alt="Sessão de Encerramento">
-    </div>
-    <div class="session-container"> 
-        <img src="assets/images/A2.png" alt="Sessão de Encerramento">
-        <img src="assets/images/A3.png" alt="Sessão de Encerramento">
-        <img src="assets/images/A5.png" alt="Sessão de Encerramento">
-     </div>
-     <div class="session-container" style="justify-content: center;"> 
-        <img src="assets/images/A4.png" alt="Sessão de Encerramento">
-     </div>
-
-
+        <div class="speaker-card">
+            <button class="speaker-toggle" type="button" aria-expanded="false">
+                <div class="speaker-image-wrapper">
+                    <img src="assets/images/teresa_porqueddu.png" alt="Teresa Porqueddu" class="speaker-image">
+                </div>
+                <div class="speaker-mobile-bar">
+                    <span class="speaker-mobile-name">Teresa Porqueddu</span>
+                    <span class="speaker-mobile-icon" aria-hidden="true">+</span>
+                </div>
+            </button>
+            <div class="speaker-body">
+                <div class="speaker-desktop-layout">
+                    <div class="speaker-image-wrapper desktop-only">
+                        <img src="assets/images/teresa_porqueddu.png" alt="Teresa Porqueddu" class="speaker-image">
+                    </div>
+                    <div class="session-content">
+                        <p><strong>Teresa Porqueddu</strong></p>
+                        <p>Teresa Porqueddu recently completed her Master's degree in Biomedical Engineering, following the Tissue Engineering and Regenerative Medicine profile. During her academic training, she expanded her international experience through Erasmus at TH Lübeck and an Erasmus Internship at the Macromolecular Engineering Laboratory at ETH Zurich, where she developed both her PIC 2 project and her Master's thesis.</p>
+                        <p>Her thesis focused on an <em>in vitro</em> tumour invasion model, with particular emphasis on optimizing its cellular and structural components. The work explored the activation and role of cancer-associated fibroblasts, as well as changes in the viscoelastic properties of the hydrogel matrix used in the system.</p>
+                        <p>Previously, during her undergraduate studies, she carried out her PIC 1 at GIMM in the Luísa Figueiredo Lab – Biology of Parasitism, where she worked on adapting a microfluidic model to replicate bovine brain microvasculature and study the sequestration of trypanosomes to endothelial cells.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         
 
-
-
-     
+        
 
     </div>
 </main>
@@ -696,7 +886,7 @@ In 2018, I transitioned to healthcare management, joining the SPMS Procurement D
             'feeding the future gmo debate': 'debate',
             'alumni session': 'alumni',
             'think connect control': 'think connect control unlocking neural computer interfaces',
-            'tease your thesis': 'workshops',
+            'tease your thesis': 'tease your thesis',
             'film session henrietta lacks': 'workshops',
             'lisbon biomechanics lab': 'workshops',
             'job fair': 'alumni',
@@ -757,22 +947,178 @@ In 2018, I transitioned to healthcare management, joining the SPMS Procurement D
             .catch(error => console.error(`Erro ao carregar ${file}:`, error));
     }
 
+    function isMobileSpeakerMode() {
+        return window.innerWidth <= 600;
+    }
+
+    function wrapSpeakerRuns() {
+        const container = document.querySelector('.container');
+        if (!container) return;
+
+        const children = Array.from(container.children);
+        let run = [];
+
+        const flushRun = () => {
+            if (!run.length) return;
+
+            if (run.length === 1 && run[0].parentElement.classList.contains('speaker-collection')) {
+                run = [];
+                return;
+            }
+
+            const collection = document.createElement('div');
+            collection.className = 'speaker-collection';
+            run[0].before(collection);
+
+            run.forEach((card) => collection.appendChild(card));
+            run = [];
+        };
+
+        children.forEach((child) => {
+            if (child.classList && child.classList.contains('speaker-card')) {
+                run.push(child);
+            } else {
+                flushRun();
+            }
+        });
+
+        flushRun();
+    }
+
+    function buildSpeakerRows() {
+        document.querySelectorAll('.speaker-collection').forEach((collection) => {
+            if (collection.dataset.rowsBuilt === 'true') return;
+
+            const cards = Array.from(collection.querySelectorAll(':scope > .speaker-card'));
+            if (!cards.length) return;
+
+            collection.innerHTML = '';
+
+            for (let i = 0; i < cards.length; i += 2) {
+                const rowCards = cards.slice(i, i + 2);
+                const row = document.createElement('div');
+                row.className = 'speaker-row';
+
+                if (rowCards.length === 1) {
+                    row.classList.add('single-card');
+                }
+
+                rowCards.forEach((card, index) => {
+                    if (rowCards.length === 1) {
+                        card.dataset.panelSide = 'center';
+                    } else {
+                        card.dataset.panelSide = index === 0 ? 'left' : 'right';
+                    }
+                    row.appendChild(card);
+                });
+
+                const panel = document.createElement('div');
+                panel.className = 'speaker-row-panel';
+
+                collection.appendChild(row);
+                collection.appendChild(panel);
+            }
+
+            collection.dataset.rowsBuilt = 'true';
+        });
+    }
+
+    function closeCollectionPanels(collection) {
+        collection.querySelectorAll('.speaker-card').forEach((card) => {
+            card.classList.remove('active');
+            const button = card.querySelector('.speaker-toggle');
+            if (button) {
+                button.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        collection.querySelectorAll('.speaker-row-panel').forEach((panel) => {
+            panel.className = 'speaker-row-panel';
+            panel.innerHTML = '';
+        });
+    }
+
+    function openSpeakerPanel(card) {
+        const collection = card.closest('.speaker-collection');
+        const row = card.closest('.speaker-row');
+        if (!collection || !row) return;
+
+        const panel = row.nextElementSibling;
+        if (!panel || !panel.classList.contains('speaker-row-panel')) return;
+
+        const alreadyOpen = card.classList.contains('active') && panel.classList.contains('is-open');
+        closeCollectionPanels(collection);
+
+        if (alreadyOpen) {
+            return;
+        }
+
+        const content = card.querySelector('.speaker-body .session-content');
+        if (!content) return;
+
+        card.classList.add('active');
+        const button = card.querySelector('.speaker-toggle');
+        if (button) {
+            button.setAttribute('aria-expanded', 'true');
+        }
+
+        const side = card.dataset.panelSide || 'center';
+        panel.classList.add('is-open', `from-${side}`);
+        const speakerName = card.querySelector('.speaker-mobile-name')?.textContent?.trim() || '';
+        const clone = content.cloneNode(true);
+        const firstP = clone.querySelector('p:first-child');
+        if (firstP) firstP.remove();
+
+        const nameHeader = speakerName
+            ? `<p style="margin:0 0 10px;font-size:18px;font-weight:bold;color:#FF9114;">${speakerName}</p>`
+            : '';
+        panel.innerHTML = `<div class="session-content">${nameHeader}${clone.innerHTML}</div>`;
+    }
+
+    function bindSpeakerButtons() {
+        document.querySelectorAll('.speaker-toggle').forEach((button) => {
+            if (button.dataset.bound === 'true') return;
+
+            button.addEventListener('click', () => {
+                if (!isMobileSpeakerMode()) return;
+                const card = button.closest('.speaker-card');
+                if (card) {
+                    openSpeakerPanel(card);
+                }
+            });
+
+            button.dataset.bound = 'true';
+        });
+    }
+
+    function resetSpeakerCardsForDesktop() {
+        if (!isMobileSpeakerMode()) {
+            document.querySelectorAll('.speaker-collection').forEach((collection) => {
+                closeCollectionPanels(collection);
+            });
+        }
+    }
     fetch("headerAtualizado.html")
         .then((response) => response.text())
         .then((data) => {
-          const container = document.getElementById("header-placeholder");
-          container.innerHTML = ""; 
-          const fragment = document.createRange().createContextualFragment(data);
-          container.appendChild(fragment);
-                });
+            const container = document.getElementById("header-placeholder");
+            container.innerHTML = "";
+            const fragment = document.createRange().createContextualFragment(data);
+            container.appendChild(fragment);
+        });
 
-        navigateToActivityFromQuery();
-
-    // Carregar o Footer
+    navigateToActivityFromQuery();
     loadPartial('footer.html', 'footer-placeholder');
+
+    document.addEventListener('DOMContentLoaded', () => {
+        wrapSpeakerRuns();
+        buildSpeakerRows();
+        bindSpeakerButtons();
+        resetSpeakerCardsForDesktop();
+    });
+
+    window.addEventListener('resize', resetSpeakerCardsForDesktop);
 </script>
 
 </body>
 </html>
-
-
