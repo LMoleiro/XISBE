@@ -399,7 +399,14 @@
             loadHeader();
             loadPartial('footer.html', 'footer-placeholder');
         };
-        window.onresize = () => gerarCalendario();
+        let _lastIsMobile = window.innerWidth <= 1024;
+        window.onresize = () => {
+            const isMobile = window.innerWidth <= 1024;
+            if (isMobile !== _lastIsMobile) {
+                _lastIsMobile = isMobile;
+                gerarCalendario();
+            }
+        };
         window.onclick = (e) => { if (e.target == document.getElementById("myModal")) fecharModal(); }
     </script>
 </body>
