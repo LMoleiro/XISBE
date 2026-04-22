@@ -202,21 +202,20 @@
         </button>
 
         <nav class="nav-links">
-            <a href="index.html" class="nav-link-style">Home</a>
-            <a href="activities.html" class="nav-link-style">Activities</a>
-            <a href="schedule.html" class="nav-link-style">Schedule</a>
-            <a href="meettheteam.html" class="nav-link-style">Meet the Team</a>
+            <a href="index.html" class="nav-link-style" data-i18n data-en="Home" data-pt="Início">Home</a>
+            <a href="activities.html" class="nav-link-style" data-i18n data-en="Activities" data-pt="Atividades">Activities</a>
+            <a href="schedule.html" class="nav-link-style" data-i18n data-en="Schedule" data-pt="Programa">Schedule</a>
+            <a href="meettheteam.html" class="nav-link-style" data-i18n data-en="Meet the Team" data-pt="Equipa">Meet the Team</a>
             
         </nav>
     
 
         <div class="nav-content" id="nav-content">
             <nav class="nav-links-mobile">
-                <a href="index.html" class="nav-link-style">Home</a>
-                <a href="activities.html" class="nav-link-style">Activities</a>
-                <a href="schedule.html" class="nav-link-style">Schedule</a>
-                <a href="meettheteam.html" class="nav-link-style">Meet the Team</a>
-               
+                <a href="index.html" class="nav-link-style" data-i18n data-en="Home" data-pt="Início">Home</a>
+                <a href="activities.html" class="nav-link-style" data-i18n data-en="Activities" data-pt="Atividades">Activities</a>
+                <a href="schedule.html" class="nav-link-style" data-i18n data-en="Schedule" data-pt="Programa">Schedule</a>
+                <a href="meettheteam.html" class="nav-link-style" data-i18n data-en="Meet the Team" data-pt="Equipa">Meet the Team</a>
             </nav>
             <div class="auth-buttons-mobile">
                
@@ -249,26 +248,42 @@
     })();
 
     const languageButtons = document.querySelectorAll('.language-option');
-  let currentLanguage = localStorage.getItem('siteLanguage') || 'en';
+    let currentLanguage = localStorage.getItem('siteLanguage') || 'en'; // sets default language to English if not set
 
-  function updateLanguageToggle(lang) {
+    function updateLanguageToggle(lang) {
     languageButtons.forEach(button => {
       button.classList.toggle('active', button.dataset.lang === lang);
     });
   }
 
+  function translateHeader(lang) {
+    document.documentElement.lang = lang;
+
+    const translatableElements = document.querySelectorAll('[data-i18n]');
+
+    translatableElements.forEach(element => {
+      const translation = element.dataset[lang];
+      if (translation) {
+        element.textContent = translation;
+      }
+    });
+  }
+
+  function applyLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem('siteLanguage', currentLanguage);
+    updateLanguageToggle(currentLanguage);
+    translateHeader(currentLanguage);
+  }
+
   updateLanguageToggle(currentLanguage);
+  translateHeader(currentLanguage);
 
   languageButtons.forEach(button => {
     button.addEventListener('click', () => {
-      currentLanguage = button.dataset.lang;
-
-      localStorage.setItem('siteLanguage', currentLanguage);
-      updateLanguageToggle(currentLanguage);
-
-      console.log('Selected language:', currentLanguage);
+      applyLanguage(button.dataset.lang);
     });
   });
- 
+    
   
 </script>
