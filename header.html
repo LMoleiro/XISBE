@@ -29,6 +29,18 @@
         gap: 0;
     }
 
+    .logo {
+        flex: 1;
+    }
+
+    .auth-buttons-desktop {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
     .nav-links, .nav-links-mobile {
         display: flex;
         gap: 20px;
@@ -85,6 +97,12 @@
     }
 
     /* MOBILE */
+    .auth-user-name {
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
     @media (max-width: 771px) {
         .custom-header {
             padding: 10px 20px; /* Reduz padding para não esticar no mobile */
@@ -110,6 +128,7 @@
             background-size: cover;
             background-position: center;
             border-radius: 5%;
+            border: 2px solid rgba(255, 255, 255, 0.6);
             padding: 20px;
             text-align: center;
             box-sizing: border-box; /* Crucial para a largura não passar dos 100% */
@@ -121,11 +140,11 @@
         }
 
         .nav-links {
-            display: none; /* Esconde os links normais no mobile */
+            display: none;
         }
 
-        .auth-buttons {
-            display: none; /* Esconde os botões normais no mobile */
+        .auth-buttons-desktop {
+            display: none;
         }
         
         .auth-buttons-mobile {
@@ -164,9 +183,9 @@
             <a href="activities.html" class="nav-link-style">Activities</a>
             <a href="schedule.html" class="nav-link-style">Schedule</a>
             <a href="meettheteam.html" class="nav-link-style">Meet the Team</a>
-            
         </nav>
-    
+
+        <div class="auth-buttons-desktop" id="auth-buttons-desktop"></div>
 
         <div class="nav-content" id="nav-content">
             <nav class="nav-links-mobile">
@@ -189,7 +208,6 @@
         const navContent = document.getElementById('nav-content');
 
         if (menuBtn && navContent) {
-            // Remove listeners antigos para evitar duplicação se reinjetado
             const newBtn = menuBtn.cloneNode(true);
             menuBtn.parentNode.replaceChild(newBtn, menuBtn);
 
@@ -197,6 +215,74 @@
                 e.stopPropagation();
                 navContent.classList.toggle('active');
             });
+        }
+
+        // Auth
+        const SUPABASE_URL = 'https://tcsbqigmjcoscrtrtmxa.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_8WpYQngE6loxjIH3Wwj6Cg_NSnZnugf';
+
+        function renderAuth(user, bioCoins) {
+            const desktop = document.getElementById('auth-buttons-desktop');
+            const mobile = document.querySelector('.auth-buttons-mobile');
+            if (!desktop && !mobile) return;
+
+            let html;
+            if (user) {
+                const name = user.user_metadata?.display_name || user.email;
+                const coins = bioCoins ?? 0;
+                html = `<span class="auth-user-name">${name}</span>
+                        <span class="auth-user-name" style="opacity:0.8;">🪙 ${coins}</span>
+                        <button class="btn-orange" id="xisbe-logout">Log Out</button>`;
+            } else {
+                html = `<button class="btn-orange" onclick="window.location.href='login.html'">Log In</button>
+                        <button class="btn-orange" onclick="window.location.href='signupDB.html'">Sign Up</button>`;
+            }
+
+            if (desktop) desktop.innerHTML = html;
+            if (mobile) mobile.innerHTML = html;
+
+            document.querySelectorAll('#xisbe-logout').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    window.xisbeAuth.auth.signOut().then(() => {
+                        window.location.href = 'index.html';
+                    });
+                });
+            });
+        }
+
+        async function fetchBioCoins(client, user) {
+            const name = user.user_metadata?.display_name;
+            console.log('fetchBioCoins: display_name =', name);
+            if (!name) return null;
+            const { data, error } = await client.from('users').select('BioCoins').eq('user_name', name).maybeSingle();
+            console.log('fetchBioCoins: data =', data, 'error =', error);
+            return data?.BioCoins ?? null;
+        }
+
+        function initAuth() {
+            const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            window.xisbeAuth = client;
+
+            client.auth.getSession().then(({ data: { session } }) => {
+                const user = session?.user ?? null;
+                renderAuth(user, null);
+                if (user) fetchBioCoins(client, user).then(coins => renderAuth(user, coins));
+            });
+
+            client.auth.onAuthStateChange((_event, session) => {
+                const user = session?.user ?? null;
+                renderAuth(user, null);
+                if (user) fetchBioCoins(client, user).then(coins => renderAuth(user, coins));
+            });
+        }
+
+        if (window.supabase) {
+            initAuth();
+        } else {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+            script.onload = initAuth;
+            document.head.appendChild(script);
         }
     })();
 </script>

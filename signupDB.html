@@ -9,7 +9,8 @@
 </head>
 <body class="signup-page">
     <div class="container">
-        <div class="signupForm">
+        <div class="signupForm" style="position: relative;">
+            <button type="button" onclick="history.back()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#555;padding:0;line-height:1;" aria-label="Go back">&times;</button>
             <div class="inSignForm">
                <h1>Sign Up</h1>
                <form id="inputForm">
@@ -58,7 +59,7 @@
                 .select('user_name')
                 .eq('user_name', userName)
                 .maybeSingle();
-            
+
             if (checkError) {
                 alert("Erro técnico: " + checkError.message);
                 submitBtn.disabled = false;
@@ -68,7 +69,19 @@
             if (userExists) {
                 document.getElementById('error-userName').innerText = "Este nome de utilizador já está ocupado.";
                 submitBtn.disabled = false;
-                return; 
+                return;
+            }
+
+            const { data: emailExists } = await supabaseClient
+                .from('users')
+                .select('email')
+                .eq('email', userEmail)
+                .maybeSingle();
+
+            if (emailExists) {
+                document.getElementById('error-email').innerText = "Este email já está a ser utilizado.";
+                submitBtn.disabled = false;
+                return;
             }
             
             const { data, error } = await supabaseClient.auth.signUp({
