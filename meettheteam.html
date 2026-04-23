@@ -12,6 +12,8 @@
             width: 100%;
             position: relative;
             overflow-x: hidden;
+            background-image: none;
+            background-color: #ffffff;
         }
     
         /* Correção para telemóvel: impede que as fotos fiquem "esmagadas" */
@@ -45,8 +47,29 @@
         /* Ajuste dos botões de navegação para mobile */
         .swiper-button-next, .swiper-button-prev {
             transform: scale(0.6);
-            color: #000; /* Ajusta a cor se necessário */
+            color: #000;
         }
+
+
+        .swiper-btn-background {
+            display: none;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(90deg, #F59E0B, #EA580C);
+            border-radius: 50%;
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
+            z-index: 9;
+            pointer-events: none;
+        }
+
+        .swiper-btn-background.next { right: 6px; }
+        .swiper-btn-background.prev { left: 6px; }
+
+        .swiper-button-next:not(.swiper-button-lock) ~ .swiper-btn-background.next { display: block; }
+        .swiper-button-prev:not(.swiper-button-lock) ~ .swiper-btn-background.prev { display: block; }
 
         #header-container,
         #footer-container {
@@ -91,6 +114,8 @@
             </div>
             <div class="swiper-button-next" id="swiper-next-1"></div>
             <div class="swiper-button-prev" id="swiper-prev-1"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
         </div>
     </div>
 
@@ -151,6 +176,8 @@
             </div>
             <div class="swiper-button-next" id="swiper-next-2"></div>
             <div class="swiper-button-prev" id="swiper-prev-2"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
         </div>
     </div>
 
@@ -223,6 +250,8 @@
             </div>
             <div class="swiper-button-next" id="swiper-next-3"></div>
             <div class="swiper-button-prev" id="swiper-prev-3"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
         </div>
     </div>
 
@@ -303,6 +332,8 @@
             </div>
             <div class="swiper-button-next" id="swiper-next-4"></div>
             <div class="swiper-button-prev" id="swiper-prev-4"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
         </div>
     </div>
 
@@ -351,6 +382,8 @@
             </div>
             <div class="swiper-button-next" id="swiper-next-5"></div>
             <div class="swiper-button-prev" id="swiper-prev-5"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
         </div>
     </div>
 
@@ -403,6 +436,8 @@
             </div>
             <div class="swiper-button-next" id="swiper-next-6"></div>
             <div class="swiper-button-prev" id="swiper-prev-6"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
         </div>
     </div>
         
@@ -483,6 +518,8 @@
             </div>
             <div class="swiper-button-next" id="swiper-next-7"></div>
             <div class="swiper-button-prev" id="swiper-prev-7"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
         </div>
     </div>
     
