@@ -302,7 +302,7 @@
             const name = user.user_metadata?.display_name;
             console.log('fetchBioCoins: display_name =', name);
             if (!name) return null;
-            const { data, error } = await client.from('users').select('BioCoins').eq('user_name', name).maybeSingle();
+            const { data, error } = await client.from('users').select('BioCoins').eq('name', name).maybeSingle();
             console.log('fetchBioCoins: data =', data, 'error =', error);
             return data?.BioCoins ?? null;
         }
