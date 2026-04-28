@@ -92,6 +92,8 @@
             }
             .activity-card strong { font-size: 13px; margin-bottom: 2px; }
             .activity-card small { font-size: 11px; }
+            .activity-card-small strong { font-size: 10px; }
+            .activity-card-small small { font-size: 8px; }
 
             .qr-section img{
                 height:200px;
@@ -316,6 +318,7 @@
                         card.className = 'activity-card';
                         card.setAttribute('tabindex', '0');
                         card.style.backgroundColor = cardColor;
+                        if (act.activity.startsWith('Pitch')) card.classList.add('activity-card-small');
                         card.style.color = '#FFFFFF';
                         if (window.innerWidth <= 1024){
                             card.innerHTML = `
