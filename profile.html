@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile – XI SBE</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        .profile-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+        }
+
+        .profile-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2f2f2f;
+            margin: 0;
+        }
+
+        .profile-coins {
+            font-size: 15px;
+            color: #555;
+            margin: 0;
+        }
+
+        #qr-container {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 16px;
+            display: inline-block;
+        }
+
+        .profile-hint {
+            font-size: 13px;
+            color: #888;
+            margin: 0;
+        }
+
+        .btn-orange {
+            background-color: #FF9114;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        @media (min-width: 768px) {
+            #qr-container, .profile-hint {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="login-page">
+    <div class="container">
+        <div class="signupForm" style="position: relative;">
+            <button type="button" onclick="history.back()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#555;padding:0;line-height:1;" aria-label="Go back">&times;</button>
+            <div class="inSignForm">
+                <h1 id="profile-title">Not logged in</h1>
+
+                <div id="view-loading" style="text-align:center; color:#555; padding: 20px 0;">
+                    Loading...
+                </div>
+
+                <div id="view-profile" class="profile-card" style="display:none;">
+                    <p class="profile-coins" id="profile-coins"></p>
+                    <div id="qr-container">
+                        <div id="qr-canvas"></div>
+                    </div>
+                    <p class="profile-hint">Show this QR code to check in to activities.</p>
+                </div>
+
+                <button class="btn-orange" id="logout-btn" style="display:none; margin-top: 16px; width: 100%;">Log Out</button>
+
+                <div id="view-error" style="display:none; text-align:center;">
+                    <p style="color:#721c24;">You need to be logged in to view your profile.</p>
+                    <a href="login.html?redirect=profile.html">Log In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const supabaseUrl = 'https://tcsbqigmjcoscrtrtmxa.supabase.co';
+        const supabaseKey = 'sb_publishable_8WpYQngE6loxjIH3Wwj6Cg_NSnZnugf';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        function show(id) {
+            ['view-loading', 'view-profile', 'view-error'].forEach(v => {
+                document.getElementById(v).style.display = v === id ? (id === 'view-profile' ? 'flex' : 'block') : 'none';
+            });
+        }
+
+        async function init() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+
+            if (!session) {
+                show('view-error');
+                return;
+            }
+
+            const user = session.user;
+            const name = user.user_metadata?.display_name || user.email;
+            document.getElementById('profile-title').textContent = name;
+
+            const { data } = await supabaseClient.from('users').select('BioCoins').eq('name', name).maybeSingle();
+            const coins = data?.BioCoins ?? 0;
+
+            document.getElementById('profile-coins').textContent = `🪙 ${coins} BioCoins`;
+
+            new QRCode(document.getElementById('qr-canvas'), {
+                text: user.id,
+                width: 220,
+                height: 220,
+                colorDark: '#1a1a1a',
+                colorLight: '#ffffff'
+            });
+
+            show('view-profile');
+
+            const logoutBtn = document.getElementById('logout-btn');
+            logoutBtn.style.display = 'block';
+            logoutBtn.addEventListener('click', async () => {
+                await supabaseClient.auth.signOut();
+                window.location.href = 'index.html';
+            });
+        }
+
+        init();
+    </script>
+</body>
+</html>
