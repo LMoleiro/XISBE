@@ -3,484 +3,578 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X SBE Teams</title>
-    <link rel="stylesheet" href="assets/css/style.css"> <!-- External CSS File -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"> <!-- Swiper CSS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js" defer></script> <!-- Swiper JS -->
-    <script src="assets/js/main.js" defer></script> <!-- External JS File -->
+    <title>XI SBE Teams</title>
+    <link rel="stylesheet" href="assets/css/style.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            position: relative;
+            overflow-x: hidden;
+            background-image: none;
+            background-color: #ffffff;
+        }
+    
+        /* Correção para telemóvel: impede que as fotos fiquem "esmagadas" */
+        .department {
+            padding: 20px 0;
+            overflow: hidden;
+        }
+        
+        .swiper-slide {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .swiper-slide img {
+            width: 90%; /* Ajusta a largura no slide */
+            max-width: 280px;
+            height: auto;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        .coordinator-label {
+            margin: 2px 0 0 0;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #000;
+        }
+
+        /* Ajuste dos botões de navegação para mobile */
+        .swiper-button-next, .swiper-button-prev {
+            transform: scale(0.6);
+            color: #000;
+        }
+
+
+        .swiper-btn-background {
+            display: none;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(90deg, #F59E0B, #EA580C);
+            border-radius: 50%;
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
+            z-index: 9;
+            pointer-events: none;
+        }
+
+        .swiper-btn-background.next { right: 6px; }
+        .swiper-btn-background.prev { left: 6px; }
+
+        .swiper-button-next:not(.swiper-button-lock) ~ .swiper-btn-background.next { display: block; }
+        .swiper-button-prev:not(.swiper-button-lock) ~ .swiper-btn-background.prev { display: block; }
+
+        #header-container,
+        #footer-container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        }
+
+        #header-container {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        }
+
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js" defer></script>
 </head>
 <body>
-    <div id="header-placeholder"></div>
-    <main>
+    <div id="header-container"></div>
+
     <div class="department">
-        <h1>General Coordination</h1>
+        <h1>Coordenação Geral</h1>
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img src="assets/images/ger_inescerqueira.jpg" alt="Inês Cerqueira">
-                    <h3>Inês Cerqueira</h3>
-                    <p>LEBIOL</p>
+                    <img src="assets/images/coo_beatrizalbuquerque.jpg" alt="Beatriz Albuquerque">
+                    <h3>Beatriz Albuquerque</h3>
                 </div>
                 <div class="swiper-slide">
-                    <img src="assets/images/ger_joanagoncalves.jpg" alt="Joana Gonçalves">
+                    <img src="assets/images/coo_eduardasilva.jpg" alt="Eduarda Silva">
+                    <h3>Eduarda Silva</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/coo_goncaloserra.jpg" alt="Gonçalo Serra">
+                    <h3>Gonçalo Serra</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/coo_madalenamestre.jpg" alt="Madalena Mestre">
+                    <h3>Madalena Mestre</h3>
+                </div>
+            </div>
+            <div class="swiper-button-next" id="swiper-next-1"></div>
+            <div class="swiper-button-prev" id="swiper-prev-1"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
+        </div>
+    </div>
+
+    <div class="department">
+        <h1>Departamento de Comunicação</h1>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="assets/images/com_joanagoncalves.jpg" alt="Joana Gonçalves">
                     <h3>Joana Gonçalves</h3>
-                    <p>LEBIOL</p>
+                    <p class="coordinator-label">Coordenador</p>
                 </div>
                 <div class="swiper-slide">
-                    <img src="assets/images/ger_catarinafreitas.jpg" alt="Catarina Freitas">
-                    <h3>Catarina Freitas</h3>
-                    <p>MEBIOM</p>
+                    <img src="assets/images/com_joaoconfraria.jpg" alt="João Confraria">
+                    <h3>João Confraria</h3>
+                    <p class="coordinator-label">Coordenador</p>
                 </div>
                 <div class="swiper-slide">
-                    <img src="assets/images/ger_lauramanso.jpeg" alt="Laura Manso">
-                    <h3>Laura Manso</h3>
-                    <p>MSRAIF</p>
+                    <img src="assets/images/com_beatrizmonteiro.jpg" alt="Beatriz Monteiro">
+                    <h3>Beatriz Monteiro</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/com_danieltojinha.jpg" alt="Daniel Tojinha">
+                    <h3>Daniel Tojinha</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/com_joanaanastacio.jpg" alt="Joana Anastácio">
+                    <h3>Joana Anastácio</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/com_juliadrentje.jpg" alt="Julia Drentje">
+                    <h3>Julia Drentje</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/com_manuelabreu.jpg" alt="Manuel Abreu">
+                    <h3>Manuel Abreu</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/com_mariabeatrizrocha.jpg" alt="Maria Beatriz Rocha">
+                    <h3>Maria Beatriz Rocha</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/com_martacamara.jpg" alt="Marta Câmara">
+                    <h3>Marta Câmara</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/com_matildesaianda.jpg" alt="Matilde Saianda">
+                    <h3>Matilde Saianda</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/com_miguelmendes.jpg" alt="Miguel Mendes">
+                    <h3>Miguel Mendes</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/com_tiagopardal.jpg" alt="Tiago Pardal">
+                    <h3>Tiago Pardal</h3>
                 </div>
             </div>
-            <!-- Botões de navegação -->
-    <div class="swiper-button-next" id="swiper-next-1"></div>
-    <div class="swiper-button-prev" id="swiper-prev-1"></div>
+            <div class="swiper-button-next" id="swiper-next-2"></div>
+            <div class="swiper-button-prev" id="swiper-prev-2"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
+        </div>
+    </div>
+
+    <div class="department">
+        <h1>Departamento de Relações Externas</h1>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="assets/images/re_leonorlouro.jpg" alt="Leonor Louro">
+                    <h3>Leonor Louro</h3>
+                    <p class="coordinator-label">Coordenador</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_teresaferreiro.jpg" alt="Teresa Ferreiro">
+                    <h3>Teresa Ferreiro</h3>
+                    <p class="coordinator-label">Coordenador</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_anarita.jpg" alt="Ana Rita">
+                    <h3>Ana Rita</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_beatrizpinela.jpg" alt="Beatriz Pinela">
+                    <h3>Beatriz Pinela</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_bernardocipriano.jpg" alt="Bernardo Cipriano">
+                    <h3>Bernardo Cipriano</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_constancaalmeida.jpg" alt="Constança Almeida">
+                    <h3>Constança Almeida</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_helenasousa.jpg" alt="Helena Sousa">
+                    <h3>Helena Sousa</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_hugobarreiros.jpg" alt="Hugo Barreiros">
+                    <h3>Hugo Barreiros</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_leonorcosta.jpg" alt="Leonor Costa">
+                    <h3>Leonor Costa</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_luanafranca.jpg" alt="Luana França">
+                    <h3>Luana França</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_luisasantos.jpg" alt="Luísa Santos">
+                    <h3>Luísa Santos</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_margaridaaparicio.jpg" alt="Margarida Aparício">
+                    <h3>Margarida Aparício</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_pedromartins.jpg" alt="Pedro Martins">
+                    <h3>Pedro Martins</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_ritarodrigues.jpg" alt="Rita Rodrigues">
+                    <h3>Rita Rodrigues</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/re_ruipires.jpg" alt="Rui Pires">
+                    <h3>Rui Pires</h3>
+                </div>
+            </div>
+            <div class="swiper-button-next" id="swiper-next-3"></div>
+            <div class="swiper-button-prev" id="swiper-prev-3"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
+        </div>
+    </div>
+
+    <div class="department">
+        <h1>Departamento de Logística</h1>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="assets/images/log_matildemartins.jpg" alt="Matilde Martins">
+                    <h3>Matilde Martins</h3>
+                    <p class="coordinator-label">Coordenador</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_filipepereira.jpg" alt="Filipe Pereira">
+                    <h3>Filipe Pereira</h3>
+                    <p class="coordinator-label">Coordenador</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_beatrizmedeiros.jpg" alt="Beatriz Medeiros">
+                    <h3>Beatriz Medeiros</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_beatrizbraz.jpg" alt="Beatriz Braz">
+                    <h3>Beatriz Braz</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_claraverissimo.jpg" alt="Clara Veríssimo">
+                    <h3>Clara Veríssimo</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_fredericocosta.jpg" alt="Frederico Costa">
+                    <h3>Frederico Costa</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_inesbarroso.jpg" alt="Inês Barroso">
+                    <h3>Inês Barroso</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_leonorlacmane.jpg" alt="Leonor Lacmane">
+                    <h3>Leonor Lacmane</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_leonormestre.jpg" alt="Leonor Mestre">
+                    <h3>Leonor Mestre</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_madalenacunha.jpg" alt="Madalena Cunha">
+                    <h3>Madalena Cunha</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_madalenavideira.jpg" alt="Madalena Videira">
+                    <h3>Madalena Videira</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_marianaferreira.jpg" alt="Mariana Ferreira">
+                    <h3>Mariana Ferreira</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_matildebravo.jpg" alt="Matilde Bravo">
+                    <h3>Matilde Bravo</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_matildeisidro.jpg" alt="Matilde Isidro">
+                    <h3>Matilde Isidro</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_monicasimao.jpg" alt="Mónica Simão">
+                    <h3>Mónica Simão</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_sofiagarrett.jpg" alt="Sofia Garrett">
+                    <h3>Sofia Garrett</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/log_sofiamarques.jpg" alt="Sofia Marques">
+                    <h3>Sofia Marques</h3>
+                </div>
+            </div>
+            <div class="swiper-button-next" id="swiper-next-4"></div>
+            <div class="swiper-button-prev" id="swiper-prev-4"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
+        </div>
+    </div>
+
+    <div class="department">
+        <h1>Departamento de Informática</h1>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="assets/images/inf_andresa.jpg" alt="André Sá">
+                    <h3>André Sá</h3>
+                    <p class="coordinator-label">Coordenador</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/inf_mariamourisca.jpg" alt="Maria Mourisca">
+                    <h3>Maria Mourisca</h3>
+                    <p class="coordinator-label">Coordenador</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/inf_carolinamendonca.jpg" alt="Carolina Mendonça">
+                    <h3>Carolina Mendonça</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/inf_catarinasequeira.jpg" alt="Catarina Sequeira">
+                    <h3>Catarina Sequeira</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/inf_joanarosa.jpg" alt="Joana Rosa">
+                    <h3>Joana Rosa</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/inf_leonorgrima.jpg" alt="Leonor Grima">
+                    <h3>Leonor Grima</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/inf_luismoleiro.jpg" alt="Luís Moleiro">
+                    <h3>Luís Moleiro</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/inf_margaridanunes.jpg" alt="Margarida Nunes">
+                    <h3>Margarida Nunes</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/inf_sarasilva.jpg" alt="Sara Silva">
+                    <h3>Sara Silva</h3>
+                </div>
+            </div>
+            <div class="swiper-button-next" id="swiper-next-5"></div>
+            <div class="swiper-button-prev" id="swiper-prev-5"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
+        </div>
+    </div>
+
+    <div class="department">
+        <h1>Departamento de Design</h1>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="assets/images/des_lauradinis.jpg" alt="Laura Dinis">
+                    <h3>Laura Dinis</h3>
+                    <p class="coordinator-label">Coordenador</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/des_marianacabaco.jpg" alt="Mariana Cabaço">
+                    <h3>Mariana Cabaço</h3>
+                    <p class="coordinator-label">Coordenador</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/des_anadomingues.jpg" alt="Ana Domingues">
+                    <h3>Ana Domingues</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/des_claravilanovarodrigues.jpg" alt="Clara Vilanova Rodrigues">
+                    <h3>Clara Vilanova Rodrigues</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/des_emiliadomarsalvador.jpg" alt="Emília do Mar Salvador">
+                    <h3>Emília do Mar Salvador</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/des_joanasaraiva.jpg" alt="Joana Saraiva">
+                    <h3>Joana Saraiva</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/des_laurapedro.jpg" alt="Laura Pedro">
+                    <h3>Laura Pedro</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/des_mariateresaribeiro.jpg" alt="Maria Teresa Ribeiro">
+                    <h3>Maria Teresa Ribeiro</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/des_rodrigoduarte.jpg" alt="Rodrigo Duarte">
+                    <h3>Rodrigo Duarte</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/des_sarabento.jpg" alt="Sara Bento">
+                    <h3>Sara Bento</h3>
+                </div>
+            </div>
+            <div class="swiper-button-next" id="swiper-next-6"></div>
+            <div class="swiper-button-prev" id="swiper-prev-6"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
+        </div>
+    </div>
+        
+    <div class="department">
+        <h1>Departamento Científico</h1>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_analaramanuel.jpg" alt="Ana Lara Manuel">
+                    <h3>Ana Lara Manuel</h3>
+                    <p class="coordinator-label">Coordenador</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_leonorbarros.jpg" alt="Leonor Barros">
+                    <h3>Leonor Barros</h3>
+                    <p class="coordinator-label">Coordenador</p>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_carolinagalaferreira.jpg" alt="Carolina Gala Ferreira">
+                    <h3>Carolina Gala Ferreira</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_claudiasilva.jpg" alt="Cláudia Silva">
+                    <h3>Cláudia Silva</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_danielaramos.jpg" alt="Daniela Ramos">
+                    <h3>Daniela Ramos</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_franciscopala.jpg" alt="Francisco Pala">
+                    <h3>Francisco Pala</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_goncalofalcao.jpg" alt="Gonçalo Falcão">
+                    <h3>Gonçalo Falcão</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_inescarvalho.jpg" alt="Inês Carvalho">
+                    <h3>Inês Carvalho</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_ineshenriques.jpg" alt="Inês Henriques">
+                    <h3>Inês Henriques</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_inesmarquesdossantos.jpg" alt="Inês Marques dos Santos">
+                    <h3>Inês Marques dos Santos</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_leonardopina.jpg" alt="Leonardo Pina">
+                    <h3>Leonardo Pina</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_leonornicolau.jpg" alt="Leonor Nicolau">
+                    <h3>Leonor Nicolau</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_madalenabento.jpg" alt="Madalena Bento">
+                    <h3>Madalena Bento</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_madalenaboldescu.jpg" alt="Madalena Boldescu">
+                    <h3>Madalena Boldescu</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_matildereis.jpg" alt="Matilde Reis">
+                    <h3>Matilde Reis</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_ritasousa.jpg" alt="Rita Sousa">
+                    <h3>Rita Sousa</h3>
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/images/cie_sofiafolgado.jpg" alt="Sofia Folgado">
+                    <h3>Sofia Folgado</h3>
+                </div>
+            </div>
+            <div class="swiper-button-next" id="swiper-next-7"></div>
+            <div class="swiper-button-prev" id="swiper-prev-7"></div>
+            <div class="swiper-btn-background next"></div>
+            <div class="swiper-btn-background prev"></div>
         </div>
     </div>
     
-    <!-- Communication Department -->
-<div class="department">
-    <h1>Communication Department</h1>
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="assets/images/com_mariaconstantino.jpg" alt="Maria Constantino">
-                <h3>Maria Constantino</h3>
-                <p>Coordinator - LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/com_beatrizalbuquerque.jpg" alt="Beatriz Albuquerque">
-                <h3>Beatriz Albuquerque</h3>
-                <p>Coordinator - LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/com_filipaaranha.png" alt="Filipa Aranha">
-                <h3>Filipa Aranha</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/com_margaridagarcia.jpg" alt="Margarida Garcia">
-                <h3>Margarida Garcia</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/com_margaridapao.jpg" alt="Margarida Pão">
-                <h3>Margarida Pão</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/com_joanabicho.jpg" alt="Joana Bicho">
-                <h3>Joana Bicho</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/com_joaoconfraria.jpg" alt="João Confraria">
-                <h3>João Confraria</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/com_ritasantos.jpg" alt="Rita Santos">
-                <h3>Rita Santos</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/com_constancamourao.jpg" alt="Constança Mourão">
-                <h3>Constança Mourão</h3>
-                <p>LEBIOM</p>
-            </div>
-        </div>
-        <!-- Botões de navegação -->
-    <div class="swiper-button-next" id="swiper-next-2"></div>
-    <div class="swiper-button-prev" id="swiper-prev-2"></div>
-    </div>
-</div>
+    <div id="footer-container"></div>
 
-    <!-- External Relations Department -->
-<div class="department">
-    <h1>External Relations Department</h1>
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="assets/images/re_inessoeiro.jpg" alt="Inês Soeiro">
-                <h3>Inês Soeiro</h3>
-                <p>Coordinator - LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/re_marianaazevedo.jpg" alt="Mariana Azevedo">
-                <h3>Mariana Azevedo</h3>
-                <p>Coordinator - LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/re_dianageirinhas.jpg" alt="Diana Gueirinhas">
-                <h3>Diana Gueirinhas</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/re_bernardomatos.jpg" alt="Bernardo Matos">
-                <h3>Bernardo Matos</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/re_miguelbocarro.jpg" alt="Miguel Bocarro">
-                <h3>Miguel Bocarro</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/re_beatrizmateus.jpg" alt="Beatriz Mateus">
-                <h3>Beatriz Mateus</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/re_carlosagostinho.jpg" alt="Carlos Agostinho">
-                <h3>Carlos Agostinho</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/re_monicaalmeida.jpg" alt="Mónica Almeida">
-                <h3>Mónica Almeida</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/re_franciscopinto.jpg" alt="Francisco Pinto">
-                <h3>Francisco Pinto</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/re_luiscarvalho.jpg" alt="Luís Carvalho">
-                <h3>Luís Carvalho</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/re_carlotafelizardo.jpg" alt="Carlota Felizardo">
-                <h3>Carlota Felizardo</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/re_marialouro.jpg" alt="Maria Louro">
-                <h3>Maria Louro</h3>
-                <p>LEBIOM</p>
-            </div>
-        </div>
-       <!-- Botões de navegação -->
-    <div class="swiper-button-next" id="swiper-next-3"></div>
-    <div class="swiper-button-prev" id="swiper-prev-3"></div>
-    </div>
-</div>
-
-    <!-- Logistics Department -->
-<div class="department">
-    <h1>Logistics Department</h1>
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="assets/images/log_joanaandrade.jpg" alt="Joana Andrade">
-                <h3>Joana Andrade</h3>
-                <p>Coordinator - LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/log_anacampos.jpg" alt="Ana Campos">
-                <h3>Ana Campos</h3>
-                <p>Coordinator - LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/log_inesbernardino.jpg" alt="Inês Bernardino">
-                <h3>Inês Bernardino</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/log_camilarodrigues.jpg" alt="Camila Rodrigues">
-                <h3>Camila Rodrigues</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/log_teresaferreiro.jpg" alt="Teresa Ferreira">
-                <h3>Teresa Ferreira</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/log_anacordeiro.png" alt="Ana Cordeiro">
-                <h3>Ana Cordeiro</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/log_sabinatofan.jpg" alt="Sabina Tofan">
-                <h3>Sabina Tofan</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/log_filipefernandes.jpg" alt="Filipe Fernandes">
-                <h3>Filipe Fernandes</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/log_mafaldasantos.jpg" alt="Mafalda Santos">
-                <h3>Mafalda Santos</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/log_tomasbelbute.jpg" alt="Tomás Belbute">
-                <h3>Tomás Belbute</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/log_matildemartins.jpg" alt="Matilde Martins">
-                <h3>Matilde Martins</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/log_catarinapinto.jpg" alt="Catarina Pinto">
-                <h3>Catarina Pinto</h3>
-                <p>LEBIOM</p>
-            </div>
-        </div>
-        <!-- Botões de navegação -->
-    <div class="swiper-button-next" id="swiper-next-4"></div>
-    <div class="swiper-button-prev" id="swiper-prev-4"></div>
-    </div>
-</div>
-
-<!-- Informatics Department -->
-<div class="department">
-    <h1>Informatics Department</h1>
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="assets/images/inf_saracoelho.jpg" alt="Sara Coelho">
-                <h3>Sara Coelho</h3>
-                <p>Coordinator - LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/inf_diogosantos.jpg" alt="Diogo Santos">
-                <h3>Diogo Santos</h3>
-                <p>Coordinator - LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/inf_goncaloribeiro.jpg" alt="Gonçalo Ribeiro">
-                <h3>Gonçalo Ribeiro</h3>
-                <p>MEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/inf_pedromarques.jpg" alt="Pedro Marques">
-                <h3>Pedro Marques</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/inf_manuelmendes.jpg" alt="Manuel Mendes">
-                <h3>Manuel Mendes</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/inf_davidresende.jpg" alt="David Resende">
-                <h3>David Resende</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/inf_afonsocarvalho.jpg" alt="Afonso Carvalho">
-                <h3>Afonso Carvalho</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/inf_rodrigovieira.jpg" alt="Rodrigo Vieira">
-                <h3>Rodrigo Vieira</h3>
-                <p>LEBIOM</p>
-            </div>
-        </div>
-        <!-- Botões de navegação -->
-    <div class="swiper-button-next" id="swiper-next-5"></div>
-    <div class="swiper-button-prev" id="swiper-prev-5"></div>
-    </div>
-</div>
-
-<div class="department">
-    <h1>Design Department</h1>
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="assets/images/des_franciscavenancio.jpg" alt="Francisca Venâncio">
-                <h3>Francisca Venâncio</h3>
-                <p>Coordinator - LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/des_tomasserra.jpg" alt="Tomás Serra">
-                <h3>Tomás Serra</h3>
-                <p>Coordinator - MEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/des_diogovalez.jpg" alt="Diogo Valez">
-                <h3>Diogo Valez</h3>
-                <p>MEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/des_lyanagodinho.jpg" alt="Lyana Godinho">
-                <h3>Lyana Godinho</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/des_inesmabutana.jpg" alt="Inês Mabutana">
-                <h3>Inês Mabutana</h3>
-                <p>MEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/des_marianacabaco.jpg" alt="Mariana Cabaço">
-                <h3>Mariana Cabaço</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/des_matildecunha.jpg" alt="Matilde Cunha">
-                <h3>Matilde Cunha</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/des_carolinafitas.jpg" alt="Carolina Fitas">
-                <h3>Carolina Fitas</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/des_fredericogoncalves.jpg" alt="Frederico Gonçalves">
-                <h3>Frederico Gonçalves</h3>
-                <p>LEBIOM</p>
-            </div>
-        </div>
-        <!-- Botões de navegação -->
-    <div class="swiper-button-next" id="swiper-next-6"></div>
-    <div class="swiper-button-prev" id="swiper-prev-6"></div>
-    </div>
-</div>
-    
-<!-- Scientific Department Swiper -->
-<div class="department">
-    <h1>Scientific Department</h1>
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="assets/images/cie_sofiacosta.jpg" alt="Sofia Costa">
-                <h3>Sofia Costa</h3>
-                <p>Coordinator - LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_catarinafaleiro.jpg" alt="Catarina Faleiro">
-                <h3>Catarina Faleiro</h3>
-                <p>Coordinator - LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_catarinamatos.jpg" alt="Catarina Matos">
-                <h3>Catarina Matos</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_gabrielagomes.jpg" alt="Gabriela Gomes">
-                <h3>Gabriela Gomes</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_tomasnunes.jpg" alt="Tomás Nunes">
-                <h3>Tomás Nunes</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_martinamachado.jpg" alt="Martina Machado">
-                <h3>Martina Machado</h3>
-                <p>MEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_inesgodinho.jpg" alt="Inês Godinho">
-                <h3>Inês Godinho</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_joanacoelho.jpg" alt="Joana Coelho">
-                <h3>Joana Coelho</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_leonorbarro.jpg" alt="Leonor Barros">
-                <h3>Leonor Barros</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_eduardasilva.jpg" alt="Eduarda Silva">
-                <h3>Eduarda Silva</h3>
-                <p>LEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_goncaloserra.jpg" alt="Gonçalo Serra">
-                <h3>Gonçalo Serra</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_inesrodrigues.jpg" alt="Inês Rodrigues">
-                <h3>Inês Rodrigues</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_inescorrea.jpg" alt="Inês Corrêa">
-                <h3>Inês Corrêa</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_carolinarocha.jpg" alt="Carolina Rocha">
-                <h3>Carolina Rocha</h3>
-                <p>MEBIOM</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_beatrizcasaca.jpg" alt="Beatriz Casaca">
-                <h3>Beatriz Casaca</h3>
-                <p>LEBIOL</p>
-            </div>
-            <div class="swiper-slide">
-                <img src="assets/images/cie_anamanuel.jpg" alt="Ana Manuel">
-                <h3>Ana Manuel</h3>
-                <p>LEBIOM</p>
-            </div>
-        </div>
-        <!-- Botões de navegação -->
-    <div class="swiper-button-next" id="swiper-next-7"></div>
-    <div class="swiper-button-prev" id="swiper-prev-7"></div>
-    <!-- Paginação -->
-    </div>
-</div>
-    </main>
-    
-    <div id="footer-placeholder"></div>
-<!-- Importar Swiper.js -->
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 <script>
-    var swipers = document.querySelectorAll(".mySwiper");
-swipers.forEach((swiperContainer, index) => {
-    new Swiper(swiperContainer, {
-        slidesPerView: 4,
-        spaceBetween: 10,
-        navigation: {
-            nextEl: `#swiper-next-${index + 1}`,
-            prevEl: `#swiper-prev-${index + 1}`,
-        },
+    // Inicialização do Swiper com suporte a mobile (breakpoints)
+    document.addEventListener('DOMContentLoaded', function() {
+        var swipers = document.querySelectorAll(".mySwiper");
+        swipers.forEach((swiperContainer, index) => {
+            new Swiper(swiperContainer, {
+                slidesPerView: 1, // 1 foto por padrão (mobile)
+                spaceBetween: 20,
+                navigation: {
+                    nextEl: `#swiper-next-${index + 1}`,
+                    prevEl: `#swiper-prev-${index + 1}`,
+                },
+                breakpoints: {
+                    // Quando o ecrã for >= 480px (Tablets pequenos)
+                    480: {
+                        slidesPerView: 2,
+                        spaceBetween: 15
+                    },
+                    // Quando o ecrã for >= 1024px (Computadores)
+                    1024: {
+                        slidesPerView: 4,
+                        spaceBetween: 10
+                    }
+                }
+            });
+        });
     });
-});
 
     // Função para carregar Header e Footer
-    function loadPartial(file, target) {
-        fetch(file)
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error(`Erro ${response.status}: Não foi possível carregar ${file}`);
-                }
-            })
-            .then(data => {
-                document.getElementById(target).innerHTML = data;
-            })
-            .catch(error => console.error(`Erro ao carregar ${file}:`, error));
-    }
+    fetch("header.html")
+        .then((response) => response.text())
+        .then((data) => {
+          const container = document.getElementById("header-container");
+          container.innerHTML = "";
+          const fragment = document.createRange().createContextualFragment(data);
+          container.appendChild(fragment);
+          const savedLanguage = localStorage.getItem("siteLanguage") || "en";
 
-    // Carregar o Header e o Footer
-    loadPartial('header.html', 'header-placeholder');
-    loadPartial('footer.html', 'footer-placeholder');
+          if (typeof applyLanguage === "function") {
+            applyLanguage(savedLanguage);
+          }
+        })
+        .catch((error) => console.error("Error loading header:", error));
+
+    fetch("footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footer-container").innerHTML = data;
+        })
+        .catch((error) => console.error("Error loading footer:", error));
 </script>
 
 </body>

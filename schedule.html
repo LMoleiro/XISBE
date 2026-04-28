@@ -3,507 +3,422 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Schedule - XI SBE</title>
     <style>
+        :root {
+            --bg-start: #FFF6E8;
+            --bg-mid: #FFE3D6;
+            --bg-end: #E6ECFF;
+            --surface-glass: rgba(255, 255, 255, 0.6);
+            --surface-glass-border: rgba(255, 255, 255, 0.7);
+            --event-primary: #F59E0B;
+            --event-hover: #EA580C;
+            --event-selected: #6366F1;
+            --event-text: #FFFFFF;
+            --weekday-header-collapsed: #E6A96B;
+            --weekday-header-expanded: #CFC3B8;
+        }
+        
+        html, body { height: 100%; margin: 0; padding: 0; }
         body {
-            height: auto; 
-            min-height: 100vh; 
-            overflow-y: auto; 
-
-            width: auto; 
-            min-width: 1300px;     
-            overflow-x: auto;
-            
-            display: block;
-
+            display: flex; flex-direction: column; min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 52%, var(--bg-end) 100%);
+            background-attachment: fixed;
+            font-family: sans-serif;
         }
+        main { flex: 1; width: 100%; }
         
+        #header-placeholder { width: 100%; z-index: 1000; }
+        #footer-placeholder { width: 100%; margin-top: auto; }
+
         .calendar-container {
-            width: auto; 
-            overflow-x: auto; /* Permite o scroll horizontal quando o conteúdo ultrapassa o tamanho */
-            margin: 50px auto; /* Centraliza o conteúdo horizontalmente */
-            place-items: center;
-        }
-
-        .qr-container {
-            width: auto; 
-            overflow-x: auto; /* Permite o scroll horizontal quando o conteúdo ultrapassa o tamanho */
-            margin: 50px auto; /* Centraliza o conteúdo horizontalmente */
-            place-items: center;
-        }
-        
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(2, 2fr) 1fr 1fr 1fr 2fr 1fr 1fr; /* 1 time column + 5 day columns */
-            grid-auto-rows: 75px; /* Default height for each time slot */
-            grid-gap: 0px;
-            width: 1200px;
-            padding: 50px auto;
-            border-radius: 15px; /* Arredonda os cantos */
-            clip-path: inset(0 round 15px); /* Define o recorte arredondado */
-            border: 1px solid #ccc;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: auto; margin: 50px auto;
+            display: flex; justify-content: center; padding: 0 20px;
             box-sizing: border-box;
+        }
+
+        /*Desktop*/
+        @media (min-width: 1025px) {
+            body {overflow-x: auto; }
+
+            .calendar {
+                display: grid !important;
+                grid-template-columns: 1.8fr 0.9fr 0.9fr 1.8fr 1.8fr !important;
+                grid-auto-rows: 35px;
+                width: 1100px !important;
+                border-radius: 15px;
+                clip-path: inset(0 round 15px);
+                border: 1px solid var(--surface-glass-border);
+                background-color: var(--surface-glass);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                grid-gap: 2px;
+                box-shadow: 0 14px 38px rgba(234, 88, 12, 0.12);
+            }
+
+            .calendar-empty-space { background-color: rgba(255, 255, 255, 0.42); }
+
+            .header1 {
+                background: var(--weekday-header-collapsed);
+                color: #fff; font-size: 22px !important; font-weight: bold;
+                display: flex; justify-content: center; align-items: center;
+                grid-row: 1; z-index: 5;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+                transition: background-color 180ms ease;
+            }
+
+            .activity-card {
+                display: flex; flex-direction: column; align-items: center;
+                justify-content: center; text-align: center; line-height: 1.1;
+                padding: 4px; box-sizing: border-box; z-index: 10;
+                cursor: pointer;
+                border-radius: 12px;
+                background-color: var(--event-primary);
+                color: var(--event-text);
+                box-shadow: 0 8px 18px rgba(245, 158, 11, 0.28);
+                transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+            }
+            .activity-card:hover {
+                transform: translateY(-1px);
+                filter: brightness(0.93);
+                box-shadow: 0 12px 24px rgba(234, 88, 12, 0.3);
+            }
+            .activity-card:focus-visible,
+            .activity-card:active,
+            .activity-card.selected {
+                outline: none;
+                background-color: var(--event-selected);
+                box-shadow: 0 12px 24px rgba(99, 102, 241, 0.32);
+            }
+            .activity-card strong { font-size: 13px; margin-bottom: 2px; }
+            .activity-card small { font-size: 11px; }
+
+            .qr-section img{
+                height:200px;
+            }
+        }
+
+        /*Mobile*/
+        @media (max-width: 1024px) {
+            body { overflow-x: hidden; }
             
-        }
-
-        @media (max-width: 768px) {
-            .calendar div {
-                /*font-size: clamp(10px, 1.5vw, 16px); /* Ajuste menor */
-                padding: 20px;
-                text-align: center;
-                transition: background-color 0.3s ease;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            .calendar-container { 
+                display: block; 
+                padding: 0 20px; 
+                box-sizing: border-box;
+            }
+            
+            .calendar { 
+                display: flex; 
+                flex-direction: column; 
+                gap: 10px; 
+                width: 100%;
+                box-sizing: border-box;
             }
 
-            .calendar .header1 {
-                font-size: 18px;
+            .header1 {
+                background: var(--weekday-header-collapsed);
+                color: #fff; padding: 18px;
+                border-radius: 10px; cursor: pointer; font-size: 18px;
+                display: flex; justify-content: space-between; align-items: center;
+                width: 100%; 
+                box-sizing: border-box;
+                border: 1px solid rgba(255, 255, 255, 0.75);
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
+                transition: background-color 180ms ease;
             }
-        }
-        
-        .calendar div {
-            /*font-size: clamp(12px, 2vw, 20px); /* Tamanho da fonte responsivo */
-            padding: 7px; /* Remove padding */
-            display: flex; /* Container flex para alinhar em coluna */
-            flex-direction: column; /* Alinha elementos em coluna */
-            gap: 2px; /* Pequeno espaço entre elementos */
-            align-items: center; /* Alinha itens no topo */
-            text-align: center; /* Adiciona alinhamento horizontal ao texto */
-            justify-content: center; /* Centraliza o conteúdo horizontalmente */
-            line-height: 1; /* Reduz o espaçamento vertical entre o texto */
-        }
-        
-        .calendar div strong {
-            display: block; /* Faz o título ocupar uma linha */
-            margin: 0; /* Remove margens */
-        }
-        
-        .calendar div small {
-            display: block; /* Mostra a hora e o texto abaixo */
-            margin: 0; /* Remove margens */
-            font-size: 15px; /* Tamanho da fonte menor para a hora */
-        }
-
-        .calendar div br {
-            margin: 0;
-            line-height: 0; /* Para garantir que não haja espaço extra */
-        }
-        
-        div span.info-text {
-            color: blue;
-            text-decoration: underline;
-            font-size: 12px; /* Ajuste o tamanho conforme necessário */
-            cursor: pointer; /* Adiciona um cursor de ponteiro ao passar o mouse */
-        }
-        
-        /* Cursor pointer for cells with activities 
-        .calendar div:not(.header1):not(.time-column):not(.empty-cell) {
-            cursor: pointer; 
-        }*/
-        
-        /* Cursor remains default for empty cells */
-        div.calendar .empty-cell {
-            cursor: default;
-        }
-
-        .calendar .header1 {
-            background-color: rgba(255, 255, 255, 0.6);
-            cursor: default;
-            font-size: 24px;        
-            display: flex; /* Define o container flex */
-            justify-content: center; /* Centraliza horizontalmente */
-            align-items: center; /* Centraliza verticalmente */
-        }
-
-        .calendar div:first-child {
-            border: none;
-            cursor: default;
-        }
-
-        .calendar div:not(first-child) {
-            border-style: solid;
-            border-color: rgba(255, 255, 255, 0.5);
-            border-width: 1px;
-        }
-
-        p {
-           margin-top: 2px;
-           margin-bottom: 2px
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px); /* Efeito de desfoque */
-        }
-
-
-        .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 10px; /* Bordas arredondadas */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* Sombra */
-            width: 90%; /* Ocupa 90% da largura da tela em dispositivos menores */
-            max-width: 750px; /* Limite máximo de largura */
-            text-align: center;
-            position: relative;
-            animation: fadeIn 0.4s ease-out; /* Transição suave */
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
+            
+            .header1::after { content: '▼'; font-size: 12px; transition: transform 0.3s; }
+            .header1.active::after { transform: rotate(180deg); }
+            .header1.active {
+                background: var(--weekday-header-expanded);
+                color: #fff;
             }
-            to {
-                opacity: 1;
-                transform: scale(1);
+
+            .day-content { 
+                display: none; 
+                flex-direction: column; 
+                gap: 8px; 
+                margin-bottom: 10px; 
+                width: 100%; 
+                box-sizing: border-box;
             }
-        }
-        
-        @keyframes slideDown {
-            from {
-                transform: translateY(-50%);
-                opacity: 0;
+            
+            .day-content.active { display: flex !important; }
+
+            .activity-card {
+                width: 100% !important; 
+                border-radius: 12px; 
+                padding: 15px !important;
+                box-shadow: 0 8px 18px rgba(245, 158, 11, 0.24);
+                text-align: left;
+                box-sizing: border-box; 
+                background-color: var(--event-primary);
+                color: var(--event-text);
+
             }
-            to {
-                transform: translateY(0);
-                opacity: 1;
+
+            .qr-section img{
+                height:150px;
             }
         }
 
+        @media (max-width: 360px) {
+        .header1 {
+            background: var(--weekday-header-collapsed);
+            color: #fff;
+            padding: 18px;
+                border-radius: 10px; cursor: pointer; font-size: 18px;
+                display: flex; justify-content: space-between; align-items: center;
+                width: 100%; 
+                box-sizing: border-box;
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            transition: background-color 180ms ease;
+            }
 
-        .close {
-            color: #555; /* Cor neutra */
-            font-size: 24px;
-            font-weight: bold;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            cursor: pointer;
-            transition: color 0.3s ease;
+            .qr-section img{
+                height:100px;
+            }
         }
+
+        /* detalhes sobre cada dia */
+        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
+        .modal-content { display:flex; flex-direction: row; justify-content: space-between; background-color: white; margin: 10% auto; padding: 30px; border-radius: 15px; width: 90%; max-width: 600px; position: relative; }
+        .close { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; }
         
-        .close:hover, .close:focus {
-            color: #e74c3c; /* Vermelho ao passar o mouse */
-        }
+        .qr-section { text-align: center; padding: 40px 20px; }
 
-        .open-modal-btn {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .close-btn, .redirect-btn {
+        .download-btn {
             display: inline-block;
-            margin: 10px 5px;
-            padding: 10px 20px;
+            background: linear-gradient(90deg, #F59E0B, #EA580C);
+            color: #fff;
             border: none;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 10px;
             cursor: pointer;
-        }
-        
-         .close-btn {
-            background-color: #ff4d4d;
-            color: white;
-         }
-        
-         .redirect-btn {
-            background-color: #007bff;
-            color: white;
+            margin-top: 20px;
+            font-weight: bold;
             text-decoration: none;
-         }
-        
-        
+            box-shadow: 0 8px 18px rgba(245, 158, 11, 0.25);
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 22px rgba(234, 88, 12, 0.28);
+        }
     </style>
 </head>
 <body>
+
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="calendar-container">
+            <div class="calendar" id="calendarGrid"></div>
+        </div>
+
+        <div class="qr-section">
+            <div><strong>To download this schedule, read this QR Code:</strong></div>
+            <img src="scheduleqr.png" style="margin: 20px 0;">
+            <div><strong>OR</strong></div>
+            <a href="assets/images/ScheduleXISBE.png" download="ScheduleXISBE.png" class="download-btn">
+                Click Here
+            </a>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="fecharModal()">&times;</span>
-            <p id="modalInfo"></p>
-            <a id="modalButton" href="#" class="btn" style="display: inline-block; background-color: #055B61; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
-                Discover +
-            </a>
+            <div id="modalInfo"></div>
         </div>
     </div>
-    
-    <div id="header-placeholder"></div>
-    <main>
-        <div class="calendar-container">
-            <div class="calendar">
-                <div class="header1">Monday</div>
-                <div class="header1">Tuesday</div>
-                <div class="header1" style="grid-column: 3 / span 2;">Wednesday</div>
-                <div class="header1" style="grid-column: 5 / span 2;">Thursday</div>
-                <div class="header1" style="grid-column: 7 / span 2;">Friday</div>
-            </div>
-        </div>
-    
-        <div class="qr-container" style="display: block; align-items: center;">
-            <div><strong>To download this schedule, read this QR Code:</strong></div>
-            <div class="logo">
-                <img src="scheduleqr.png" style="height: 200px; margin: 40px 0px 40px 0px;">
-            </div>
-            <div><strong>OR</strong></div>
-            <button onclick="window.location.href='Schedule X SBE.ics'" style="background-color: #055B61; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 40px 0px 40px 0px; font-size: 16px;">
-                <strong>Click Here</strong>
-            </button>
-        </div>
-            
-    </main>
-    <div id="footer-placeholder"></div>
-    
-        
+
     <script>
+        const horariosData = [
+            { startTime: '09:00', endTime: '09:30', ter: { activity: 'Opening Session (Grande Anfiteatro)', color: '#FFFFFF', fontColor: '#111111' } },
+            { startTime: '09:30', endTime: '11:00', ter: { activity: 'NeuroFrontiers: Pushing the Limits of Non-Invasive Brain Stimulation (V02.1)', color: '#C89AF7', fontColor: '#111111' }, qua: { activity: 'Compliance in Healthcare (V02.2)', color: '#8FB2F3', fontColor: '#111111', position: 'full' }, qui: { activity: 'The Gut-Brain Connection Unveiled (V02.1)', color: '#BA8CF0', fontColor: '#111111' } },
+            { startTime: '11:00', endTime: '11:30', ter: { activity: 'Coffee break (Hall 2)', color: '#FFEAA6', fontColor: '#111111' }, qua: { activity: 'Coffee break (Hall 2)', color: '#FFEAA6', fontColor: '#111111', position: 'full' }, qui: { activity: 'Coffee break (Hall 2)', color: '#FFEAA6', fontColor: '#111111' }, sex: { activity: 'Coffee break (Hall 2)', color: '#FFEAA6', fontColor: '#111111' } },
+            { startTime: '11:30', endTime: '17:30', qua: { activity: 'Job Fair (Átrio Civil)', color: '#D1009C', fontColor: '#111111' } },
+            { startTime: '11:30', endTime: '13:00', ter: { activity: 'Laser Written Bioelectronics: Building Blocks for Epidermal Sensors (V02.2)', color: '#8FB2F3', fontColor: '#111111' }, qua2: { activity: 'At the Edge of Life: Astrobiology and the Search for the (Im)Possible (V02.1)', color: '#C89AF7', fontColor: '#111111' }, qui: { activity: 'Behind the Formula: Innovation in Cosmetic Science (V02.3)', color: '#8FB2F3', fontColor: '#111111' }, sex: { activity: 'Thease Your Thesis (V02.1)', color: '#F28B82', fontColor: '#111111' } },
+            { startTime: '13:00', endTime: '14:00', ter: { activity: 'Lunch', color: '#FFFFFF', fontColor: '#111111' }, qua2: { activity: 'Lunch', color: '#FFFFFF', fontColor: '#111111' }, qui: { activity: 'Lunch', color: '#FFFFFF', fontColor: '#111111' }, sex: { activity: 'Lunch', color: '#FFFFFF', fontColor: '#111111' } },
+            { startTime: '14:00', endTime: '15:30', ter: { activity: 'Debate (V02.1)', color: '#BDBDBD', fontColor: '#111111' },  qui: { activity: 'Genetic Footprints of Portugal: History in Our DNA (V02.1)', color: '#B98CF2', fontColor: '#111111' }, sex: { activity: 'Forensic Bioengineering: DNA as an eyewitness (V02.1)', color: '#B98CF2', fontColor: '#111111' } },
+            { startTime: '14:00', endTime: '14:30', qua2:{ activity: 'Pitch Medtronic (V02.2)', color: '#F3B968', fontColor: '#111111' } },
+            { startTime: '14:30', endTime: '15:00', qua2:{ activity: 'Pitch Cipan (V02.2)', color: '#F3B968', fontColor: '#111111' } },
+            { startTime: '15:00', endTime: '15:30', qua2:{ activity: 'Pitch Deloitte (V02.2)', color: '#F3B968', fontColor: '#111111' } },
+            { startTime: '15:30', endTime: '16:00', ter: { activity: 'Coffee break (Hall 2)', color: '#FFEAA6', fontColor: '#111111' }, qua2: { activity: 'Coffee break (Hall 2)', color: '#FFEAA6', fontColor: '#111111' }, qui: { activity: 'Coffee break', color: '#FFEAA6', fontColor: '#111111' }, sex: { activity: 'Coffee break', color: '#FFEAA6', fontColor: '#111111' } },
+            { startTime: '16:00', endTime: '17:30', ter: { activity: 'Decoding Aging: From Molecules to Longevity (V02.1)', color: '#B98CF2', fontColor: '#111111' }, qua2: { activity: 'Alumni Sessions Bachelor and Master (V02.1)', color: '#9BE36B', fontColor: '#111111' }, qui: { activity: 'Digital Twins e Realidade Aumentada em cirurgia (workshop champalimaud) (V02.2)', color: '#A9D7E1', fontColor: '#111111' }, sex: { activity: 'EMG as a proxy to the brain:How to control a robotic prosthesis with EMG signals (V02.2)', color: '#8FB2F3', fontColor: '#111111' } },
+            { startTime: '17:30', endTime: '18:00', sex: { activity: 'Closing Session (Grande Anfiteatro)', color: '#F7B5A8', fontColor: '#111111' } },
+            { startTime: '17:30', endTime: '19:00', qui: { activity: 'Churrasco', color: '#5FAFB1', fontColor: '#111111' } }
+        ];
 
-const horariosData = [
-    { startTime: '11:00', endTime: '11:30', seg: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', description: '', room: '', type: '' } },
-    { startTime: '11:00', endTime: '11:30', ter: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', description: '', room: '', type: '' } },
-    { startTime: '11:00', endTime: '11:30', qua: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', description: '', room: '', type: '' } },
-    { startTime: '11:00', endTime: '11:30', qui2: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', position: 'full', description: '', room: '', type: '' } },
-    { startTime: '11:00', endTime: '11:30', sex: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', position: 'full', description: '', room: '', type: '' } },
+        const eventColorPalette = ['#F6B756', '#F79A4A', '#F46D6D', '#8C73E6', '#6F7AE6', '#3BB3C3'];
+        const nonInteractiveActivities = new Set(['Coffee break', 'Lunch']);
 
-    { startTime: '15:30', endTime: '16:00', seg: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', description: '', room: '', type: '' } },
-    { startTime: '15:30', endTime: '16:00', ter: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', description: '', room: '', type: '' } },
-    { startTime: '15:30', endTime: '16:00', qui2: { activity: 'Coffee Break', color: '#fdfdf1', fontColor: 'black', position: 'full', description: '', room: '', type: '' } },
-      
-    { startTime: '10:30', endTime: '11:00', seg: { activity: 'Opening Session', color: '#fb890a', fontColor: 'white', description: 'The Opening Session marks the beginning of SBE and will count with the presence of Prof. Rogério Colaço, president of Instituto Superior Técnico (IST), Prof. João Conde, president of IST’s Bioengineering Department (DBE), Clara Mestre, president of the Biological Engineering Nucleus (NEB) and André Pestana, president of the Biomedical Engineering Nucleus (NEBM).', room: 'V02.1', type: '' } },
-    { startTime: '11:30', endTime: '13:00', seg: { activity: 'The AI Revolution in Healthcare: From Innovation to Real-World Impact', color: '#44c0c0', fontColor: 'white', description: 'Artificial Intelligence is transforming medicine, but how do we bridge the gap between innovation and real-world impact? From improving diagnostics to optimizing treatments, AI is revolutionizing the way we approach healthcare. In "The AI Revolution in Healthcare: From Innovation to Real-World Impact", leading experts will dive into the latest advancements in AI-driven healthcare and discuss its challenges, opportunities, and future directions. Don’t miss this lecture, where technology meets medicine to shape the future of patient care!', room: 'V02.1', type: 'Lecture' } },
-    { startTime: '14:00', endTime: '15:30', seg: { activity: 'The Future of Plastic: Bioplastics from Organic Waste as a Sustainable Alternative', color: '#94c203', fontColor: 'white', description: 'Dive into the groundbreaking innovations in "The Future of Plastics: Bioplastics from Organic Waste as a Sustainable Alternative" lecture. This is an incredible opportunity for students and professionals passionate about sustainability, engineering, and the future of eco-friendly solutions.', room: 'V02.1', type: 'Lecture' } },
-    { startTime: '16:00', endTime: '17:30', seg: { activity: 'Feeding the Future: Can GMO Help End World Hunger?', color: '#edc12f', fontColor: 'white', description: 'Can GMOs be the key to solving world hunger? Join us at X SBE for a dynamic discussion on “Feeding the Future: Can GMOs Help End World Hunger?”, alongside Carla Pinheiro, Assistant Professor at the NOVA School of Science and Technology and Researcher at UCIBIO, and Ana Margarida Flores, Assistant Professor at the Faculty of Sciences, University of Lisbon, Researcher at BioISI in the Fruit Functional Genomics & Biotechnology Lab.', room: 'V02.1', type: 'Debate' } },
+        const timeToRow = (time) => {
+            const [h, m] = time.split(':').map(Number);
+            return ((h - 9) * 2) + (m === 30 ? 1 : 0) + 2;
+        };
 
-    { startTime: '09:30', endTime: '11:00', ter: { activity: 'Think. Connect. Control: Unlocking Neural Computer Interfaces', color: '#edc12f', fontColor: 'white', description: 'Join us for the workshop: Think. Connect. Control: Unlocking Neural Computer Interfaces. Dive into cutting-edge research and discover how brain-computer interfaces are transforming the future of technology. Led by Mariana Nunes, a PhD student at IST collaborating with world-renowned institutions, this is your chance to explore the fusion of neuroscience and innovation. Don’t miss out—secure your spot and step into the forefront of bioengineering advancements!', room: 'V02.03', type: 'Workshop' } },
-    { startTime: '11:30', endTime: '13:00', ter: { activity: 'Beyond Donors: How 3D Printing is Creating a New World for Transplants', color: '#fb890a', fontColor: 'white', description: 'Discover how 3D printing is reshaping regenerative medicine in the “Beyond Donors: How 3D Printing is Creating a New World for Transplants” lecture. This groundbreaking technology is opening doors to customized tissues and organs, revolutionizing the future of healthcare. Join us and explore how innovation is transforming lives!', room: 'V02.1', type: 'Lecture' } },
-    { startTime: '14:00', endTime: '15:30', ter: { activity: 'Surgeons of Tomorrow: How Robotics is Shaping the Future of Surgery', color: '#44c0c0', fontColor: 'white', description: 'Will robots be the surgeons of tomorrow, or will they remain just an aid in the operating room? Explore the future of surgery in the lecture "Surgeons of Tomorrow: How Robotics Is Shaping the Future of Surgery." Discover how robotic-assisted techniques are revolutionizing procedures, increasing precision, and transforming patient outcomes. Join us for an insightful discussion on the cutting-edge technologies redefining surgery!', room: 'V02.1', type: 'Lecture' } },
-    { startTime: '16:00', endTime: '17:30', ter: { activity: 'Tease your Thesis', color: '#94c203', fontColor: 'white', description: '', room: 'V02.1', type: '' } },
-    { startTime: '17:30', endTime: '19:30', ter: { activity: '"The Immortal Life of Henrietta Lacks"', color: '#7ac9ac', fontColor: 'white', description: 'This year, we’re introducing our very first Film Session – a unique opportunity to enjoy the film “The Immortal Life of Henrietta Lacks”, that will inspire, entertain, and captivate you.', room: '', type: 'Film Session' } },
-
-    { startTime: '09:30', endTime: '11:00', qua: { activity: 'Craft Beer Production', color: '#edc12f', position: 'left', fontColor: 'white', description: 'If you want to learn everything about beer, come to the Clube de Cervejeiros from IST Workshop! In a relaxed manner, you’ll be able to learn all about the different phases of the beer production process. From malt milling to bottling, a practical overview of the process will be shared providing participants with an opportunity to explore the industrial sector, apply biochemical concepts and collaborate in teamwork!', room: 'BBQ Space', type: 'Workshop' } },
-    { startTime: '10:30', endTime: '13:00', qua2: { activity: 'Lisbon Biomechanics Laboratory', color: '#7ac9ac', fontColor: 'white', description: 'The field trip to Lisbon Biomechanics Laboratory (LBL) has been confirmed! Registration form in Bio! The Lisbon Biomechanics Laboratory (LBL) was founded in 2005 with the mission of promoting education and research in the area of biomechanics. As part of IDMEC – Institute of Mechanical Engineering (IST branch), the Lisbon Biomechanics Laboratory is based at the Department of Mechanical Engineering of Instituto Superior Técnico, located on the Alameda University campus in Lisbon.', room: 'Pavilhão de Mecânica II', type: 'Field Trip' } },
-    { startTime: '11:30', endTime: '13:00', qua: { activity: 'Neuroscience and Regenerations: New Horizons in Brain Healing', color: '#94c203', position: 'left', fontColor: 'white', description: 'Discover revolutionary approaches in “Neuroscience and Regenerations: New Horizons in Brain Healing.” This is an unmissable lecture for anyone curious about how cutting-edge science unlocks the potential for brain repair and regeneration.', room: 'V02.1', type: 'Lecture' } },
-    { startTime: '19:00', endTime: '21:00', qua: { activity: 'BARBECUE', color: '#7ac9ac', position: 'full', fontColor: 'white', description: '', room: 'BBQ Space', type: '' } },
-    
-    { startTime: '11:30', endTime: '13:00', qui2: { activity: 'The Cycle of Cancer: Metastatic Cells and Their Role in Tumor Recurrence', color: '#94c203', fontColor: 'white', description: 'The hidden battle of cancer recurrence! Metastatic cells play a key role in tumor recurrence, but how do they survive and resist treatment? In “The Cycle of Cancer”, leading experts will unveil the latest discoveries on cancer dormancy, metastasis, and immune system interactions. Join us to explore groundbreaking insights that could shape the future of cancer therapies!', room: 'V02.1', type: 'Lecture' } },
-    { startTime: '14:00', endTime: '14:30', qui2: { activity: 'The Glintter World', color: '#edc12f', fontColor: 'white', description: 'Get ready for our Pitch: “The Glintter World” by Joana Santos, where she will give a company presentation and tell you about areas of expertise and opportunities to learn about and join the team.', room: 'V02.03', type: 'Pitch' } },
-    { startTime: '14:30', endTime: '15:00', qui2: { activity: 'What’s my fit at Deloitte?', color: '#edc12f', fontColor: 'white', description: 'Get ready for our Pitch: “From Biomedics to Consulting, What’s my fit at Deloitte?” by Filipa Barbosa da Costa. Discover how a degree in Biomedical Engineering can open doors at Deloitte. From technology consulting to healthcare innovation,explore the opportunities and challenges of applying your knowledge to transform the healthcare sector.', room: 'V02.03', type: 'Pitch' } },
-    { startTime: '15:00', endTime: '15:30', qui2: { activity: 'Fermentation in the Pharmaceutical Industry', color: '#edc12f', fontColor: 'white', description: 'Get ready for our Pitch: “Fermentation in the Pharmaceutical Industry” by Engineer Rogério Guerreiro. Discover how Suanfarma CDMO, a Portuguese company specializing in microbial fermentation since 1963, develops Active Pharmaceutical Ingredients (APIs). In this pitch, learn how their expertise in fermentation, downstream processing, and chemical synthesis helps bring new molecules to the market and improve lives as a Contract Development & Manufacturing Organization (CDMO).', room: 'V02.03', type: 'Pitch' } },
-    { startTime: '16:00', endTime: '17:30', qui2: { activity: 'Alumni Session', color: '#44c0c0', fontColor: 'white', description: 'Join us for an exciting “Alumni Sesssion”, where you can discover the secrets of academic and professional success in the areas of biomedical and biological engineering! Explore the multiple facets of these promising careers and gain valuable insights into the opportunities and challenges that await future bioengineers. Don’t miss this incredible opportunity to talk with those who have already been on this path and discover what the future can hold for you!', room: 'V02.01', type: '' } },
-    { startTime: '11:00', endTime: '17:30', qui: { activity: 'Job Fair', color: '#7ac9ac', position: 'left', fontColor: 'white', description: 'This year we bring you a Job Fair with a lot of companies in the bioengineering area! This is the best place for you to get in touch with all the companies that may interest you. They’ll be more than happy to clear all your doubts and every curiosity you might have. You could possibly be meeting your future co-workers! You really shouldn’t miss the opportunity to know these companies better! Join us on February 20th, from 11 am to 5:30 pm.', room: '', type: '' } },
-
-    { startTime: '09:30', endTime: '11:00', sex: { activity: 'From Lab to Patient: How Drug Delivery and Immunoengineering are Shaping Modern Medicine', color: '#fb890a', position: 'full', fontColor: 'white', description: 'Find out in the lecture “From Lab to Patient: How Drug Delivery and Immunoengineering Are Shaping Modern Medicine.” Discover how cutting-edge research is transforming drug delivery and revolutionizing treatments through immunoengineering. A must-attend event for anyone interested in innovation and the future of medicine!', room: 'V02.1', type: 'Lecture' } },
-    { startTime: '11:30', endTime: '13:00', sex: { activity: 'Product Management', color: '#94c203', position: 'full', fontColor: 'white', description: 'Join the workshop ‘Product Management’ and gain exclusive insights into the strategies behind successful product development. Learn from Ana Margarida Lopes, Product Owner at Glintt Global, as she shares her expertise and real-world experience. This is your opportunity to discover essential tools and techniques to thrive in managing innovative products. Secure your spot now and elevate your career in the bioengineering industry!', room: 'V02.03', type: 'Workshop' } },
-    { startTime: '13:00', endTime: '13:30', sex: { activity: 'Closing Session', color: '#44c0c0', position: 'full', fontColor: 'white', description: '', room: 'V02.1', type: '' } },
-];
-
-function gerarHorarios(inicio, fim, intervalo) {
-    let horarios = [];
-    let horaAtual = inicio;
-    let horaFim = fim;
-    let [horasFinal, minutosFinal] = fim.split(':').map(Number);
-    let [horas, minutos] = horaAtual.split(':').map(Number);
-    let minutosaux = minutos
-    while (horas < horasFinal + 1 || minutos <= minutosFinal) {
-        horarios.push(`${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`);
-        minutos += intervalo;
-        minutosaux = minutos
-        if (minutos >= 60) {
-            minutos = minutosaux - 60;
-            horas++;
+        function openActivityPage(activityName) {
+            const targetUrl = `activities.html?activity=${encodeURIComponent(activityName)}`;
+            window.location.href = targetUrl;
         }
-    }
-    return horarios;
-}
 
-function gerarOccupiedCells(horariosData, horarios) { 
-    // To track cells that are part of spans
-    const occupiedCells = new Set();
-    horariosData.forEach(schedule => {
-        const { startTime, endTime, ...dias } = schedule;
-        const startTimeIndex = horarios.indexOf(startTime);
-        const endTimeIndex = horarios.indexOf(endTime);
-        for (const dia in dias) {
-            const { position } = dias[dia];
-            for (let j = startTimeIndex + 1; j < endTimeIndex; j++) {
-                occupiedCells.add(`${horarios[j].replace(/:/g, '')}-${dia}`);
-                if (dia === 'qui' && position === 'full') {
-                    occupiedCells.add(`${horarios[j].replace(/:/g, '')}-qui2`);
+        function gerarCalendario() {
+            const calendar = document.getElementById('calendarGrid');
+            let eventColorCursor = 0;
+            const dias = [
+                { id: 'ter', label: 'Monday', col: "1" },
+                { id: 'qua', label: 'Tuesday', col: "2 / span 2" },
+                { id: 'qui', label: 'Wednesday', col: "4" },
+                { id: 'sex', label: 'Thursday', col: "5" }
+            ];
+
+            calendar.innerHTML = '';
+
+            if (window.innerWidth > 1024) {
+                for (let r = 2; r <= 22; r++) {
+                    for (let c = 1; c <= 5; c++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'calendar-empty-space';
+                        cell.style.gridRow = r;
+                        cell.style.gridColumn = c;
+                        calendar.appendChild(cell);
+                    }
                 }
-                if (dia === 'sex' && position === 'full') {
-                    occupiedCells.add(`${horarios[j].replace(/:/g, '')}-sex2`);
+            }
+
+            dias.forEach((dia) => {
+                const header = document.createElement('div');
+                header.className = 'header1';
+                header.innerText = dia.label;
+                if (window.innerWidth > 1024) header.style.gridColumn = dia.col;
+                calendar.appendChild(header);
+
+                const content = document.createElement('div');
+                content.className = 'day-content';
+
+                horariosData.forEach(item => {
+                    const dayKey = item[dia.id] ? dia.id : (item[dia.id + '2'] ? dia.id + '2' : null);
+                    if (dayKey) {
+                        const act = item[dayKey];
+                        const isInteractive = !nonInteractiveActivities.has(act.activity);
+                        const card = document.createElement('div');
+                        const cardColor = eventColorPalette[eventColorCursor % eventColorPalette.length];
+                        eventColorCursor += 1;
+                        card.className = 'activity-card';
+                        card.setAttribute('tabindex', '0');
+                        card.style.backgroundColor = cardColor;
+                        card.style.color = '#FFFFFF';
+                        if (window.innerWidth <= 1024){
+                            card.innerHTML = `
+                                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 10px;">
+                                    <strong style="flex: 1; text-align: left;">${act.activity}</strong>
+                                    <small style="flex: 1; text-align: center;">${item.startTime} - ${item.endTime}</small>
+                                    <small style="flex: 1; text-align: right;">${act.room || ''}</small>
+                                </div>
+                            `;
+                        }
+                        else card.innerHTML = `<strong>${act.activity}</strong><small>${item.startTime} - ${item.endTime}</small><small>${act.room || ''}</small>`;
+
+                        if (isInteractive) {
+                            card.onclick = (e) => {
+                                e.stopPropagation();
+                                document.querySelectorAll('.activity-card.selected').forEach(el => el.classList.remove('selected'));
+                                card.classList.add('selected');
+                                setTimeout(() => openActivityPage(act.activity), 120);
+                            };
+
+                            card.onkeydown = (e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    card.click();
+                                }
+                            };
+                        } else {
+                            card.style.cursor = 'default';
+                        }
+
+                        if (window.innerWidth > 1024) {
+                            const rowStart = timeToRow(item.startTime);
+                            const rowEnd = timeToRow(item.endTime);
+                            card.style.gridRow = `${rowStart} / ${rowEnd}`;
+                            
+                            if (dia.id === 'ter') card.style.gridColumn = "1";
+                            else if (dia.id === 'qua') {
+                                if (dayKey === 'qua2') card.style.gridColumn = "3";
+                                else if (act.position === 'full') card.style.gridColumn = "2 / span 2";
+                                else card.style.gridColumn = "2";
+                            }
+                            else if (dia.id === 'qui') card.style.gridColumn = "4";
+                            else if (dia.id === 'sex') card.style.gridColumn = "5";
+                            calendar.appendChild(card);
+                        } else {
+                            content.appendChild(card);
+                        }
+                    }
+                });
+
+                if (window.innerWidth <= 1024) {
+                    header.onclick = function() {
+                        const isActive = this.classList.contains('active');
+                        document.querySelectorAll('.header1, .day-content').forEach(el => el.classList.remove('active'));
+                        if (!isActive) { this.classList.add('active'); content.classList.add('active'); }
+                    };
+                    calendar.appendChild(content);
                 }
-                if (dia === 'qua' && position === 'full') {
-                   occupiedCells.add(`${horarios[j].replace(/:/g, '')}-qua2`);
-                }
+            });
+        }
+
+        function mostrarInfo(titulo, tempo, sala, desc) {
+            document.getElementById("modalInfo").innerHTML = `<h2>${titulo}</h2><p><strong>Time:</strong> ${tempo}</p><p><strong>Room:</strong> ${sala}</p><hr><p>${desc}</p>`;
+            const modal = document.getElementById("myModal");
+            modal.style.display = "flex";
+        }
+        function fecharModal() { document.getElementById("myModal").style.display = "none"; }
+
+        function loadPartial(file, target) {
+            fetch(file).then(r => r.text()).then(d => document.getElementById(target).innerHTML = d);
+        }
+        
+        function loadHeader() {
+            fetch("header.html")
+                .then((response) => response.text())
+                .then((data) => {
+                const container = document.getElementById("header-placeholder");
+                container.innerHTML = "";
+                const fragment = document.createRange().createContextualFragment(data);
+                container.appendChild(fragment);
                 
-            }
+                const savedLanguage = localStorage.getItem("siteLanguage") || "en";
+
+                if (typeof applyLanguage === "function") {
+                    applyLanguage(savedLanguage);
+                }
+                })
+                .catch((error) => console.error("Error loading header:", error));
         }
-    });
-    return occupiedCells;
-}
-
-function gerarCalendario() {
-    const horarios = gerarHorarios('09:30', '20:00', 30); // Horários de 08:00 até 17:00
-    console.log('horarios:', horarios);
-    const calendar = document.querySelector('.calendar');
-    const diasSemana = ['seg', 'ter', 'qua', 'qua2', 'qui', 'qui2', 'sex', 'sex2'];
-    const quartaColunas = { left: 3, right: 4, full: '3 / 5' };
-    const quintaColunas = { left: 5, right: 6, full: '5 / 7' }; // Map das colunas para quinta-feira
-    const sextaColunas = { left: 7, right: 8, full: '7 / 9' }; // Map das colunas para sexta-feira
-    const occupiedCells = gerarOccupiedCells(horariosData, horarios);
-    console.log('OccupiedCells:', occupiedCells);
-    /*
-    for (let i = 0; i < horarios.length - 1; i++) { //cria coluna com os horários
-        const timeColumn = document.createElement('div');
-        timeColumn.classList.add('time-column');
-        timeColumn.textContent = `${horarios[i]} - ${horarios[i + 1]}`;
-        calendar.appendChild(timeColumn);
-    }*/
-
-    for (let rowIndex = 0; rowIndex < horarios.length - 1; rowIndex++) {
-        for (let colIndex = 0; colIndex < diasSemana.length; colIndex++) { // Modificado para garantir 8 colunas
-            const dia = diasSemana[colIndex];
-            const horario = horarios[rowIndex];
-            const cellId = `${horario.replace(/:/g, '')}-${dia}`;
-    
-            if (occupiedCells.has(cellId)) continue; // Siga para a próxima iteração se já estiver ocupada
-    
-            const cell = document.createElement('div');
-            const schedule = horariosData.find(item => item.startTime === horario && item[dia]);
-    
-            if (schedule) {
-                const { activity, color, fontColor, position, description, room, type } = schedule[dia];
-    
-                if (dia === 'qui' && position === 'full') occupiedCells.add(`${horario.replace(/:/g, '')}-qui2`);
-                if (dia === 'sex' && position === 'full') occupiedCells.add(`${horario.replace(/:/g, '')}-sex2`);
-                if (dia === 'qua' && position === 'full') occupiedCells.add(`${horario.replace(/:/g, '')}-qua2`);
-                
-                const formattedText = `
-                    <p><strong>${activity}</strong></p>
-                    <p><small>${schedule.startTime} - ${schedule.endTime}</small></p>
-                    <p><small>${room}</small></p>`
-                ;
-    
-                cell.id = cellId;
-                cell.innerHTML = formattedText;
-                cell.style.backgroundColor = color;
-                cell.style.color = fontColor;
-    
-                if (activity !== 'Coffee Break') {
-                    cell.addEventListener('click', () => mostrarInfo(cellId, activity, type, room, description));
-                }
-    
-                const startTimeIndex = horarios.indexOf(schedule.startTime);
-                const endTimeIndex = horarios.indexOf(schedule.endTime);
-                const span = endTimeIndex - startTimeIndex;
-    
-                // Atribuição correta de gridColumn para garantir 7 colunas
-                if (dia === 'qui' && position) {
-                    const gridColumn = quintaColunas[position];
-                    cell.style.gridColumn = gridColumn;
-                } else if (dia === 'sex' && position) {
-                    const gridColumn = sextaColunas[position];
-                    cell.style.gridColumn = gridColumn;
-                } else if (dia === 'qua' && position) {
-                    const gridColumn = quartaColunas[position];
-                    cell.style.gridColumn = gridColumn;
-                } else {
-                    cell.style.gridColumn = `${colIndex + 1}`; // Ajuste para 7 colunas
-                }
-    
-                cell.style.gridRow = `${startTimeIndex + 2} / span ${span}`;
-                if (activity !== 'Coffee Break') cell.style.cursor = 'pointer';
-                calendar.appendChild(cell);
-                cell.style.borderColor = "rgba(255, 255, 255, 0.5)";
-            } else {
-                // Células vazias
-                if (dia === 'qui' && !occupiedCells.has(`${horario.replace(/:/g, '')}-qui2`)) {
-                    cell.style.gridColumn = quintaColunas.full;
-                } else if (dia === 'sex' && !occupiedCells.has(`${horario.replace(/:/g, '')}-sex2`)) {
-                    cell.style.gridColumn = sextaColunas.full;
-                } else if (dia === 'qua' && !occupiedCells.has(`${horario.replace(/:/g, '')}-qua2`)) {
-                    cell.style.gridColumn = quartaColunas.full;
-                } else {
-                    cell.style.gridColumn = `${colIndex + 1}`;
-                }
-
-                if (dia === 'qui') occupiedCells.add(`${horario.replace(/:/g, '')}-qui2`);
-                if (dia === 'sex') occupiedCells.add(`${horario.replace(/:/g, '')}-sex2`);
-                if (dia === 'qua') occupiedCells.add(`${horario.replace(/:/g, '')}-qua2`);
-                cell.style.gridRow = `${rowIndex + 2}`;
-                cell.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-                cell.classList.add('empty-cell');
-                calendar.appendChild(cell);
+        window.onload = () => {
+            gerarCalendario();
+            loadHeader();
+            loadPartial('footer.html', 'footer-placeholder');
+        };
+        let _lastIsMobile = window.innerWidth <= 1024;
+        window.onresize = () => {
+            const isMobile = window.innerWidth <= 1024;
+            if (isMobile !== _lastIsMobile) {
+                _lastIsMobile = isMobile;
+                gerarCalendario();
             }
-        }
-    }
-}
-
-
-function mostrarInfo(id, atividade, type, room, description) {
-    const cell = document.getElementById(id);
-    const horario = cell.querySelector('small');
-    document.getElementById("modalInfo").innerHTML = `<strong>${atividade}</strong><br><br><p>${type}</p><small>${horario.textContent}</small><br><small>${room}</small><br><small>${description}</small><br><small></small>`;
-
-    const modalButton = document.getElementById("modalButton");
-    modalButton.textContent = "Discover +"; // Texto do botão
-    modalButton.setAttribute("href", "activities.html"); // Define o link
-    
-    document.getElementById("myModal").style.display = "block";
-}
-
-function fecharModal() {
-    document.getElementById("myModal").style.display = "none";
-}
-
-window.onclick = function(event) {
-    if (event.target == document.getElementById("myModal")) {
-        document.getElementById("myModal").style.display = "none";
-    }
-};
-
-window.onload = gerarCalendario;
-
-
-
-
-// Função para carregar Header e Footer
-function loadPartial(file, target) {
-    fetch(file)
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error(`Erro ${response.status}: Não foi possível carregar ${file}`);
-            }
-        })
-        .then(data => {
-            document.getElementById(target).innerHTML = data;
-        })
-        .catch(error => console.error(`Erro ao carregar ${file}:`, error));
-}
-
-// Carregar o Header e o Footer
-loadPartial('header.html', 'header-placeholder');
-loadPartial('footer.html', 'footer-placeholder');
-
-    
-    
-</script>
-
+        };
+        window.onclick = (e) => { if (e.target == document.getElementById("myModal")) fecharModal(); }
+    </script>
 </body>
 </html>

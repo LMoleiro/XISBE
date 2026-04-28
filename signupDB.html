@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="assets/css/style.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="signup-page">
+    <div class="container">
+        <div class="signupForm" style="position: relative;">
+            <button type="button" onclick="history.back()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#555;padding:0;line-height:1;" aria-label="Go back">&times;</button>
+            <div class="inSignForm">
+               <h1>Sign Up</h1>
+               <form id="inputForm">
+                    <label for="userName">User Name:</label>
+                    <input type="text" id="userName" name="userName" placeholder="Enter your user name" maxlength="20" required>
+                    <span id="error-userName" class="errorMessage"></span>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    <span id="error-email" class="errorMessage"></span>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="At least 6 characters" required>
+                    <span id="error-password" class="errorMessage"></span>
+
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                    <span id="error-confirmPassword" class="errorMessage"></span>
+
+                <div style="display: flex; justify-content: space-between; width:100%; margin-top: 10px; margin-bottom: 10px;">
+                    <button type="button" onclick="history.back()" style="background-color: #6c757d; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                        Cancel
+                    </button>
+
+                    <button type="submit">Create Account</button>
+                </div>
+                </form>
+                <p>Already have an account? <a href="login.html">Log In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Ligar ao Supabase
+        const supabaseUrl = 'https://tcsbqigmjcoscrtrtmxa.supabase.co';
+        const supabaseKey = 'sb_publishable_8WpYQngE6loxjIH3Wwj6Cg_NSnZnugf';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // 2. Função para criar a conta
+        async function registerUser(userEmail, userPassword, userName) {
+            const submitBtn = document.querySelector('#inputForm button[type="submit"]');
+            submitBtn.disabled = true;
+
+            const { data: userExists, error: checkError } = await supabaseClient
+                .from('users')
+                .select('name')
+                .eq('name', userName)
+                .maybeSingle();
+
+            if (checkError) {
+                alert("Erro técnico: " + checkError.message);
+                submitBtn.disabled = false;
+                return;
+            }
+
+            if (userExists) {
+                document.getElementById('error-userName').innerText = "Este nome de utilizador já está ocupado.";
+                submitBtn.disabled = false;
+                return;
+            }
+
+            const { data: emailExists } = await supabaseClient
+                .from('users')
+                .select('email')
+                .eq('email', userEmail)
+                .maybeSingle();
+
+            if (emailExists) {
+                document.getElementById('error-email').innerText = "Este email já está a ser utilizado.";
+                submitBtn.disabled = false;
+                return;
+            }
+            
+            const { data, error } = await supabaseClient.auth.signUp({
+                email: userEmail,
+                password: userPassword,
+                options: {
+                    data: {
+                        display_name: userName 
+                    }
+                }
+            });
+
+            if (error) {
+                if (error.message.includes("already exists")) {
+                    document.getElementById('error-userName').innerText = "Este nome de utilizador já está ocupado.";
+                } else {
+                    alert("Error: " + error.message);
+                }
+                submitBtn.disabled = false;
+            } else {
+                window.location.href = "success.html";
+            }
+        }
+
+        // 3. Capturar o botão e fazer as verificações
+        const form = document.getElementById('inputForm');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            // Limpar erros antigos antes de verificar de novo
+            document.getElementById('error-userName').innerText = "";
+            document.getElementById('error-password').innerText = "";
+            document.getElementById('error-confirmPassword').innerText = "";
+
+            const emailDigitado = document.getElementById('email').value;
+            const passwordDigitada = document.getElementById('password').value;
+            const confirmPasswordDigitada = document.getElementById('confirmPassword').value; 
+            const nomeDigitado = document.getElementById('userName').value;
+
+            let temErro = false;
+
+            // Verificações dinâmicas
+            if (nomeDigitado.length < 3) {
+                document.getElementById('error-userName').innerText = "O nome tem de ter pelo menos 3 letras.";
+                temErro = true;
+            } else if (nomeDigitado.length > 20) {
+                document.getElementById('error-userName').innerText = "O nome não pode ter mais de 20 caracteres.";
+                temErro = true;
+            }
+
+            if (passwordDigitada.length < 6) {
+                document.getElementById('error-password').innerText = "A password tem de ter pelo menos 6 caracteres.";
+                temErro = true; 
+            }
+
+            if (passwordDigitada !== confirmPasswordDigitada) {
+                document.getElementById('error-confirmPassword').innerText = "As passwords não coincidem.";
+                temErro = true; 
+            }
+
+            // Se a variável temErro for true, paramos aqui e NÃO chamamos o Supabase
+            if (temErro) {
+                return;
+            }
+
+            // Se chegou aqui, está tudo limpo! Envia para o Supabase.
+            registerUser(emailDigitado, passwordDigitada, nomeDigitado);
+        });
+    </script>
+</body>
+</html>

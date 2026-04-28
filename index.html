@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XI SBE - Semana da Bioengenharia</title>
+    <link rel="stylesheet" href="assets/css/website.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    
+</head>
+  
+  <style>
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: "Jaapokki Subtract", sans-serif;
+      background-image: url("assets/images/Background.png");
+      background-size: cover;
+      background-position: center;
+      color: #333;
+    }
+    section {
+      padding: 15px;
+    }
+    .countdown-e-banner {
+      padding: 0px 0 0px 0;
+    }
+    .sec-countdown {
+      display: flex;
+      background-color: white;
+      top: 100px;
+    }
+    
+    .join-us {
+      width: 500px;
+      font-size: 115px;
+      position: absolute;
+      font-weight: bolder;
+      font-family: "Bebas Neue", Copperplate, fantasy;
+      text-transform: uppercase;
+      background: url("assets/images/Background.png") 50% 50%;
+      background-size: cover;
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      text-align: center;
+    }
+    
+    .join-us span {
+      display: block;
+    }
+    .texto-countdown {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+    }
+    .countdown-section {
+      text-align: center;
+      margin: 20px 0;
+      flex: 1;
+    }
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background: url("assets/images/Background.png") 50% 50%;
+      background-size: cover;
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+    }
+    .countdown div {
+      display: flex;
+      flex-direction: column;
+    }
+    .countdown div p {
+      font-size: 48px;
+      font-weight: bolder;
+      font-family: "Bebas Neue", Copperplate, fantasy;
+      text-transform: uppercase;
+    }
+    .countdown div span {
+      font-size: 97px;
+      font-weight: bolder;
+      font-family: "Bebas Neue", Copperplate, fantasy;
+      text-transform: uppercase;
+    }
+    
+    .countdown-1,
+    .countdown-2,
+    .countdown-3,
+    .countdown-4 {
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .countdown span {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .countdown p {
+      margin: 0;
+      font-size: 1rem;
+    }
+    .team-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .countdown-e-banner {
+      padding: 0px 0 0px 0;
+    }
+    .sec-countdown {
+      display: flex;
+      background-color: white;
+      top: 74px;
+    }
+    .join-us {
+      width: 500px;
+      font-size: 115px;
+      position: absolute;
+      font-weight: bolder;
+      font-family: "Bebas Neue", Copperplate, fantasy;
+      text-transform: uppercase;
+      background: url("assets/images/Background.png") 50% 50%;
+      background-size: cover;
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      text-align: center;
+    }
+    .join-us span {
+      display: block;
+    }
+    
+    .about-us-main {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .about-us-texto,
+    .atividades,
+    .meet-the-team {
+      display: flex;
+      height: 130px;
+      background-color: white;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+    }
+    .about-us-texto p,
+    .atividades p,
+    .meet-the-team p {
+      font-size: 92px;
+      font-weight: bolder;
+      font-family: "Bebas Neue", Copperplate, fantasy;
+      background: url("assets/images/Background.png") center/cover;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+    
+    .x-sbe-caixa {
+      height: auto;
+    }
+    .about-us {
+      display: flex;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 200px;
+      padding: 15px 0px 15px 0px;
+      pointer-events: none;
+    }
+    .texto-about-us {
+      text-align: justify;
+      margin: 10px 0;
+      line-height: 25px;
+    }
+    
+    .logo-e-texto-about-us {
+      background-color: white;
+      display: flex;
+      position: relative;
+      box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      width: 80%;
+      height: 80%;
+
+    }
+   
+    .logo-about-us {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+    }
+    .imagem-logo-about-us {
+      width: 80%;
+      height: 50%;
+      margin-left: 70px;
+      margin-top: 24px;
+    }
+    .sec-about-us {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 18px;
+    }
+ 
+    .sec-about-us div {
+      width: 70%;
+    }
+    .perguntas-who-what {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 15px;
+      height: auto;
+    }
+    .pergunta-who,
+    .pergunta-what {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+    }
+    .pergunta-who-texto,
+    .pergunta-what-texto {
+      padding: 15px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      width: 55%;
+      height: 240px;
+    }
+    .pergunta-who-texto p,
+    .pergunta-what-texto p {
+      margin: 10px;
+    }
+    
+    .pergunta-where-main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      height: 150px;
+      pointer-events: none;
+    }
+    .pergunta-where-texto {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      width: 50%;
+      height: 55%;
+    }
+    .pergunta-where-texto p {
+      margin: 10px;
+    }
+    .perguntas-about-us {
+      font-size: 21px;
+      font-weight: 700;
+      font-family: "Bebas Neue", Copperplate, fantasy;
+        background: url("assets/images/Background.png") center/cover;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+  
+
+    .atividades a,
+    .meet-the-team a {
+      text-decoration: none;
+    }
+    
+    
+    #header-container,
+    #footer-container {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #header-container {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+  
+ 
+@media (max-width: 1200px) {
+  .sec-countdown{
+    position: static;  
+    top: auto;
+    flex-direction: column;   
+    align-items: center;
+    justify-content: center;
+    gap: 0; 
+  }
+  .join-us {
+    position: static; 
+    font-size: 20vw;
+    margin-bottom: 0;
+    width: 100% !important;
+    margin-top: 15px;
+  }
+  .countdown {
+    flex-direction: row !important;
+  }
+  .countdown div span{
+    font-size: 18vw;                 
+    line-height: 1;
+  }
+  .countdown div p{
+    font-size: 6vw;                 
+    margin: 0;                       
+  }
+  .about-us{
+    height: auto !important;
+    align-items: flex-start !important; 
+    padding: 15px 0 !important;
+  }
+
+  .logo-e-texto-about-us{
+  display: flex;
+  align-items: flex-start; 
+  height: auto;            
+  pointer-events: none;  
+  }
+  .sec-about-us,
+  .pergunta-who-texto,
+  .pergunta-what-texto,
+  .pergunta-where-texto {
+    padding-top: 0 !important;
+    font-size: 18px !important;
+  }
+  .pergunta-who-texto,
+  .pergunta-what-texto {
+    width: 65% !important;
+    height: auto !important;
+    pointer-events: none; 
+  }
+ 
+  .pergunta-where-texto{
+    width: 80%;
+    height: auto;
+    pointer-events: none;
+  }
+ 
+}
+    
+@media (max-width: 768px) {
+  /* Fix font on mobile */
+  body {
+    font-family: "Jaapokki Subtract", Copperplate, fantasy, sans-serif;
+  }
+
+  .about-us-texto p,
+  .atividades p,
+  .meet-the-team p {
+    font-size: 16vw;
+  }
+
+  .sec-countdown{
+    position: static;  
+    top: auto;
+    flex-direction: column;   
+    align-items: center;
+    justify-content: center;
+    gap: 0; 
+  }
+  .join-us {
+    position: static; 
+    margin-bottom: 0;
+    width: 100% !important;
+  }
+  .countdown {
+    flex-direction: row !important;
+  }
+  .countdown div span{              
+    line-height: 1;
+  }
+  .countdown div p{                 
+    margin: 0;                       
+  }
+
+  /* Logo above text */
+  .about-us {
+    height: auto !important;
+    align-items: flex-start !important;
+    padding: 15px 0 !important;
+  }
+  .logo-e-texto-about-us {
+    flex-direction: column !important;
+    align-items: center !important;
+    height: auto !important;
+    width: 90% !important;
+    pointer-events: none;
+  }
+
+  .logo-about-us {
+    width: 100%;
+    padding: 15px 0 5px 0;
+  }
+  .imagem-logo-about-us {
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    width: 55% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+  .sec-about-us {
+    width: 100%;
+    padding: 0 0 15px 0 !important;
+    font-size: 14px !important;
+  }
+  .sec-about-us div {
+    width: 85%;
+  }
+
+  /* Who / What stacked vertically */
+  .perguntas-who-what {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 15px;
+    padding: 15px 0;
+  }
+  .pergunta-who,
+  .pergunta-what {
+    width: 100%;
+    flex: unset;
+    justify-content: center;
+  }
+  .pergunta-who-texto,
+  .pergunta-what-texto {
+    width: 80% !important;
+    height: auto !important;
+    pointer-events: none;
+    font-size: 14px !important;
+    padding-top: 0 !important;
+  }
+
+  /* Where */
+  .pergunta-where-main {
+    height: auto;
+    padding: 0 0 15px 0;
+  }
+  .pergunta-where-texto {
+    width: 80% !important;
+    height: auto !important;
+    font-size: 14px !important;
+    pointer-events: none;
+    padding-top: 0 !important;
+  }
+}
+  </style>
+  <body>    
+    <div id="header-container"></div>
+    <div class="countdown-e-banner">
+      <div class="sec-countdown">
+        <div class="texto-countdown">
+          <p class="join-us" data-i18n data-en="Join Us In" data-pt="Junta-te a nós em" style="color: #055b61">Join Us In:</p>
+        </div>
+        <section class="countdown-section" id="countdown-to-event">
+          <div class="countdown">
+            <div class="countdown-1">
+              <span id="days">0</span>
+              <p data-i18n data-en="Days" data-pt="Dias">Days</p>
+            </div>
+            <div class="countdown-2">
+              <span id="hours">0</span>
+              <p data-i18n data-en="Hours" data-pt="Horas">Hours</p>
+            </div>
+            <div class="countdown-3">
+              <span id="minutes">0</span>
+              <p data-i18n data-en="Minutes" data-pt="Minutos">Minutes</p>
+            </div>
+            <div class="countdown-4">
+              <span id="seconds">0</span>
+              <p data-i18n data-en="Seconds" data-pt="Segundos">Seconds</p>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="banner-container" style="width: 100%; overflow: hidden;">
+        <picture>
+          <source media="(max-width: 768px)" srcset="assets/images/Banner_mobile.png" type="image/png">
+          <img src="assets/images/Banner_desktop.png" 
+            alt="SBE Banner" 
+            style="width: 100%; height: auto; display: block; object-fit: cover;">
+    </picture>
+  </div>
+</div>
+    <div class="about-us-main">
+      <div class="about-us-texto">
+        <p data-i18n data-en="About Us" data-pt="Sobre Nós">About Us</p>
+      </div>
+      <div class="x-sbe-caixa">
+        <div class="about-us">
+          <div class="logo-e-texto-about-us">
+            <div class="logo-about-us">
+              <img
+                class="imagem-logo-about-us"
+                src="assets/images/Logo_cores.png"
+                alt="SBE Semana da Bioengenharia"
+                style="width: 80%; height: 80%; object-fit: contain;"
+              />
+            </div>
+            <div class="sec-about-us">
+              <div>
+                <p class="texto-about-us">
+                  <span><strong>SBE</strong></span> –
+                  <span><strong>Semana da Bioengenharia</strong></span> - 
+                  <span data-i18n data-en="is a week-long event dedicated to showcasing 
+                  the exciting world of Bioengineering. It combines biology, biomechanics,
+                  artificial intelligence, pharmaceuticals and technologies, and innovation 
+                  to address real-world challenges." 
+                  data-pt= "é um evento de uma semana dedicado a mostrar o fascinante 
+                  mundo da Bioengenharia. Combina biologia, biomecânica, inteligência 
+                  artificial, farmacêutica e tecnologias, e inovação para responder a 
+                  desafios do mundo real." >
+                  is a week-long event dedicated to showcasing the exciting world of
+                  Bioengineering. It combines biology, biomechanics, artificial
+                  intelligence, pharmaceuticals and technologies, and innovation
+                  to address real-world challenges.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="perguntas-who-what">
+        <div class="pergunta-who">
+          <div class="pergunta-who-texto">
+            <p class="perguntas-about-us">
+               <span data-i18n data-en=" " data-pt="Para"></span>
+               <span style="font-size: 45px" data-i18n data-en="WHO" data-pt="QUEM">WHO</span>
+               <span data-i18n data-en=" is it for?" data-pt=" é?"> is it for?</span>
+            </p>
+            <p style="line-height: 25px">
+               <span data-i18n data-en="SBE is designed for " data-pt="A SBE foi pensada para ">
+               SBE is designed for 
+               </span>
+
+               <span class="aaa">
+                  <strong
+                    data-i18n
+                    data-en="students, researchers, and enthusiasts of Bioengineering"
+                    data-pt="estudantes, investigadores e entusiastas da Bioengenharia">
+                    students, researchers, and enthusiasts of Bioengineering
+                  </strong>
+               </span>
+
+               <span
+                data-i18n
+                data-en=". Whether you're curious about groundbreaking discoveries, eager to network, or simply exploring your passion for the field, this event has something for everyone."
+                data-pt=". Quer tenhas curiosidade sobre descobertas inovadoras, vontade de fazer networking, ou estejas simplesmente a explorar a tua paixão pela área, este evento tem algo para todos.">
+                . Whether you're curious about groundbreaking discoveries, eager to network, or simply exploring your passion for the field, this event has something for everyone.
+               </span>
+            </p>
+          </div>
+        </div>
+        <div class="pergunta-what">
+          <div class="pergunta-what-texto">
+            <p class="perguntas-about-us">
+              <span style="font-size: 45px" data-i18n data-en="WHAT" data-pt="O QUE">WHAT</span> 
+              <span data-i18n data-en="can you expect?" data-pt="esperar?">can you expect?</span> 
+              
+            </p>
+            <p>
+              -
+              <span><strong data-i18n data-en="Inspiring talks" data-pt="Palestras inspiradoras">
+              Inspiring talks</strong></span>
+              <span data-i18n data-en=" by leading experts" data-pt=" por especialistas"> by leading experts</span>
+            </p>
+            <p>
+              - 
+              <span><strong data-i18n data-en="Hands-on workshops" data-pt="Workshops práticos ">Hands-on workshops</strong></span> 
+              <span data-i18n data-en="to build practical skills" data-pt="para desenvolver competências práticas">to build practical skills</span>
+            </p>
+            <p>
+              - 
+              <span data-i18n data-en="Opportunities to " data-pt="Oportunidades para fazer ">Opportunities to </span>
+              <span><strong>network</strong></span> 
+              <span data-i18n data-en="with professionals" data-pt="com profissionais">with professionals</span>
+            </p>
+            <p>
+              - <span><strong data-i18n data-en="Insights" data-pt="Perspetivas"> Insights</strong></span> 
+              <span data-i18n data-en="into career paths and the future of Bioengineering." data-pt="sobre carreiras e o futuro da Bioengenharia.">
+              into career paths and the future of Bioengineering.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="pergunta-where-main">
+        <div class="pergunta-where-texto">
+          <p class="perguntas-about-us">
+            <span class="where1" style="font-size: 45px" data-i18n data-en="WHERE" data-pt="ONDE">WHERE</span> 
+            <span data-i18n data-en="does it  happen?" data-pt="acontece?">does it happen?</span>
+          </p>
+          <p class="texto-perguntas-about-us">
+            <span><strong>Instituto Superior Técnico</strong></span>
+            (IST), 
+            <span data-i18n data-en="Lisbon" data-pt="Lisboa">Lisbon</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="atividades">
+      <a href="activities.html">
+        <p data-i18n data-en="Activities" data-pt="Atividades">Activities</p>
+      </a>
+    </div>
+    <div class="meet-the-team">
+      <a href="meettheteam.html">
+        <p data-i18n data-en="Meet the Team" data-pt="Equipa">MEET THE TEAM</p>
+      </a>
+    </div>
+    <div id="footer-container"></div>
+
+    <script>      
+      fetch("header.html")        
+        .then((response) => response.text())
+        .then((data) => {
+          
+          const container = document.getElementById("header-container");
+    
+          // Limpa o que lá estiver antes
+          container.innerHTML = ""; 
+          // Cria um "fragmento" que processa o HTML e EXECUTA os scripts
+          const fragment = document.createRange().createContextualFragment(data);
+          
+          // Insere o fragmento no container
+          container.appendChild(fragment);
+
+          const savedLanguage = localStorage.getItem("siteLanguage") || "en";
+
+          if (typeof applyLanguage === "function") {
+            applyLanguage(savedLanguage);
+          }
+        })
+      
+      
+      fetch("footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footer-container").innerHTML = data;
+        })
+        .catch((error) => console.error("Error loading header:", error));
+      
+      
+      function updateCountdown() {
+        
+        const eventDate = new Date("May 4, 2026 23:59:59").getTime();
+        
+        const now = new Date().getTime();
+        const timeLeft = eventDate - now;
+        
+        if (timeLeft <= 0) {
+        document.getElementById("days").textContent = 0;
+        document.getElementById("hours").textContent = 0;
+        document.getElementById("minutes").textContent = 0;
+        document.getElementById("seconds").textContent = 0;
+        return;
+        }
+        
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        
+        document.getElementById("days").textContent = days;
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("seconds").textContent = seconds;
+      }
+      
+      setInterval(updateCountdown, 1000);
+      
+    </script>
+  </body>
+</html>
