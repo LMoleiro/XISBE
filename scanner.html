@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner – XI SBE</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        .scanner-card {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        #reader {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 4px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        #reader.scan-success { border-color: #28a745; }
+        #reader.scan-warn    { border-color: #ffc107; }
+        #reader.scan-error   { border-color: #dc3545; }
+
+        .feedback {
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+        }
+
+        .feedback.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .feedback.error   { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .feedback.warn    { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+
+        .btn-orange {
+            background-color: #FF9114;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="login-page">
+    <div class="container">
+        <div class="signupForm" style="position: relative;">
+            <button type="button" onclick="history.back()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#555;padding:0;line-height:1;" aria-label="Go back">&times;</button>
+            <div class="inSignForm">
+                <h1>Check-in Scanner</h1>
+
+                <div id="view-loading" style="text-align:center; color:#555; padding: 20px 0;">Loading...</div>
+
+                <div id="view-scanner" class="scanner-card" style="display:none;">
+                    <label for="activity-select"><strong>Activity:</strong></label>
+                    <select id="activity-select">
+                        <option value="">— Select activity —</option>
+                    </select>
+
+                    <div id="feedback" class="feedback"></div>
+
+                    <div id="reader"></div>
+                </div>
+
+                <div id="view-denied" style="display:none; text-align:center;">
+                    <p style="color:#721c24;">Access denied. Organizers only.</p>
+                    <a href="index.html">Go back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const supabaseUrl = 'https://tcsbqigmjcoscrtrtmxa.supabase.co';
+        const supabaseKey = 'sb_publishable_8WpYQngE6loxjIH3Wwj6Cg_NSnZnugf';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        function show(id) {
+            ['view-loading', 'view-scanner', 'view-denied'].forEach(v => {
+                document.getElementById(v).style.display = v === id ? (id === 'view-scanner' ? 'flex' : 'block') : 'none';
+            });
+        }
+
+        function showFeedback(type, message) {
+            const el = document.getElementById('feedback');
+            el.className = `feedback ${type}`;
+            el.textContent = message;
+            el.style.display = 'block';
+
+            const reader = document.getElementById('reader');
+            const borderClass = type === 'success' ? 'scan-success' : type === 'warn' ? 'scan-warn' : 'scan-error';
+            reader.classList.add(borderClass);
+
+            setTimeout(() => {
+                el.style.display = 'none';
+                reader.classList.remove(borderClass);
+            }, 3000);
+        }
+
+        let scanning = false;
+
+        async function onScan(decodedText) {
+            if (scanning) return;
+            const activityId = document.getElementById('activity-select').value;
+            if (!activityId) {
+                showFeedback('warn', 'Please select an activity first.');
+                return;
+            }
+
+            scanning = true;
+            const userId = decodedText.trim();
+
+            const { data: existing } = await supabaseClient
+                .from('participations')
+                .select('id')
+                .eq('user_id', userId)
+                .eq('activity_id', activityId)
+                .maybeSingle();
+
+            if (existing) {
+                showFeedback('warn', 'Already checked in.');
+                scanning = false;
+                return;
+            }
+
+            const { error } = await supabaseClient
+                .from('participations')
+                .insert({ user_id: userId, activity_id: activityId });
+
+            if (error) {
+                showFeedback('error', 'Error: ' + error.message);
+            } else {
+                showFeedback('success', 'Checked in!');
+            }
+
+            setTimeout(() => { scanning = false; }, 2000);
+        }
+
+        async function init() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) { show('view-denied'); return; }
+
+            const name = session.user.user_metadata?.display_name;
+            const { data: userData } = await supabaseClient
+                .from('users').select('is_organizer').eq('name', name).maybeSingle();
+
+            if (!userData?.is_organizer) { show('view-denied'); return; }
+
+            const { data: activities, error: activitiesError } = await supabaseClient
+                .from('activities').select('id, name').order('name');
+            console.log('activities:', activities, 'error:', activitiesError);
+
+            const select = document.getElementById('activity-select');
+            (activities || []).forEach(a => {
+                const opt = document.createElement('option');
+                opt.value = a.id;
+                opt.textContent = a.name;
+                select.appendChild(opt);
+            });
+
+            show('view-scanner');
+
+            const scanner = new Html5Qrcode('reader');
+            scanner.start(
+                { facingMode: 'environment' },
+                { fps: 10, qrbox: 250 },
+                onScan
+            );
+        }
+
+        init();
+    </script>
+</body>
+</html>
