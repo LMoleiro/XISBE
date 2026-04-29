@@ -270,7 +270,7 @@
         const SUPABASE_URL = 'https://tcsbqigmjcoscrtrtmxa.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_8WpYQngE6loxjIH3Wwj6Cg_NSnZnugf';
 
-        function renderAuth(user, bioCoins) {
+        function renderAuth(user, userData) {
             const desktop = document.getElementById('auth-buttons-desktop');
             const mobile = document.querySelector('.auth-buttons-mobile');
             if (!desktop && !mobile) return;
@@ -278,8 +278,12 @@
             let html;
             if (user) {
                 const name = user.user_metadata?.display_name || user.email;
-                const coins = bioCoins ?? 0;
-                html = `<span class="auth-user-name">${name}</span>
+                const coins = userData?.BioCoins ?? 0;
+                const scannerBtn = userData?.is_organizer
+                    ? `<button class="btn-orange" onclick="window.location.href='scanner.html'">Scanner</button>`
+                    : '';
+                html = `${scannerBtn}
+                        <span class="auth-user-name">${name}</span>
                         <span class="auth-user-name" style="opacity:0.8;">🪙 ${coins}</span>
                         <a href="profile.html" style="display:flex;align-items:center;justify-content:center;">
                             <img src="assets/images/userIcon.jpg" alt="Profile" style="width:34px;height:34px;border-radius:50%;object-fit:cover;cursor:pointer;border:2px solid rgba(255,255,255,0.7);">
@@ -291,23 +295,13 @@
 
             if (desktop) desktop.innerHTML = html;
             if (mobile) mobile.innerHTML = html;
-
-            document.querySelectorAll('#xisbe-logout').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    window.xisbeAuth.auth.signOut().then(() => {
-                        window.location.href = 'index.html';
-                    });
-                });
-            });
         }
 
-        async function fetchBioCoins(client, user) {
+        async function fetchUserData(client, user) {
             const name = user.user_metadata?.display_name;
-            console.log('fetchBioCoins: display_name =', name);
             if (!name) return null;
-            const { data, error } = await client.from('users').select('BioCoins').eq('name', name).maybeSingle();
-            console.log('fetchBioCoins: data =', data, 'error =', error);
-            return data?.BioCoins ?? null;
+            const { data } = await client.from('users').select('BioCoins, is_organizer').eq('name', name).maybeSingle();
+            return data ?? null;
         }
 
         function initAuth() {
@@ -317,13 +311,13 @@
             client.auth.getSession().then(({ data: { session } }) => {
                 const user = session?.user ?? null;
                 renderAuth(user, null);
-                if (user) fetchBioCoins(client, user).then(coins => renderAuth(user, coins));
+                if (user) fetchUserData(client, user).then(userData => renderAuth(user, userData));
             });
 
             client.auth.onAuthStateChange((_event, session) => {
                 const user = session?.user ?? null;
                 renderAuth(user, null);
-                if (user) fetchBioCoins(client, user).then(coins => renderAuth(user, coins));
+                if (user) fetchUserData(client, user).then(userData => renderAuth(user, userData));
             });
         }
 
