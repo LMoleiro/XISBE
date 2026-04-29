@@ -27,7 +27,13 @@
             width: 100%;
             border-radius: 8px;
             overflow: hidden;
+            border: 4px solid transparent;
+            transition: border-color 0.2s ease;
         }
+
+        #reader.scan-success { border-color: #28a745; }
+        #reader.scan-warn    { border-color: #ffc107; }
+        #reader.scan-error   { border-color: #dc3545; }
 
         .feedback {
             padding: 12px;
@@ -97,7 +103,15 @@
             el.className = `feedback ${type}`;
             el.textContent = message;
             el.style.display = 'block';
-            setTimeout(() => { el.style.display = 'none'; }, 3000);
+
+            const reader = document.getElementById('reader');
+            const borderClass = type === 'success' ? 'scan-success' : type === 'warn' ? 'scan-warn' : 'scan-error';
+            reader.classList.add(borderClass);
+
+            setTimeout(() => {
+                el.style.display = 'none';
+                reader.classList.remove(borderClass);
+            }, 3000);
         }
 
         let scanning = false;
