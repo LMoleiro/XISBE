@@ -3094,6 +3094,9 @@ PITCHES
           "pitch fermentation industry": "workshops",
           "coffee break": "opening and closing sessions",
           barbecue: "workshops",
+          "pitch medtronic v02 2": "medtronic",
+          "pitch cipan v02 2": "cipan",
+          "pitch deloitte v02 2": "deloitte",
         };
       }
 
@@ -3112,10 +3115,13 @@ PITCHES
 
         return headings.find((heading) => {
           const normalizedHeading = normalizeText(heading.textContent);
+          const normalizedHeadingEn = normalizeText(heading.dataset.en || heading.textContent);
           return searchTerms.some(
             (term) =>
               normalizedHeading.includes(term) ||
-              term.includes(normalizedHeading),
+              term.includes(normalizedHeading) ||
+              normalizedHeadingEn.includes(term) ||
+              term.includes(normalizedHeadingEn),
           );
         });
       }
