@@ -224,10 +224,8 @@
         </div>
 
         <div class="qr-section">
-            <div><strong>To download this schedule, read this QR Code:</strong></div>
-            <img src="scheduleqr.png" style="margin: 20px 0;">
-            <div><strong>OR</strong></div>
-            <a href="assets/images/ScheduleXISBE.png" download="ScheduleXISBE.png" class="download-btn">
+            <div><strong data-i18n data-en="To download this schedule, click here:" data-pt="Para descarregar o horário, clique aqui:">To download this schedule, click here:</strong></div>
+            <a href="assets/images/AGENDA.png" download="AGENDA.png" class="download-btn" data-i18n data-en="Click Here" data-pt="Clique Aqui">
                 Click Here
             </a>
         </div>
@@ -244,19 +242,19 @@
 
     <script>
         const horariosData = [
-            { startTime: '09:00', endTime: '09:30', ter: { activity: 'Opening Session (Grande Anfiteatro)', color: '#FFFFFF', fontColor: '#111111' } },
-            { startTime: '09:30', endTime: '11:00', ter: { activity: 'NeuroFrontiers: Pushing the Limits of Non-Invasive Brain Stimulation (V02.1)', color: '#C89AF7', fontColor: '#111111' }, qua: { activity: 'Compliance in Healthcare (V02.2)', color: '#8FB2F3', fontColor: '#111111', position: 'full' }, qui: { activity: 'The Gut-Brain Connection Unveiled (V02.1)', color: '#BA8CF0', fontColor: '#111111' } },
-            { startTime: '11:00', endTime: '11:30', ter: { activity: 'Coffee break (Hall 2)', color: '#FFEAA6', fontColor: '#111111' }, qua: { activity: 'Coffee break (Hall 2)', color: '#FFEAA6', fontColor: '#111111', position: 'full' }, qui: { activity: 'Coffee break (Hall 2)', color: '#FFEAA6', fontColor: '#111111' }, sex: { activity: 'Coffee break (Hall 2)', color: '#FFEAA6', fontColor: '#111111' } },
-            { startTime: '11:30', endTime: '17:30', qua: { activity: 'Job Fair (Átrio Civil)', color: '#D1009C', fontColor: '#111111' } },
-            { startTime: '11:30', endTime: '13:00', ter: { activity: 'Laser Written Bioelectronics: Building Blocks for Epidermal Sensors (V02.2)', color: '#8FB2F3', fontColor: '#111111' }, qua2: { activity: 'At the Edge of Life: Astrobiology and the Search for the (Im)Possible (V02.1)', color: '#C89AF7', fontColor: '#111111' }, qui: { activity: 'Behind the Formula: Innovation in Cosmetic Science (V02.3)', color: '#8FB2F3', fontColor: '#111111' }, sex: { activity: 'Thease Your Thesis (V02.1)', color: '#F28B82', fontColor: '#111111' } },
-            { startTime: '13:00', endTime: '14:00', ter: { activity: 'Lunch', color: '#FFFFFF', fontColor: '#111111' }, qua2: { activity: 'Lunch', color: '#FFFFFF', fontColor: '#111111' }, qui: { activity: 'Lunch', color: '#FFFFFF', fontColor: '#111111' }, sex: { activity: 'Lunch', color: '#FFFFFF', fontColor: '#111111' } },
-            { startTime: '14:00', endTime: '15:30', ter: { activity: 'Debate (V02.1)', color: '#BDBDBD', fontColor: '#111111' },  qui: { activity: 'Genetic Footprints of Portugal: History in Our DNA (V02.1)', color: '#B98CF2', fontColor: '#111111' }, sex: { activity: 'Forensic Bioengineering: DNA as an eyewitness (V02.1)', color: '#B98CF2', fontColor: '#111111' } },
+            { startTime: '09:00', endTime: '09:30', ter: { activity: 'Opening Session (Grande Anfiteatro)', activityPt: 'Sessão de Abertura (Grande Anfiteatro)', color: '#FFFFFF', fontColor: '#111111' } },
+            { startTime: '09:30', endTime: '11:00', ter: { activity: 'NeuroFrontiers: Pushing the Limits of Non-Invasive Brain Stimulation (V02.1)', activityPt: 'NeuroFrontiers: A Expandir os Limites da Estimulação Cerebral Não Invasiva (V02.1)', color: '#C89AF7', fontColor: '#111111' }, qua: { activity: 'Compliance in Healthcare (V02.2)', activityPt: 'Compliance na Saúde (V02.2)', color: '#8FB2F3', fontColor: '#111111', position: 'full' }, qui: { activity: 'The Gut-Brain Connection Unveiled (V02.1)', activityPt: 'A Ligação Intestino-Cérebro Revelada (V02.1)', color: '#BA8CF0', fontColor: '#111111' } },
+            { startTime: '11:00', endTime: '11:30', ter: { activity: 'Coffee break (Hall 2)', activityPt: 'Pausa para Café (Hall 2)', color: '#FFEAA6', fontColor: '#111111' }, qua: { activity: 'Coffee break (Hall 2)', activityPt: 'Pausa para Café (Hall 2)', color: '#FFEAA6', fontColor: '#111111', position: 'full' }, qui: { activity: 'Coffee break (Hall 2)', activityPt: 'Pausa para Café (Hall 2)', color: '#FFEAA6', fontColor: '#111111' }, sex: { activity: 'Coffee break (Hall 2)', activityPt: 'Pausa para Café (Hall 2)', color: '#FFEAA6', fontColor: '#111111' } },
+            { startTime: '11:30', endTime: '17:30', qua: { activity: 'Job Fair (Átrio Civil)', activityPt: 'Feira de Emprego (Átrio Civil)', color: '#D1009C', fontColor: '#111111' } },
+            { startTime: '11:30', endTime: '13:00', ter: { activity: 'Laser Written Bioelectronics: Building Blocks for Epidermal Sensors (V02.2)', activityPt: 'Bioeletrónica Escrita a Laser: Blocos de Construção para Sensores Epidérmicos (V02.2)', color: '#8FB2F3', fontColor: '#111111' }, qua2: { activity: 'At the Edge of Life: Astrobiology and the Search for the (Im)Possible (V02.1)', activityPt: 'No Limiar da Vida: Astrobiologia e a Procura do (Im)Possível (V02.1)', color: '#C89AF7', fontColor: '#111111' }, qui: { activity: 'Behind the Formula: Innovation in Cosmetic Science (V02.3)', activityPt: 'Por Trás da Fórmula: Inovação em Ciência Cosmética (V02.3)', color: '#8FB2F3', fontColor: '#111111' }, sex: { activity: 'Thease Your Thesis (V02.1)', color: '#F28B82', fontColor: '#111111' } },
+            { startTime: '13:00', endTime: '14:00', ter: { activity: 'Lunch', activityPt: 'Almoço', color: '#FFFFFF', fontColor: '#111111' }, qua2: { activity: 'Lunch', activityPt: 'Almoço', color: '#FFFFFF', fontColor: '#111111' }, qui: { activity: 'Lunch', activityPt: 'Almoço', color: '#FFFFFF', fontColor: '#111111' }, sex: { activity: 'Lunch', activityPt: 'Almoço', color: '#FFFFFF', fontColor: '#111111' } },
+            { startTime: '14:00', endTime: '15:30', ter: { activity: 'Debate (V02.1)', color: '#BDBDBD', fontColor: '#111111' },  qui: { activity: 'Genetic Footprints of Portugal: History in Our DNA (V02.1)', activityPt: 'Pegadas Genéticas de Portugal: A História no Nosso ADN (V02.1)', color: '#B98CF2', fontColor: '#111111' }, sex: { activity: 'Forensic Bioengineering: DNA as an eyewitness (V02.1)', activityPt: 'Bioengenharia Forense: ADN como Testemunha (V02.1)', color: '#B98CF2', fontColor: '#111111' } },
             { startTime: '14:00', endTime: '14:30', qua2:{ activity: 'Pitch Medtronic (V02.2)', color: '#F3B968', fontColor: '#111111' } },
             { startTime: '14:30', endTime: '15:00', qua2:{ activity: 'Pitch Cipan (V02.2)', color: '#F3B968', fontColor: '#111111' } },
             { startTime: '15:00', endTime: '15:30', qua2:{ activity: 'Pitch Deloitte (V02.2)', color: '#F3B968', fontColor: '#111111' } },
-            { startTime: '15:30', endTime: '16:00', ter: { activity: 'Coffee break (Hall 2)', color: '#FFEAA6', fontColor: '#111111' }, qua2: { activity: 'Coffee break (Hall 2)', color: '#FFEAA6', fontColor: '#111111' }, qui: { activity: 'Coffee break', color: '#FFEAA6', fontColor: '#111111' }, sex: { activity: 'Coffee break', color: '#FFEAA6', fontColor: '#111111' } },
-            { startTime: '16:00', endTime: '17:30', ter: { activity: 'Decoding Aging: From Molecules to Longevity (V02.1)', color: '#B98CF2', fontColor: '#111111' }, qua2: { activity: 'Alumni Sessions Bachelor and Master (V02.1)', color: '#9BE36B', fontColor: '#111111' }, qui: { activity: 'Digital Twins e Realidade Aumentada em cirurgia (workshop champalimaud) (V02.2)', color: '#A9D7E1', fontColor: '#111111' }, sex: { activity: 'EMG as a proxy to the brain:How to control a robotic prosthesis with EMG signals (V02.2)', color: '#8FB2F3', fontColor: '#111111' } },
-            { startTime: '17:30', endTime: '18:00', sex: { activity: 'Closing Session (Grande Anfiteatro)', color: '#F7B5A8', fontColor: '#111111' } },
+            { startTime: '15:30', endTime: '16:00', ter: { activity: 'Coffee break (Hall 2)', activityPt: 'Pausa para Café (Hall 2)', color: '#FFEAA6', fontColor: '#111111' }, qua2: { activity: 'Coffee break (Hall 2)', activityPt: 'Pausa para Café (Hall 2)', color: '#FFEAA6', fontColor: '#111111' }, qui: { activity: 'Coffee break', activityPt: 'Pausa para Café', color: '#FFEAA6', fontColor: '#111111' }, sex: { activity: 'Coffee break', activityPt: 'Pausa para Café', color: '#FFEAA6', fontColor: '#111111' } },
+            { startTime: '16:00', endTime: '17:30', ter: { activity: 'Decoding Aging: From Molecules to Longevity (V02.1)', activityPt: 'Descodificar o Envelhecimento: Das Moléculas à Longevidade (V02.1)', color: '#B98CF2', fontColor: '#111111' }, qua2: { activity: 'Alumni Sessions Bachelor and Master (V02.1)', activityPt: 'Sessões Alumni Licenciatura e Mestrado (V02.1)', color: '#9BE36B', fontColor: '#111111' }, qui: { activity: 'Digital Twins e Realidade Aumentada em cirurgia (workshop champalimaud) (V02.2)', activityEn: 'Digital Twins and Augmented Reality in Surgery (Champalimaud Workshop) (V02.2)', activityPt: 'Digital Twins e Realidade Aumentada em Cirurgia (workshop champalimaud) (V02.2)', color: '#A9D7E1', fontColor: '#111111' }, sex: { activity: 'EMG as a proxy to the brain:How to control a robotic prosthesis with EMG signals (V02.2)', activityPt: 'EMG como Proxy do Cérebro: Como Controlar uma Prótese Robótica com Sinais EMG (V02.2)', color: '#8FB2F3', fontColor: '#111111' } },
+            { startTime: '17:30', endTime: '18:00', sex: { activity: 'Closing Session (Grande Anfiteatro)', activityPt: 'Sessão de Encerramento (Grande Anfiteatro)', color: '#F7B5A8', fontColor: '#111111' } },
             { startTime: '17:30', endTime: '19:00', qui: { activity: 'Churrasco', color: '#5FAFB1', fontColor: '#111111' } }
         ];
 
@@ -277,10 +275,10 @@
             const calendar = document.getElementById('calendarGrid');
             let eventColorCursor = 0;
             const dias = [
-                { id: 'ter', label: 'Monday', col: "1" },
-                { id: 'qua', label: 'Tuesday', col: "2 / span 2" },
-                { id: 'qui', label: 'Wednesday', col: "4" },
-                { id: 'sex', label: 'Thursday', col: "5" }
+                { id: 'ter', label: 'Monday',    labelPt: 'Segunda',  col: "1" },
+                { id: 'qua', label: 'Tuesday',   labelPt: 'Terça',    col: "2 / span 2" },
+                { id: 'qui', label: 'Wednesday', labelPt: 'Quarta',   col: "4" },
+                { id: 'sex', label: 'Thursday',  labelPt: 'Quinta',   col: "5" }
             ];
 
             calendar.innerHTML = '';
@@ -301,6 +299,9 @@
                 const header = document.createElement('div');
                 header.className = 'header1';
                 header.innerText = dia.label;
+                header.setAttribute('data-i18n', '');
+                header.setAttribute('data-en', dia.label);
+                header.setAttribute('data-pt', dia.labelPt);
                 if (window.innerWidth > 1024) header.style.gridColumn = dia.col;
                 calendar.appendChild(header);
 
@@ -318,18 +319,20 @@
                         card.className = 'activity-card';
                         card.setAttribute('tabindex', '0');
                         card.style.backgroundColor = cardColor;
-                        if (act.activity.startsWith('Pitch')) card.classList.add('activity-card-small');
+                        if (act.activity.startsWith('Pitch') || act.activity === 'Coffee break (Hall 2)' || act.activity.startsWith('Closing Session')) card.classList.add('activity-card-small');
                         card.style.color = '#FFFFFF';
+                        const displayEn = act.activityEn || act.activity;
+                        const displayPt = act.activityPt || displayEn;
                         if (window.innerWidth <= 1024){
                             card.innerHTML = `
                                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 10px;">
-                                    <strong style="flex: 1; text-align: left;">${act.activity}</strong>
+                                    <strong style="flex: 1; text-align: left;" data-i18n data-en="${displayEn}" data-pt="${displayPt}">${displayEn}</strong>
                                     <small style="flex: 1; text-align: center;">${item.startTime} - ${item.endTime}</small>
                                     <small style="flex: 1; text-align: right;">${act.room || ''}</small>
                                 </div>
                             `;
                         }
-                        else card.innerHTML = `<strong>${act.activity}</strong><small>${item.startTime} - ${item.endTime}</small><small>${act.room || ''}</small>`;
+                        else card.innerHTML = `<strong data-i18n data-en="${displayEn}" data-pt="${displayPt}">${displayEn}</strong><small>${item.startTime} - ${item.endTime}</small><small>${act.room || ''}</small>`;
 
                         if (isInteractive) {
                             card.onclick = (e) => {
@@ -419,6 +422,8 @@
             if (isMobile !== _lastIsMobile) {
                 _lastIsMobile = isMobile;
                 gerarCalendario();
+                const lang = localStorage.getItem('siteLanguage') || 'en';
+                if (typeof translatePage === 'function') translatePage(lang);
             }
         };
         window.onclick = (e) => { if (e.target == document.getElementById("myModal")) fecharModal(); }
